@@ -1,0 +1,5 @@
+/* Change la couleur de fond en bleu et la couleur du texte en blanc en mode hover */
+.navbar-nav :hover {
+    background-color: #4400ff;
+   
+}
