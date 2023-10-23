@@ -1,5 +1,10 @@
-/* Change la couleur de fond en bleu et la couleur du texte en blanc en mode hover */
-.navbar-nav :hover {
-    background-color: #4400ff;
-   
+.my-navbar-class {
+    margin-bottom: 20px; /* Ajustez la valeur selon vos préférences */
+}
+
+/* styles.css ou styles.scss */
+
+.container.my-custom-container {
+    margin-top: 20px; /* Espacement en haut du container */
+ /
 }

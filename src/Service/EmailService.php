@@ -14,10 +14,10 @@ class EmailService
         $this->mailer = $mailer;
     }
 
-    public function sendEmail($subject, $to, $message)
+    public function sendEmailConfirmation($subject, $to, $message)
     {
         $email = (new Email())
-            ->from('contactafritex@gmail.com') // Adresse e-mail Gmail configurée dans les paramètres
+            ->from('contactafritex@gmail.com')
             ->to($to)
             ->subject($subject)
             ->text($message);

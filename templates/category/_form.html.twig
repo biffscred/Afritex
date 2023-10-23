@@ -1,0 +1,16 @@
+<div class="container">
+	<div class="row justify-content-center align-items-center" style="height: 100vh;">
+		<div class="col-md-6">
+			<h1 class="text-center">Modifier la catégorie</h1>
+
+			{{ form_start(form, {'attr': {'class': 'my-custom-form-class'}}) }}
+			<div class="form-group">
+				{{ form_row(form.name, {'attr': {'class': 'form-control', 'placeholder': 'Nom de la catégorie'}}) }}
+			</div>
+			<button class="btn btn-primary">{{ button_label|default('Sauvegarder') }}</button>
+			{{ form_end(form) }}
+
+			<a href="{{ path('app_category_index') }}" class="d-block text-center mt-3">Retour à la liste</a>
+		</div>
+	</div>
+</div>
