@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<title>
 			{% block title %}Bienvenue sur Afritex
 			{% endblock %}
@@ -11,7 +11,11 @@
 
 		<!-- Ajoutez le lien vers le fichier CSS de Bootstrap -->
 		<link rel="stylesheet" href="{{ asset('assets/css/bootstrapmorph.min.css') }}"> {% block stylesheets %}{% endblock %}
-		<link href="{{ asset('assets/css/styles.css') }}" rel="stylesheet"/>
+		<link
+		href="{{ asset('assets/css/styles.css') }}" rel="stylesheet"/>
+		<!-- Ajoutez le lien d import d'icones  -->
+		<link href="{{ asset('assets/fonts/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" type="text/css"/>
+		<link href="{{ asset('assets/fonts/website-font/stylefont.css') }}" rel="stylesheet" type="text/css"/>
 
 
 	</head>
