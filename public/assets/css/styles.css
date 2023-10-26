@@ -1,11 +1,9 @@
+.footer{
 
-
-body {
-    color: #000;
-    font-family: 'cabinregular';
-    background-color: #fff;
-    letter-spacing: 1px;
+    bottom:0;
 }
+
+
 
 .tv-bgblackclr{
     background-color: #161616;
@@ -32,63 +30,15 @@ body {
 
         .tv-map iframe{
             width: 100%;
-            height: 250px;
+            height: 200px;
         }
-        .footer{
-            padding: 20px 0;
-            color:#999;
-        }
-        .tv-copyright-box a, .footer-social-links a:hover{
-            color: #ceb483;
-        }
-        .footer-social-links a{
-            color: #fff;
-            margin-left: 13px;
-        }
-        .footer-social-links li:first-child a{
-            margin-left: 0px;
-        }  
+       
         
-        .tv-back-to-top {
-            background: transparent;
-            bottom: 10px;
-            color: #111;
-            cursor: pointer;
-            display: inline-block;
-            font-size: 28px; 
-            height: 45px;
-            line-height: 50px;
-            outline: medium none;
-            position: fixed;
-            right: 15px;
-            text-align: center;
-            text-decoration: none;
-            width: 35px;
-            z-index: 9999;
+    
+      .body{
+            background-image: url("/assets/logo/accueil.jpg");
+            background-size: cover; /* Ajuster la taille de l'image pour couvrir tout l'élément body */
+            background-position: center; /* Centrer l'image de fond horizontalement et verticalement */
+            background-repeat: no-repeat; /* Ne pas répéter l'image de fond */
         }
-        .tv-bounce {
-            animation: 2s linear 0s normal none infinite running bounce;
-            display: inline-block;
-            position: relative;
-        }
-        @keyframes bounce {
-            0% {
-                top: 0;
-            }
-            50% {
-                top: -0.2em;
-            }
-            70% {
-                top: -0.3em;
-            }
-            100% {
-                top: 0;
-            }
-        }
-        .tv-back-to-top img {
-            width: 65%;
-        }
-        .tv-logo > img {
-            margin-top: 30px;
-            width: 80%;
-        }
+        
