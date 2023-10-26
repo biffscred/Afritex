@@ -6,9 +6,13 @@ use App\Repository\ProductRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
+use Symfony\Component\HttpFoundation\File\File;
 
-#[ORM\Entity(repositoryClass: ProductRepository::class)]
-class Product
+
+ #[ORM\Entity(repositoryClass: ProductRepository::class)]
+ #[Vich\Uploadable]
+ class Product
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -18,7 +22,7 @@ class Product
     #[ORM\Column(length: 255)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(type:'text',length: 500)]
     private ?string $description = null;
 
     #[ORM\Column]
@@ -27,8 +31,13 @@ class Product
     #[ORM\Column]
     private ?int $quantity = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(length: 255,type :'string')]
     private ?string $images = null;
+
+    
+    #[Vich\UploadableField(mapping:"product_images", fileNameProperty:"images")]
+     
+    private ?File $imageFile = null;
 
     #[ORM\ManyToOne(inversedBy: 'product')]
     private ?Category $category = null;
@@ -112,6 +121,22 @@ class Product
         $this->images = $images;
 
         return $this;
+    }
+
+    public function getImageFile(): ?File
+    {
+        return $this->imageFile;
+    }
+
+    public function setImageFile(?File $imageFile): static
+    {
+        $this->imageFile = $imageFile;
+
+        if (null !==$imageFile){
+            $this->updated_at= new \DateTimeImmutable();
+        }
+
+       
     }
 
     public function getCategory(): ?Category

@@ -18,7 +18,7 @@ class Category
     #[ORM\Column(length: 50)]
     private ?string $name = null;
 
-    #[ORM\Column(length: 255, nullable: true)]
+    #[ORM\Column(type:'text' ,length: 500, nullable: true)]
     private ?string $description = null;
 
     #[ORM\OneToMany(mappedBy: 'category', targetEntity: Product::class)]
@@ -87,4 +87,9 @@ class Category
 
         return $this;
     }
+    public function __toString()
+{
+    // Retournez la propriété de l'entité que vous souhaitez afficher
+    return $this->getName();
+}
 }
