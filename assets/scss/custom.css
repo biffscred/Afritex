@@ -1,0 +1,40 @@
+body {
+  display: block !important;
+}
+
+.background-video video {
+  position: absolute;
+  height: 100%;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  object-fit: cover;
+}
+
+.accordion-button::after {
+  display: none;
+}
+
+.btn-with-ball:hover .btn-ball {
+  animation: bounce 500ms;
+  transform: translateY(0px);
+  animation-iteration-count: infinite;
+  position: relative;
+}
+
+@keyframes bounce {
+  0% {
+    top: -15px;
+    -webkit-animation-timing-function: ease-in-out;
+  }
+  /* 40% {
+  } */
+  50% {
+    top: 0px;
+    -webkit-animation-timing-function: ease-in-out;
+  }
+  100% {
+    top: -5px;
+    -webkit-animation-timing-function: ease-in-out;
+  }
+}

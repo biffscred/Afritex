@@ -1,0 +1,52 @@
+@import "/src/assets/scss/variables";
+
+
+// Components Variables
+// Navbar
+@import "/src/assets/scss/navbar/variables";
+
+// Buttons
+@import "/src/assets/scss/component-buttons/variables";
+
+// Form
+@import "/src/assets/scss/component-form/variables";
+
+// Card
+@import "/src/assets/scss/component-card/variables";
+
+// Nav
+@import "/src/assets/scss/component-nav/variables";
+
+// Dropdown
+@import "/src/assets/scss/component-dropdown/variables";
+
+// List Group
+@import "/src/assets/scss/component-list-group/variables";
+
+// Table
+@import "/src/assets/scss/component-table/variables";
+
+
+// Init Plugin
+@import "/node_modules/bootstrap/scss/bootstrap";
+
+// Grid
+@import "/src/assets/scss/_mixins/grid";
+
+
+// Components
+
+// Buttons
+@import "/src/assets/scss/component-buttons/buttons";
+
+// Form
+@import "/src/assets/scss/component-form/include";
+
+// Nav
+@import "/src/assets/scss/component-nav/include";
+
+// Card
+@import "/src/assets/scss/component-card/include";
+
+// Table
+@import "/src/assets/scss/component-table/table";

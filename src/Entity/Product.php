@@ -128,13 +128,14 @@ use Symfony\Component\HttpFoundation\File\File;
         return $this->imageFile;
     }
 
-    public function setImageFile(?File $imageFile): static
+    public function setImageFile(?File $imageFile): void
     {
         $this->imageFile = $imageFile;
 
         if (null !==$imageFile){
             $this->updated_at= new \DateTimeImmutable();
         }
+        
 
        
     }
