@@ -1,7 +1,7 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 import { Col, Container, Row } from "reactstrap";
-import Logo from "../../../assets/images/logo-white.svg";
+import Logo from "../../../assets/images/logo.png";
 
 
 const Footer = () => {

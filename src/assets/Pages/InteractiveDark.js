@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import Logo from "../images/logo-white.svg";
+import Logo from "../images/logo.png";
 import Navbar from "../Layouts/CommonLayouts/Navbar4";
 
 import Fashion from "../images/portfolio/fashion-model-1200-865.jpg";

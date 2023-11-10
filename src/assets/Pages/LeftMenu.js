@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
-import Logo from "../images/logo.svg";
+import Logo from "../images/logo.png";
 import LogoCircle from "../images/logo-circle.svg";
 import Identity from "../images/portfolio/identity-design-1200-865.jpg";
 import App from "../images/portfolio/app-photography-1200-1330.jpg";

@@ -3,8 +3,8 @@ import { Row, Col, Container, UncontrolledCollapse } from "reactstrap";
 import { Link, useLocation } from "react-router-dom";
 
 //Images
-import Logo from "../../images/logo.svg";
-import Logodark from "../../images/logo.svg";
+import Logo from "../../images/logo.png";
+import Logodark from "../../images/logo.png";
 import MainHome from "../../images/demos/main-home.jpg";
 import SimplePortfolio from "../../images/demos/simple-portfolio.jpg";
 import CreativeAgency from "../../images/demos/creative-agency.jpg";
@@ -1596,7 +1596,7 @@ const Navbar = ({ navClass }) => {
                         </li>
                         <li className="nav-item">
                           <Link to="/coming-soon" className="nav-link">
-                            <span className="nav-link-name">Coming Soon</span>
+                            <span className="nav-link-name">A venir </span>
                           </Link>
                         </li>
                         <li className="nav-item">
@@ -1666,7 +1666,7 @@ const Navbar = ({ navClass }) => {
                         to="/mailto:hello@themebau.com?subject=Test%20Address%20Email"
                         className="text-decoration-none text-white"
                       >
-                        hello@themebau.com
+                        contactafritex@gmail.com
                       </Link>
                     </li>
                     <li className="list-group-item">
@@ -1675,7 +1675,7 @@ const Navbar = ({ navClass }) => {
                         to="/callto:+1 202-358-0309"
                         className="text-decoration-none text-white"
                       >
-                        +1 202-358-0309
+                        +33612604731
                       </Link>
                     </li>
                   </ul>

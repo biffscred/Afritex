@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Col, Container, Row, UncontrolledCollapse } from "reactstrap";
 import { Link, useLocation } from "react-router-dom";
-import Logo from "../../../assets/images/logo-white.svg";
+import Logo from "../../../assets/images/logo.png";
 
 //Images
 
@@ -139,7 +139,7 @@ const Navbar = () => {
           <ul className="nav navbar-nav order-2">
             <li className="nav-item navbar-dropdown navbar-dropdown-mega">
               <Link to="/home" className="nav-link">
-                <span className="nav-link-name">home</span>
+                <span className="nav-link-name">Accueil</span>
                 <svg
                   width="6"
                   height="10"
@@ -550,7 +550,7 @@ const Navbar = () => {
                       <ul className="nav navbar-nav">
                         <li className="nav-item">
                           <Link to="/about-us" className="nav-link">
-                            <span className="nav-link-name">About Us</span>
+                            <span className="nav-link-name">A propos</span>
                           </Link>
                         </li>
                         <li className="nav-item">

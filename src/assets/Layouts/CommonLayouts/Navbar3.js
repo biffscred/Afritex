@@ -1,8 +1,8 @@
 import React, { useEffect, useCallback, useState } from "react";
 import { Col, Container, Row, UncontrolledCollapse } from "reactstrap";
 import { Link, useLocation } from "react-router-dom";
-import Logo from "../../../assets/images/logo.svg";
-import Logodark from "../../../assets/images/logo-white.svg";
+import Logo from "../../../assets/images/logo.png";
+import Logodark from "../../../assets/images/logo.png";
 
 const Navbar = ({ navClass }) => {
   const [isClick, setIsClick] = useState(false);

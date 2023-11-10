@@ -1,8 +1,8 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { Col, Container, Row, UncontrolledCollapse } from "reactstrap";
 import { Link, useLocation } from "react-router-dom";
-import Logo from "../../images/logo.svg";
-import Logolight from "../../images/logo-white.svg";
+import Logo from "../../images/logo.png";
+import Logolight from "../../images/logo.png";
 
 
 const Navbar = ({ navClass, styleClass }) => {

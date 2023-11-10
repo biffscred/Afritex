@@ -1,6 +1,6 @@
 import React from "react";
 import { Col, Container, Row } from "reactstrap";
-import Logo from "../../../images/logo-white.svg";
+import Logo from "../../../images/logo.png";
 import { NavLink } from "react-router-dom";
 const Footer = () => {
   return (
@@ -23,10 +23,10 @@ const Footer = () => {
                 </li>
                 <li className="nav-item">
                   <NavLink
-                    to="/mailto:hello@themebau.com?subject=Test%20Address%20Email"
+                    to="/mailto:contactafritex@gmail.com?subject=Test%20Address%20Email"
                     className="nav-link"
                   >
-                    hello@themebau.com
+                    contactafritex@gmail.com
                   </NavLink>
                 </li>
               </ul>
@@ -35,7 +35,7 @@ const Footer = () => {
               <ul className="nav text-white nav-gap-sm align-items-center justify-content-center mb-30">
                 <li className="nav-item">
                   <NavLink
-                    to="/https://facebook.com/runwebrun"
+                    to="/https://facebook.com/afritex"
                     className="nav-link"
                   >
                     <svg

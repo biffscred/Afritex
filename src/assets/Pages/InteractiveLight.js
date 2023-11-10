@@ -5,7 +5,7 @@ import Creative from "../images/portfolio/creative-branding-1200-865.jpg";
 import Colorib from "../images/portfolio/colibri-creative-1200-865.jpg";
 import Luxury from "../images/portfolio/luxury-car-1200-865.jpg";
 import Potraite from "../images/portfolio/portrait-inspiration-1200-865.jpg";
-import Logo from "../images/logo.svg";
+import Logo from "../images/logo.png";
 import Navbar from "../Layouts/CommonLayouts/Navbar4";
 import { Col, Container, Row } from "reactstrap";
 import { NavLink } from "react-router-dom";

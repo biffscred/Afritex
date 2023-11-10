@@ -1,8 +1,9 @@
 {
   "files": {
-    "main.css": "/static/css/main.798a61a4.css",
-    "main.js": "/static/js/main.25f7f859.js",
-    "static/js/47.3c1ce805.chunk.js": "/static/js/47.3c1ce805.chunk.js",
+    "main.css": "/static/css/main.42e2f2eb.css",
+    "main.js": "/static/js/main.362dc8c7.js",
+    "static/js/47.6f4f0d59.chunk.js": "/static/js/47.6f4f0d59.chunk.js",
+    "static/media/accueil-global.jpg": "/static/media/accueil-global.d227f12d6c0260261740.jpg",
     "static/media/slide-3.jpg": "/static/media/slide-3.4ce97ab129882e78fccd.jpg",
     "static/media/amazing-nature-1920-1080.jpg": "/static/media/amazing-nature-1920-1080.3e3fd9d57a16c147173d.jpg",
     "static/media/degital-agency-1920-1080.jpg": "/static/media/degital-agency-1920-1080.3e3fd9d57a16c147173d.jpg",
@@ -190,6 +191,7 @@
     "static/media/carousel-light-740-362.jpg": "/static/media/carousel-light-740-362.2360f7b6d18030a3fedc.jpg",
     "static/media/happy-moments-540-540.jpg": "/static/media/happy-moments-540-540.bfaa8ac3f3a822d4c808.jpg",
     "static/media/identity-design-540-540.jpg": "/static/media/identity-design-540-540.938b84d8eac48be46662.jpg",
+    "static/media/logo.png": "/static/media/logo.b71b0f5dd8ef97ba511a.png",
     "static/media/watch-design-540-540.jpg": "/static/media/watch-design-540-540.b34ad409e5b974f74a54.jpg",
     "static/media/blog-2-540-460.jpg": "/static/media/blog-2-540-460.254b22fe23667cb4e6a9.jpg",
     "static/media/bag-design-540-540.jpg": "/static/media/bag-design-540-540.eeb02e73ac5905027a7b.jpg",
@@ -200,16 +202,14 @@
     "static/media/contact-us-540-460.jpg": "/static/media/contact-us-540-460.1b489050dba28d9d71d6.jpg",
     "static/media/dark-center-menu-740-362.jpg": "/static/media/dark-center-menu-740-362.197a920250619c99da32.jpg",
     "static/media/kerry-norton-340-360.jpg": "/static/media/kerry-norton-340-360.81cf73962184dce7e632.jpg",
-    "static/media/logo.svg": "/static/media/logo.4b826f08e5b7cc4304b135f8638b1509.svg",
-    "static/media/logo-white.svg": "/static/media/logo-white.83d06011cba611143de6113e2ab2aa3f.svg",
     "static/media/logo-circle.svg": "/static/media/logo-circle.a4b5c9a0bd85c3e5d25002f1ae010bdd.svg",
     "index.html": "/index.html",
-    "main.798a61a4.css.map": "/static/css/main.798a61a4.css.map",
-    "main.25f7f859.js.map": "/static/js/main.25f7f859.js.map",
-    "47.3c1ce805.chunk.js.map": "/static/js/47.3c1ce805.chunk.js.map"
+    "main.42e2f2eb.css.map": "/static/css/main.42e2f2eb.css.map",
+    "main.362dc8c7.js.map": "/static/js/main.362dc8c7.js.map",
+    "47.6f4f0d59.chunk.js.map": "/static/js/47.6f4f0d59.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.798a61a4.css",
-    "static/js/main.25f7f859.js"
+    "static/css/main.42e2f2eb.css",
+    "static/js/main.362dc8c7.js"
   ]
 }

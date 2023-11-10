@@ -5,7 +5,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination, Navigation, Autoplay } from "swiper";
 
-import Colorib from "../../images/portfolio/colibri-creative-1920-1080.jpg";
+import Colorib from "../../images/portfolio/accueil-global.jpg";
 import Happy from "../../images/portfolio/happy-moments-1920-1080.jpg";
 import Portfolio from "../../images/portfolio/luxury-car-1920-1080.jpg";
 const Slider = () => {

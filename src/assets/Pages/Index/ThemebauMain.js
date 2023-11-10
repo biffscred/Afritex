@@ -34,11 +34,10 @@ const ThemebauMain = () => {
           </div>
           <Row className="justify-content-center text-white mb-100">
             <Col className="col-12 col-lg-8 col-xl-6" data-aos="fade-up">
-              <h1 className="display-4 mb-20 text-white">Themebau.</h1>
+              <h1 className="display-4 mb-20 text-white">Afritex.</h1>
               <p className="mb-4">
-                Themebau is a stylish universal template for all your projects &
-                creative output. Minimalistic and easy to use, it has everything
-                you need to launch your website.
+             
+              Un espace de valorisation et de promotion de tissus africains authentiques surtout en coton tissé pour faciliter leur accès à l'international et permettre à une plus grande clientèle de s'en approvisionner en un même endroit (Gain de temps, choix variés en qualité et en quantité, coût moindre).
               </p>
             </Col>
           </Row>
