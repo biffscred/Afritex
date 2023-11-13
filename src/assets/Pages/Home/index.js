@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../../Layouts/CommonLayouts/Navbar2";
+import Navbar from "../../Layouts/CommonLayouts/Navbar1";
 
 import Slider from "./Slider";
 import WhoWeAre from "./WhoWeAre";
@@ -7,7 +7,7 @@ import FeaturedWork from "./FeaturedWork";
 import WorkProcess from "./WorkProcess";
 import Service from "./Service";
 import OurClients from "./OurClients";
-import Footer from "../../Layouts/CommonLayouts/Footer1";
+import Footer from "../../Layouts/CommonLayouts/Footer2";
 
 const Home = () => {
   //meta title

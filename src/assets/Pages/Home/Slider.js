@@ -6,8 +6,8 @@ import "swiper/css/pagination";
 import { Pagination, Navigation, Autoplay } from "swiper";
 
 import Colorib from "../../images/portfolio/accueil-global.jpg";
-import Happy from "../../images/portfolio/happy-moments-1920-1080.jpg";
-import Portfolio from "../../images/portfolio/luxury-car-1920-1080.jpg";
+import Happy from "../../images/portfolio/Accueil.jpg";
+import Portfolio from "../../images/portfolio/Accueil-femme.jpg";
 const Slider = () => {
   return (
     <React.Fragment>
@@ -58,8 +58,8 @@ const Slider = () => {
                   </span>
                   <span className="card-img-overlay">
                     <span className="card-title h1">
-                      <span className="card-title-decoration"></span>Colibri
-                      Creative Project
+                      <span className="card-title-decoration"></span>Tissus 100%
+                      authentiques
                     </span>
                   </span>
                 </NavLink>
@@ -81,8 +81,8 @@ const Slider = () => {
                   </span>
                   <span className="card-img-overlay">
                     <span className="card-title h1">
-                      <span className="card-title-decoration"></span>Happy
-                      Moments Photoset
+                      <span className="card-title-decoration"></span>Tissus 100%
+                      Africains
                     </span>
                   </span>
                 </NavLink>
@@ -104,8 +104,7 @@ const Slider = () => {
                   </span>
                   <span className="card-img-overlay">
                     <span className="card-title h1">
-                      <span className="card-title-decoration"></span>Luxury Car
-                      Website
+                      <span className="card-title-decoration"></span>Créations 
                     </span>
                   </span>
                 </NavLink>

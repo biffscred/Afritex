@@ -60,16 +60,16 @@ const Footer = () => {
             <Col lg={3}>
               <ul className="nav flex-column text-white">
                 <li className="nav-item">
-                  <NavLink to="callto:+1 202-358-0309" className="nav-link">
-                    +1 202-358-0309
+                  <NavLink to="callto:+33612" className="nav-link">
+                   +33612
                   </NavLink>
                 </li>
                 <li className="nav-item">
                   <NavLink
-                    to="mailto:hello@themebau.com?subject=Test%20Address%20Email"
+                    to="mailto:contactafritex@gmail.com?subject=Test%20Address%20Email"
                     className="nav-link"
                   >
-                    hello@themebau.com
+                    contactafritex@gmail.com
                   </NavLink>
                 </li>
               </ul>

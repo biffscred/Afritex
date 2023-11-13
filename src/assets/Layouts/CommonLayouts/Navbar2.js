@@ -137,7 +137,7 @@ const Navbar = ({ navClass }) => {
           <ul className="nav navbar-nav" id="navBar">
             <li className="nav-item navbar-dropdown navbar-dropdown-mega">
               <Link to="/#" className="nav-link">
-                <span className="nav-link-name">home</span>
+                <span className="nav-link-name">Accueil</span>
                 <svg
                   width="6"
                   height="10"
@@ -163,7 +163,7 @@ const Navbar = ({ navClass }) => {
                           <span className="nav-link-image">
                             <img src={MainHome} alt="" />
                           </span>
-                          <span className="nav-link-name">main home</span>
+                          <span className="nav-link-name">Accueil</span>
                         </Link>
                       </span>
                     </li>

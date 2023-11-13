@@ -34,7 +34,7 @@ const ThemebauMain = () => {
           </div>
           <Row className="justify-content-center text-white mb-100">
             <Col className="col-12 col-lg-8 col-xl-6" data-aos="fade-up">
-              <h1 className="display-4 mb-20 text-white">Afritex.</h1>
+              <h1 className="display-4 mb-20 text-white">Afritex</h1>
               <p className="mb-4">
              
               Un espace de valorisation et de promotion de tissus africains authentiques surtout en coton tissé pour faciliter leur accès à l'international et permettre à une plus grande clientèle de s'en approvisionner en un même endroit (Gain de temps, choix variés en qualité et en quantité, coût moindre).
@@ -48,7 +48,7 @@ const ThemebauMain = () => {
                   <img src={Home} alt="" />
                 </span>
                 <span className="card-body">
-                  <span className="card-title h5">Main Home</span>
+                  <span className="card-title h5">Menu</span>
                 </span>
               </NavLink>
             </Col>

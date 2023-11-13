@@ -22,21 +22,21 @@ const Footer = () => {
           <ul className="nav align-items-center flex-column text-white mb-100">
             <li className="nav-item">
               <NavLink
-                to="mailto:hello@themebau.com?subject=Test%20Address%20Email"
+                to="mailto: contactafritex@gmail.com?subject=Test%20Address%20Email"
                 className="nav-link h2 mb-8 mb-md-30 d-none d-md-flex"
               >
-                hello@themebau.com
+                contactafritex@gmail.com
               </NavLink>
               <NavLink
-                to="mailto:hello@themebau.com?subject=Test%20Address%20Email"
+                to="mailto:contactafritex@gmail.com?subject=Test%20Address%20Email"
                 className="nav-link h4 mb-8 mb-md-30 d-md-none"
               >
-                hello@themebau.com
+                contactafritex@gmail.com
               </NavLink>
             </li>
             <li className="nav-item">
               <NavLink
-                to="callto:+1 202-358-0309"
+                to="callto:+33612"
                 className="nav-link h4 mt-8 mt-md-0"
               >
                 +1 202-358-0309
@@ -78,7 +78,7 @@ const Footer = () => {
             </li>
             <li className="nav-item">
               <NavLink
-                to="//instagram.com/runwebrun"
+                to="//instagram.com/afritex.fr"
                 className="nav-link"
               >
                 <svg
@@ -97,7 +97,7 @@ const Footer = () => {
             </li>
           </ul>
           <div className="footer-copyright mb-5">
-            © 2020-2023 | Themebau by RunWebRun.
+            © 2019| Afritex.
           </div>
         </Container>
       </footer>

@@ -695,7 +695,7 @@ const Navbar = () => {
             id="btn-purchase"
           >
             {" "}
-            purchase{" "}
+            panier{" "}
             <span className="btn-ball" style={{ transform: "translateY(0px)" }} id="btn-ball"></span>
           </a>
           <a
@@ -703,7 +703,7 @@ const Navbar = () => {
             href="https://themes.getbootstrap.com/product/themebau/"
           >
             {" "}
-            purchase{" "}
+            panier{" "}
           </a>
         </Container>
       </header>
@@ -752,7 +752,7 @@ const Navbar = () => {
                       aria-controls="navbarCollapseHome"
                       onClick={() => setNavbarCollapseHome(!navbarCollapseHome)}
                     >
-                      <span className="nav-link-name">home</span>
+                      <span className="nav-link-name">Accueil</span>
                       <svg
                         className="collapse-icon"
                         width="7"
@@ -869,7 +869,7 @@ const Navbar = () => {
                       aria-controls="navbarCollapseProjects"
                       onClick={() => setNavbarCollapseProjects(!navbarCollapseProjects)}
                     >
-                      <span className="nav-link-name">projects</span>
+                      <span className="nav-link-name">Produits</span>
                       <svg
                         className="collapse-icon"
                         width="7"

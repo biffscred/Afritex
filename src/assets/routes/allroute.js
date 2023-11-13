@@ -44,7 +44,7 @@ import SinglePost from "../Pages/Blog/SinglePost";
 import ComingSoon from "../Pages/ComingSoon";
 import Page404 from "../Pages/404";
 
-import Contact1 from "../Pages/Contact/Contact1";
+
 import Contact2 from "../Pages/Contact/Contact2";
 import CreativeAgency from "../Pages/CreativeAgency";
 import FreelancerPortfolio from "../Pages/FreelancerPortfolio";
@@ -112,7 +112,7 @@ const routes = [
   { path: "/coming-soon", element: <ComingSoon /> },
   { path: "/404", element: <Page404 /> },
 
-  { path: "/contact1", element: <Contact1 /> },
+
   { path: "/contact2", element: <Contact2 /> },
 ];
 
