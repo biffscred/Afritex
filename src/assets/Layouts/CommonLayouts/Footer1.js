@@ -48,7 +48,7 @@ const Footer = () => {
                     to="/#"
                     className="btn btn-clean btn-with-ball text-white"
                   >
-                    send
+                    envoyer
                     <span className="btn-ball" style={{ transform: "translateY(0px)" }}></span>
                   </NavLink>
                 </div>
@@ -81,7 +81,7 @@ const Footer = () => {
                   <ul className="nav flex-column text-white">
                     <li className="nav-item">
                       <NavLink to="/#" className="nav-link">
-                        About us
+                        A propos de nous 
                       </NavLink>
                     </li>
                     <li className="nav-item">
@@ -91,13 +91,11 @@ const Footer = () => {
                     </li>
                     <li className="nav-item">
                       <NavLink to="/#" className="nav-link">
-                        Our team
+                        Notre équipe 
                       </NavLink>
                     </li>
                     <li className="nav-item">
-                      <NavLink to="/#" className="nav-link">
-                        Careers
-                      </NavLink>
+                      
                     </li>
                   </ul>
                 </Col>
@@ -105,7 +103,7 @@ const Footer = () => {
                   <ul className="nav flex-column text-white">
                     <li className="nav-item">
                       <NavLink to="/#" className="nav-link">
-                        Work process
+                        Procéde de travail 
                       </NavLink>
                     </li>
                     <li className="nav-item">
@@ -115,7 +113,7 @@ const Footer = () => {
                     </li>
                     <li className="nav-item">
                       <NavLink to="/#" className="nav-link">
-                        Our blog
+                        Notre blog 
                       </NavLink>
                     </li>
                     <li className="nav-item">
@@ -128,14 +126,17 @@ const Footer = () => {
                 <Col lg={4} className="col-12">
                   <ul className="nav flex-column text-white">
                     <li className="nav-item">
-                      <NavLink to="/#" className="nav-link">
-                        Privacy
-                      </NavLink>
-                    </li>
                     <li className="nav-item">
-                      <NavLink to="/#" className="nav-link">
-                        Terms of Use
-                      </NavLink>
+                <NavLink to="/#" className="nav-link">
+                 Confidentialité
+                 </NavLink>
+                </li>
+                <li className="nav-item">
+                <NavLink to="/#" className="nav-link">
+                Conditions d'utilisation
+               </NavLink>
+               </li>
+
                     </li>
                   </ul>
                 </Col>

@@ -10,7 +10,7 @@ import ManuStyle from "./ManuStyle";
 
 const Index = () => {
   //meta title
-  document.title = "Themebau | Demo Landing";
+  document.title = "Afritex ";
   return (
     <React.Fragment>
       <Navbar />

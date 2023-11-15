@@ -169,7 +169,7 @@ const Navbar = ({ navClass }) => {
                       aria-controls="navbarCollapseHome"
                       onClick={() => setNavbarCollapseHome(!navbarCollapseHome)}
                     >
-                      <span className="nav-link-name">home</span>
+                      <span className="nav-link-name">Accueil</span>
                       <svg
                         className="collapse-icon"
                         width="7"
@@ -191,7 +191,7 @@ const Navbar = ({ navClass }) => {
                       <ul className="nav navbar-nav">
                         <li className="nav-item">
                           <Link to="/home" className="nav-link">
-                            <span className="nav-link-name">main home</span>
+                            <span className="nav-link-name"></span>
                           </Link>
                         </li>
                         <li className="nav-item">
@@ -240,7 +240,7 @@ const Navbar = ({ navClass }) => {
                         </li>
                         <li className="nav-item">
                           <Link to="/left-menu" className="nav-link">
-                            <span className="nav-link-name">left menu</span>
+                            <span className="nav-link-name">Menu</span>
                           </Link>
                         </li>
                         <li className="nav-item">

@@ -23,7 +23,7 @@ const Main = () => {
           <Col className="col-12 col-lg-10 pb-160 text-white">
             <Row className="mt-160 pt-3">
               <Col lg={9} xl={8} className="col-12" data-aos="fade-up">
-                <h1 className="display-4 text-white">We are Themebau.</h1>
+                <h1 className="display-4 text-white">Nous sommes Afritex.</h1>
               </Col>
             </Row>
             <Row className="mt-100">
@@ -33,8 +33,7 @@ const Main = () => {
               >
                 <hr className="mt-0 border-white" />
                 <p className="lead">
-                  Over 10 years of combined experience, and know a thing or two
-                  about designing websites and mobile apps.
+                "Chez Afritex, nous sommes passionnés par la richesse et la diversité des textiles africains. Fondée avec l'idée de célébrer et de promouvoir l'art du tissage, notre entreprise est le fruit d'une vision inspirée par des décennies d'expérience dans le domaine du textile.
                 </p>
               </Col>
               <Col lg={6} className="col-12" data-aos="fade-up">

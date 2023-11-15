@@ -15,9 +15,9 @@ const WhoWeAre = () => {
         <Container>
           <Row className="justify-content-center">
             <Col lg={7} className="col-12 text-center">
-              <p className="subtitle mt-n10">who we are</p>
+              <p className="subtitle mt-n10">Qui sommes nous!</p>
               <h1 className="h3 mb-0">
-                An award-winning design & dev team that is proud of our work 👋
+              Chez Afritex, notre équipe possède une vaste expérience qui célèbrent la richesse de l'artisanat africain.  👋
               </h1>
             </Col>
           </Row>
@@ -25,19 +25,15 @@ const WhoWeAre = () => {
             <Col lg={5}>
               <hr className="mt-0" />
               <p className="lead">
-                Over 10 years of combined experience, and know thing or two
-                about designing websites and mobile apps.
+              Notre équipe est prête à relever les défis à venir pour continuer à promouvoir la beauté et la diversité des textiles africains .
               </p>
             </Col>
             <Col lg={5}>
               <p>
-                Were divided, moved night light darkness winged may also make
-                man for. Winged the for Earth creeping appear evening, gathered
-                Forth so he. Life that dry of created greater can't also
-                gathered female green.
+              Chez Afritex, notre équipe possède une vaste expérience dans la conception de plateformes en ligne qui célèbrent la richesse de l'artisanat africain. Nous sommes fiers de mettre notre savoir-faire au service de la promotion des tissus africains authentiques à travers nos réalisations.
               </p>
               <NavLink to="/about-us" className="btn btn-dark btn-with-ball">
-                about us
+                A propos
                 <span className="btn-ball" style={{ transform: "translateY(0px)" }}></span>
               </NavLink>
             </Col>

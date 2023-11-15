@@ -17,7 +17,7 @@ const FeaturedWork = () => {
             <Col lg={10} className="col-12 mt-8">
               <Row className="justify-content-between gh-1">
                 <Col lg={6} className="col-md">
-                  <h2 className="display-4 mt-n30">Featured work</h2>
+                  <h2 className="display-4 mt-n30">Notre travail</h2>
                 </Col>
                 <div className="d-none d-lg-block col-auto">
                   <hr className="mt-30 mx-2 width-70px" />
@@ -27,8 +27,7 @@ const FeaturedWork = () => {
                     to="/portfolio-col-3-style-5"
                     data-aos="fade-up"
                     className="btn btn-dark btn-with-ball"
-                  >
-                    all work
+                  >Tout le travail 
                     <span className="btn-ball" style={{ transform: "translateY(0px)" }}></span>
                   </NavLink>
                 </div>

@@ -6,11 +6,11 @@ import "swiper/css";
 import "swiper/css/navigation";
 import { Navigation, Autoplay } from "swiper";
 
-import Aboutus from "../../../images/about/about-us-1920-1080.jpg";
-import AboutContect from "../../../images/about/about-us-content.jpg";
-import Slide1 from "../../../images/about/about-us-slide-940-1000.jpg";
-import Slide2 from "../../../images/about/about-us-slide-2-940-1000.jpg";
-import Slide3 from "../../../images/about/about-us-slide-3-940-1000.jpg";
+import Aboutus from "../../../images/about/groupe-amis.png";
+import AboutContect from "../../../images/about/rouleau-coton.png";
+import Slide1 from "../../../images/about/styliste.png";
+import Slide2 from "../../../images/about/créations-tissus.png";
+import Slide3 from "../../../images/about/tisserands.png";
 import { Col, Container, Row } from "reactstrap";
 
 const Main = () => {
@@ -36,7 +36,7 @@ const Main = () => {
             <Col lg={1}></Col>
             <Col lg={8} className="col-12" data-show-duration="700">
               <h1 className="text-white mb-0">
-                We were born from a collective idea, a need for sharing.
+Un besoin de partage, et une passion pour les textiles africains.
               </h1>
             </Col>
           </Row>
@@ -66,7 +66,7 @@ const Main = () => {
                     data-show-distance="10"
                     data-show-delay="50"
                   >
-                    who we are
+                   Qui nous sommes
                   </p>
                   <h3
                     className="mb-n7"
@@ -74,21 +74,16 @@ const Main = () => {
                     data-show-distance="10"
                     data-show-delay="150"
                   >
-                    An award-winning design & dev team that is proud of our work
+                    Une équipe de passionnés du textile africain, engagée dans la création et le développement de produits uniques.
                     👋
                   </h3>
                 </Col>
                 <Col md={6} className="col-12" data-show-duration="700">
                   <p className="lead mb-30">
-                    Over 10 years of combined experience, and know a thing or
-                    two about.
+                  Chez Afritex, nous sommes animés par la vision d'un avenir où les tissus africains et les produits qui en découlent auront une place de choix sur la scène internationale. Notre équipe est prête à relever les défis à venir pour continuer à promouvoir la beauté et la diversité des textiles africains, en restant à la pointe de la conception de sites web et d'applications mobiles.".
                   </p>
                   <p className="mb-3">
-                    Creepeth. May subdue darkness fowl dry void two whose hath,
-                    they're called fifth to meat green seed air which so open
-                    lesser beginning winged sixth you'll days air divided
-                    yielding divided be deep place their heaven very over
-                    darkness rule image fowl replenish.
+                  Notre passion pour les textiles africains authentiques nous pousse à concevoir des produits uniques qui célèbrent la richesse culturelle du continen
                   </p>
                   <img className="w-100 mt-100" src={AboutContect} alt="" />
                 </Col>
@@ -183,64 +178,12 @@ const Main = () => {
                   </div>
 
                   <p className="pt-3 mt-100 mb-0">
-                    Evening saw there were bring. Spirit can't replenish from.
-                    Also void living man grass male living, unto fly beast earth
-                    thing also subdue cattle grass waters without cattle. His
-                    them seasons. Living winged give very given first is. Life
-                    saw it saying waters very fly. Fly dry had fill grass Two
-                    his saying.
+                  Tout comme un oiseau prend son envol, nous donnons vie à nos produits avec énergie et enthousiasme. Chaque saison est une opportunité pour nous de vous offrir des textiles uniques et inspirants. Notre objectif est de donner des ailes à la mode africaine, en comblant le vide de l'innovation et en créant des pièces exceptionnelles.
                   </p>
                 </Col>
               </Row>
               <hr className="mt-160 pb-8" />
-              <div className="mb-n7">
-                <Row className="gv-2 justify-content-around text-center">
-                  <Col sm={6} className="col-md-auto">
-                    <div
-                      className="number-box"
-                      data-show-duration="500"
-                      data-show-distance="15"
-                      data-show-delay="50"
-                    >
-                      <div className="number-box-title h1">106</div>
-                      <div className="number-box-subtitle">projects</div>
-                    </div>
-                  </Col>
-                  <Col sm={6} className="col-md-auto">
-                    <div
-                      className="number-box"
-                      data-show-duration="500"
-                      data-show-distance="15"
-                      data-show-delay="150"
-                    >
-                      <div className="number-box-title h1">12</div>
-                      <div className="number-box-subtitle">years</div>
-                    </div>
-                  </Col>
-                  <Col sm={6} className="col-md-auto">
-                    <div
-                      className="number-box"
-                      data-show-duration="500"
-                      data-show-distance="15"
-                      data-show-delay="250"
-                    >
-                      <div className="number-box-title h1">76</div>
-                      <div className="number-box-subtitle">feedbacks</div>
-                    </div>
-                  </Col>
-                  <Col sm={6} className="col-md-auto">
-                    <div
-                      className="number-box"
-                      data-show-duration="500"
-                      data-show-distance="15"
-                      data-show-delay="350"
-                    >
-                      <div className="number-box-title h1">9</div>
-                      <div className="number-box-subtitle">awards</div>
-                    </div>
-                  </Col>
-                </Row>
-              </div>
+              
             </Col>
           </Row>
         </Container>

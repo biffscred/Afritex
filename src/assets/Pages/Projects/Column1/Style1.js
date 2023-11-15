@@ -95,7 +95,7 @@ const Style1 = () => {
                   toggleVertical("all");
                 }}
               >
-                <div className="nav-link-name">all projects</div>
+                <div className="nav-link-name">Tous les produits </div>
               </NavLink>
             </NavItem>
             <NavItem>
@@ -107,7 +107,7 @@ const Style1 = () => {
                   toggleVertical("branding");
                 }}
               >
-                <div className="nav-link-name">branding</div>
+                <div className="nav-link-name">Vètements</div>
               </NavLink>
             </NavItem>
             <li className="nav-item" data-aos="fade-up">
@@ -119,7 +119,7 @@ const Style1 = () => {
                   setFilter("design");
                 }}
               >
-                <div className="nav-link-name">design</div>
+                <div className="nav-link-name">Tissus</div>
               </NavLink>
             </li>
             <li className="nav-item" data-aos="fade-up">
@@ -132,22 +132,10 @@ const Style1 = () => {
                   toggleVertical("photography");
                 }}
               >
-                <div className="nav-link-name">photography</div>
+                <div className="nav-link-name">Accesoires</div>
               </NavLink>
             </li>
-            <li className="nav-item" data-aos="fade-up">
-              <NavLink
-                href="#"
-                data-filter="marketing"
-                className="nav-link"
-                active={filter === "marketing"}
-                onClick={() => {
-                  toggleVertical("marketing");
-                }}
-              >
-                <div className="nav-link-name">marketing</div>
-              </NavLink>
-            </li>
+            
           </ul>
           <div className="pt-30" data-show-duration="800">
             <Row className="gv-1 isotope-grid">
