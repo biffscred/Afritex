@@ -286,7 +286,7 @@ const Navbar = ({ navClass }) => {
                       aria-controls="navbarCollapseProjects"
                       onClick={() => setNavbarCollapseProjects(!navbarCollapseProjects)}
                     >
-                      <span className="nav-link-name">projects</span>
+                      <span className="nav-link-name">Produits</span>
                       <svg
                         className="collapse-icon"
                         width="7"
@@ -317,7 +317,7 @@ const Navbar = ({ navClass }) => {
                             aria-controls="navbarCollapse1Column"
                             onClick={() => setCollapse(!collapse)}
                           >
-                            <span className="nav-link-name">1 column</span>
+                            <span className="nav-link-name">Vètements</span>
                             <svg
                               className="collapse-icon"
                               width="7"
@@ -367,7 +367,7 @@ const Navbar = ({ navClass }) => {
                             aria-controls="navbarCollapse2Column"
                             onClick={() => setCollapse1(!collapse1)}
                           >
-                            <span className="nav-link-name">2 column</span>
+                            <span className="nav-link-name">Tissus</span>
                             <svg
                               className="collapse-icon"
                               width="7"
@@ -411,30 +411,10 @@ const Navbar = ({ navClass }) => {
                                   <span className="nav-link-name">Style 3</span>
                                 </Link>
                               </li>
-                              <li className="nav-item">
-                                <Link
-                                  to="/portfolio-col-2-style-4"
-                                  className="nav-link"
-                                >
-                                  <span className="nav-link-name">Style 4</span>
-                                </Link>
-                              </li>
-                              <li className="nav-item">
-                                <Link
-                                  to="/portfolio-col-2-style-5"
-                                  className="nav-link"
-                                >
-                                  <span className="nav-link-name">Style 5</span>
-                                </Link>
-                              </li>
-                              <li className="nav-item">
-                                <Link
-                                  to="/portfolio-col-2-style-6"
-                                  className="nav-link"
-                                >
-                                  <span className="nav-link-name">Style 6</span>
-                                </Link>
-                              </li>
+                             
+                              
+                              
+                              
                             </ul>
                           </UncontrolledCollapse>
                         </li>
@@ -449,7 +429,7 @@ const Navbar = ({ navClass }) => {
                             aria-controls="navbarCollapse3Column"
                             onClick={() => setCollapse2(!collapse2)}
                           >
-                            <span className="nav-link-name">3 column</span>
+                            <span className="nav-link-name">Accesoires</span>
                             <svg
                               className="collapse-icon"
                               width="7"
@@ -493,22 +473,8 @@ const Navbar = ({ navClass }) => {
                                   <span className="nav-link-name">Style 3</span>
                                 </Link>
                               </li>
-                              <li className="nav-item">
-                                <Link
-                                  to="/portfolio-col-3-style-4"
-                                  className="nav-link"
-                                >
-                                  <span className="nav-link-name">Style 4</span>
-                                </Link>
-                              </li>
-                              <li className="nav-item">
-                                <Link
-                                  to="/portfolio-col-3-style-5"
-                                  className="nav-link"
-                                >
-                                  <span className="nav-link-name">Style 5</span>
-                                </Link>
-                              </li>
+                             
+                            
                             </ul>
                           </UncontrolledCollapse>
                         </li>
@@ -674,7 +640,7 @@ const Navbar = ({ navClass }) => {
                       aria-controls="navbarCollapsePages"
                       onClick={() => setNavbarCollapsePages(!navbarCollapsePages)}
                     >
-                      <span className="nav-link-name">pages</span>
+                      <span className="nav-link-name">Connexion</span>
                       <svg
                         className="collapse-icon"
                         width="7"
@@ -705,7 +671,7 @@ const Navbar = ({ navClass }) => {
                             aria-controls="navbarCollapseAboutUs"
                             onClick={() => setCollapse5(!collapse5)}
                           >
-                            <span className="nav-link-name">About Us</span>
+                            <span className="nav-link-name">A Propos </span>
                             <svg
                               className="collapse-icon"
                               width="7"
@@ -732,19 +698,9 @@ const Navbar = ({ navClass }) => {
                                   </span>
                                 </Link>
                               </li>
+                              
                               <li className="nav-item">
-                                <Link to="/about-us-2" className="nav-link">
-                                  <span className="nav-link-name">
-                                    About Us 2
-                                  </span>
-                                </Link>
-                              </li>
-                              <li className="nav-item">
-                                <Link to="/about-me" className="nav-link">
-                                  <span className="nav-link-name">
-                                    About Me
-                                  </span>
-                                </Link>
+                               
                               </li>
                             </ul>
                           </UncontrolledCollapse>

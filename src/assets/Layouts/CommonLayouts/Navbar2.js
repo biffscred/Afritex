@@ -292,7 +292,7 @@ const Navbar = ({ navClass }) => {
             </li>
             <li className="nav-item navbar-dropdown">
               <Link to="/portfolio-col-1-style-1" className="nav-link">
-                <span className="nav-link-name">projects</span>
+                <span className="nav-link-name">Produits</span>
                 <svg
                   width="6"
                   height="10"

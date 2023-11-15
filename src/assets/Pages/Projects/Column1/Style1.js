@@ -11,7 +11,7 @@ import Footer from "../../../Layouts/CommonLayouts/Footer2";
 
 const Style1 = () => {
   //meta title
-  document.title = "Themebau | An Award-winning digital Studio";
+  document.title = "Afritex | L'avenir du savoir faire";
   const [filter, setFilter] = useState();
   const [projects, setProjects] = useState([]);
 

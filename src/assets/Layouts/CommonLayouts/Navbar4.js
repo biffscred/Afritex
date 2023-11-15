@@ -180,7 +180,7 @@ const Navbar = ({ navClass, styleClass }) => {
                           aria-controls="navbarCollapseHome"
                           onClick={() => setNavbarCollapseHome(!navbarCollapseHome)}
                         >
-                          <span className="nav-link-name">home</span>
+                          <span className="nav-link-name">Accueil</span>
                           <svg
                             className="collapse-icon"
                             width="7"

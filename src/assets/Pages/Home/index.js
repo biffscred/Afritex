@@ -3,10 +3,10 @@ import Navbar from "../../Layouts/CommonLayouts/Navbar1";
 
 import Slider from "./Slider";
 import WhoWeAre from "./WhoWeAre";
-import FeaturedWork from "./FeaturedWork";
-import WorkProcess from "./WorkProcess";
-import Service from "./Service";
-import OurClients from "./OurClients";
+// import FeaturedWork from "./FeaturedWork";
+// import WorkProcess from "./WorkProcess";
+// import Service from "./Service";
+// import OurClients from "./OurClients";
 import Footer from "../../Layouts/CommonLayouts/Footer2";
 
 const Home = () => {
@@ -18,10 +18,10 @@ const Home = () => {
       <Slider />
       <div className="content-wrap" id="content-wrap">
         <WhoWeAre />
-        <FeaturedWork />
+        {/* <FeaturedWork />
         <WorkProcess />
         <Service />
-        <OurClients />
+        <OurClients /> */}
       </div>
       <Footer />
     </React.Fragment>
