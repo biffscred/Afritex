@@ -640,7 +640,7 @@ const Navbar = ({ navClass }) => {
                       aria-controls="navbarCollapsePages"
                       onClick={() => setNavbarCollapsePages(!navbarCollapsePages)}
                     >
-                      <span className="nav-link-name">Connexion</span>
+                      <span className="nav-link-name">Utilisateur</span>
                       <svg
                         className="collapse-icon"
                         width="7"

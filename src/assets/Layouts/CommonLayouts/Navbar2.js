@@ -623,7 +623,7 @@ const Navbar = ({ navClass }) => {
             </li>
             <li className="nav-item navbar-dropdown">
               <Link to="/about-us" className="nav-link">
-                <span className="nav-link-name">pages</span>
+                <span className="nav-link-name">Utilisateur</span>
                 <svg
                   width="6"
                   height="10"

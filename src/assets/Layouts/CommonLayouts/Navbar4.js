@@ -200,89 +200,7 @@ const Navbar = ({ navClass, styleClass }) => {
                         </Link>
                         <UncontrolledCollapse toggler="#navbarCollapseHome" className="navbar-collapse-menu">
                           <ul className="nav navbar-nav">
-                            <li className="nav-item">
-                              <Link to="/home" className="nav-link">
-                                <span className="nav-link-name">main home</span>
-                              </Link>
-                            </li>
-                            <li className="nav-item">
-                              <Link to="/simple-portfolio" className="nav-link">
-                                <span className="nav-link-name">
-                                  simple portofolio
-                                </span>
-                              </Link>
-                            </li>
-                            <li className="nav-item">
-                              <Link to="/creative-agency" className="nav-link">
-                                <span className="nav-link-name">
-                                  creative agency
-                                </span>
-                              </Link>
-                            </li>
-                            <li className="nav-item">
-                              <Link
-                                to="/freelancer-portfolio"
-                                className="nav-link"
-                              >
-                                <span className="nav-link-name">
-                                  freelancer portfolio
-                                </span>
-                              </Link>
-                            </li>
-                            <li className="nav-item">
-                              <Link
-                                to="/interactive-links-dark"
-                                className="nav-link"
-                              >
-                                <span className="nav-link-name">
-                                  interactive dark
-                                </span>
-                              </Link>
-                            </li>
-                            <li className="nav-item">
-                              <Link
-                                to="/interactive-links-light"
-                                className="nav-link"
-                              >
-                                <span className="nav-link-name">
-                                  interactive light
-                                </span>
-                              </Link>
-                            </li>
-                            <li className="nav-item">
-                              <Link to="/left-menu" className="nav-link">
-                                <span className="nav-link-name">left menu</span>
-                              </Link>
-                            </li>
-                            <li className="nav-item">
-                              <Link to="/digital-agency" className="nav-link">
-                                <span className="nav-link-name">
-                                  digital agency
-                                </span>
-                              </Link>
-                            </li>
-                            <li className="nav-item">
-                              <Link to="/carousel-dark" className="nav-link">
-                                <span className="nav-link-name">carousel dark</span>
-                              </Link>
-                            </li>
-                            <li className="nav-item">
-                              <Link to="/carousel-light" className="nav-link">
-                                <span className="nav-link-name">
-                                  carousel light
-                                </span>
-                              </Link>
-                            </li>
-                            <li className="nav-item">
-                              <Link
-                                to="/fullscreen-showcase"
-                                className="nav-link"
-                              >
-                                <span className="nav-link-name">
-                                  fullscreen showcase
-                                </span>
-                              </Link>
-                            </li>
+                           
                           </ul>
                         </UncontrolledCollapse>
                       </li>
@@ -297,7 +215,7 @@ const Navbar = ({ navClass, styleClass }) => {
                           aria-controls="navbarCollapseProjects"
                           onClick={() => setNavbarCollapseProjects(!navbarCollapseProjects)}
                         >
-                          <span className="nav-link-name">projects</span>
+                          <span className="nav-link-name">Produits</span>
                           <svg
                             className="collapse-icon"
                             width="7"
