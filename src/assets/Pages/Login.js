@@ -1,26 +1,42 @@
 import React, { useState } from 'react';
-import '../styles/LoginForm.css'; // Assurez-vous de créer un fichier CSS avec ce nom
+import axios from 'axios';
+import { useNavigate} from 'react-router-dom'; // Ajouté pour la redirection
+import '../styles/LoginForm.css'; // Assurez-vous que le chemin vers votre fichier CSS est correct
 
 const LoginForm = () => {
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const navigate = useNavigate(); // Hook pour la redirection
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Traitement de la connexion ici
+    try {
+      const response = await axios.post('http://127.0.0.1:8000/login', {
+        email: email,
+        password: password
+      });
+      console.log('Token:', response.data.token);
+      // Stockez le token dans le localStorage ou le sessionStorage
+      localStorage.setItem('token', response.data.token);
+      // Redirection vers le tableau de bord administrateur après la connexion réussie
+      // navigate('/);
+    } catch (error) {
+      console.error('Erreur de connexion', error);
+      // Gérez les erreurs ici (par exemple, afficher un message d'erreur)
+    }
   };
 
   return (
     <div className="login-form-container">
       <form onSubmit={handleSubmit} className="login-form">
         <div className="form-group">
-          <label htmlFor="username">Nom d'utilisateur</label>
+          <label htmlFor="email">Email</label>
           <input
             type="text"
             id="username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
           />
         </div>
         <div className="form-group">
@@ -42,11 +58,14 @@ const LoginForm = () => {
             />
             <label htmlFor="rememberMe">Se souvenir de moi</label>
           </div>
+          {/* Assurez-vous que le lien mène à un composant ou une route existante pour réinitialiser le mot de passe */}
           <a href="/forgot-password" className="forgot-password">
             Mot de passe oublié ?
           </a>
         </div>
+        
         <button type="submit" className="login-button">Se connecter</button>
+      
       </form>
     </div>
   );

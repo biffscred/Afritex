@@ -155,144 +155,12 @@ const Navbar = ({ navClass }) => {
                 </svg>
               </Link>
               <div className="dropdown-menu">
-                <Container>
-                  <ul role="menu" className="navbar-nav row gh-1 gv-3">
-                    <li className="col-md-6 col-lg-3 col-xl-2">
-                      <span className="nav-item">
-                        <Link to="/home" className="nav-link">
-                          <span className="nav-link-image">
-                            <img src={MainHome} alt="" />
-                          </span>
-                          <span className="nav-link-name">Accueil</span>
-                        </Link>
-                      </span>
-                    </li>
-                    <li className="col-md-6 col-lg-3 col-xl-2">
-                      <span className="nav-item">
-                        <Link to="/simple-portfolio" className="nav-link">
-                          <span className="nav-link-image">
-                            <img src={SimplePortfolio} alt="" />
-                          </span>
-                          <span className="nav-link-name">
-                            simple portofolio
-                          </span>
-                        </Link>
-                      </span>
-                    </li>
-                    <li className="col-md-6 col-lg-3 col-xl-2">
-                      <span className="nav-item">
-                        <Link to="/creative-agency" className="nav-link">
-                          <span className="nav-link-image">
-                            <img src={CreativeAgency} alt="" />
-                          </span>
-                          <span className="nav-link-name">creative agency</span>
-                        </Link>
-                      </span>
-                    </li>
-                    <li className="col-md-6 col-lg-3 col-xl-2">
-                      <span className="nav-item">
-                        <Link
-                          to="/freelancer-portfolio"
-                          className="nav-link"
-                        >
-                          <span className="nav-link-image">
-                            <img src={FreelancerPortfolio} alt="" />
-                          </span>
-                          <span className="nav-link-name">
-                            freelancer portfolio
-                          </span>
-                        </Link>
-                      </span>
-                    </li>
-                    <li className="col-md-6 col-lg-3 col-xl-2">
-                      <span className="nav-item">
-                        <Link
-                          to="/interactive-links-dark"
-                          className="nav-link"
-                        >
-                          <span className="nav-link-image">
-                            <img src={InteractiveDark} alt="" />
-                          </span>
-                          <span className="nav-link-name">
-                            interactive dark
-                          </span>
-                        </Link>
-                      </span>
-                    </li>
-                    <li className="col-md-6 col-lg-3 col-xl-2">
-                      <span className="nav-item">
-                        <Link
-                          to="/interactive-links-light"
-                          className="nav-link"
-                        >
-                          <span className="nav-link-image">
-                            <img src={InteractiveLight} alt="" />
-                          </span>
-                          <span className="nav-link-name">
-                            interactive light
-                          </span>
-                        </Link>
-                      </span>
-                    </li>
-                    <li className="col-md-6 col-lg-3 col-xl-2">
-                      <span className="nav-item">
-                        <Link to="/left-menu" className="nav-link">
-                          <span className="nav-link-image">
-                            <img src={LeftMenu} alt="" />
-                          </span>
-                          <span className="nav-link-name">left menu</span>
-                        </Link>
-                      </span>
-                    </li>
-                    <li className="col-md-6 col-lg-3 col-xl-2">
-                      <span className="nav-item">
-                        <Link to="/digital-agency" className="nav-link">
-                          <span className="nav-link-image">
-                            <img src={DigitalAgency} alt="" />
-                          </span>
-                          <span className="nav-link-name">digital agency</span>
-                        </Link>
-                      </span>
-                    </li>
-                    <li className="col-md-6 col-lg-3 col-xl-2">
-                      <span className="nav-item">
-                        <Link to="/carousel-dark" className="nav-link">
-                          <span className="nav-link-image">
-                            <img src={CarouselDark} alt="" />
-                          </span>
-                          <span className="nav-link-name">carousel dark</span>
-                        </Link>
-                      </span>
-                    </li>
-                    <li className="col-md-6 col-lg-3 col-xl-2">
-                      <span className="nav-item">
-                        <Link to="/carousel-light" className="nav-link">
-                          <span className="nav-link-image">
-                            <img src={CarouselLight} alt="" />
-                          </span>
-                          <span className="nav-link-name">carousel light</span>
-                        </Link>
-                      </span>
-                    </li>
-                    <li className="col-md-6 col-lg-3 col-xl-2">
-                      <span className="nav-item">
-                        <Link to="/fullscreen-showcase" className="nav-link">
-                          <span className="nav-link-image">
-                            <img src={FullScreenShow} alt="" />
-                          </span>
-                          <span className="nav-link-name">
-                            fullscreen showcase
-                          </span>
-                        </Link>
-                      </span>
-                    </li>
-                  </ul>
-                </Container>
+                
               </div>
             </li>
             <li className="nav-item navbar-dropdown">
               <Link to="/portfolio-col-1-style-1" className="nav-link">
-                <span className="nav-link-name">Produits</span>
+                <span className="nav-link-name">Tissus</span>
                 <svg
                   width="6"
                   height="10"
@@ -312,8 +180,8 @@ const Navbar = ({ navClass }) => {
               <div className="dropdown-menu">
                 <ul className="nav navbar-nav">
                   <li className="nav-item navbar-dropdown">
-                    <Link to="/portfolio-col-1-style-1" className="nav-link">
-                      <span className="nav-link-name">1 column</span>
+                    <Link to="/portfolio-col-4-style-1" className="nav-link">
+                      <span className="nav-link-name">Tous les tissus</span>
                       <svg
                         width="6"
                         height="10"

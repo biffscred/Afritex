@@ -39,7 +39,7 @@ const Footer = () => {
                 to="callto:+33612"
                 className="nav-link h4 mt-8 mt-md-0"
               >
-                +33612
+                (+33) 612 607 431
               </NavLink>
             </li>
           </ul>

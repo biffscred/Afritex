@@ -107,7 +107,7 @@ const Data = [
 
 const Style1 = () => {
   //meta title
-  document.title = "Themebau | An Award-winning digital Studio";
+  document.title = "Afritex | Tissus";
 
   const [filter, setFilter] = useState();
   const [projects, setProjects] = useState([]);
@@ -134,7 +134,7 @@ const Style1 = () => {
       <div className="content-wrap" id="content-wrap">
         <Container className="isotope">
           <h1 className="mt-160 py-10 mb-100 text-center" data-aos="fade-up">
-            Our projects
+            Nos tissus
           </h1>
           <ul
             className="nav justify-content-center isotope-options mb-60"
@@ -148,7 +148,7 @@ const Style1 = () => {
                 data-filter="all"
                 className="nav-link"
               >
-                <div className="nav-link-name">all projects</div>
+                <div className="nav-link-name">Tous les tissus</div>
               </NavLink>
             </li>
             <li className="nav-item" data-aos="fade">

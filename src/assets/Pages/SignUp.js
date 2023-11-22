@@ -1,53 +1,91 @@
 import React, { useState } from 'react';
-import '../styles/SignUpForm.css'; // Assurez-vous de créer un fichier CSS avec ce nom
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faGoogle, faFacebookF, faInstagram } from '@fortawesome/free-brands-svg-icons';
+import axios from 'axios';
+
+// import ReCAPTCHA from "react-google-recaptcha";
+import '../styles/SignUpForm.css';
+
 const SignUpForm = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [isVerified, setIsVerified] = useState(false);
+    const [rgpdConsent, setRgpdConsent] = useState(false);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    // Traitement de l'inscription ici
-  };
+    // const handleCaptcha = (value) => {
+    //     console.log("Captcha value:", value);
+    //     setIsVerified(true);
+    // };
 
-  return (
-    <div className="signup-form-container">
-      <form onSubmit={handleSubmit} className="signup-form">
-        <div className="form-group">
-          <label htmlFor="email">Email</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+    
+
+    
+    
+
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+
+        // if (!isVerified) {
+        //     alert('Veuillez valider le CAPTCHA');
+        //     return;
+        // }
+
+        if (!rgpdConsent) {
+            alert('Veuillez accepter les termes et conditions RGPD');
+            return;
+        }
+
+        try {
+            const response = await axios.post('http://127.0.0.1:8000/SignUp', {
+                email,
+                password
+            });
+            console.log('Réponse:', response.data);
+            // Traitez la réponse, par exemple redirigez vers la page de connexion ou affichez un message de succès
+        } catch (error) {
+            console.error("Erreur lors de l'inscription", error);
+            // Gérez les erreurs d'inscription ici
+        }
+    };
+
+    return (
+        <div className="signup-form-container">
+            <form onSubmit={handleSubmit} className="signup-form">
+                <div className="form-group">
+                    <label htmlFor="email">Email</label>
+                    <input
+                        type="email"
+                        id="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
+                    />
+                </div>
+                <div className="form-group">
+                    <label htmlFor="password">Mot de passe</label>
+                    <input
+                        type="password"
+                        id="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </div>
+               
+                {/* <ReCAPTCHA
+                    sitekey="YOUR_RECAPTCHA_SITE_KEY"
+                    onChange={handleCaptcha}
+                /> */}
+                <div className="form-group">
+                    <input 
+                        type="checkbox" 
+                        id="rgpdConsent" 
+                        checked={rgpdConsent} 
+                        onChange={(e) => setRgpdConsent(e.target.checked)} 
+                    />
+                    <label htmlFor="rgpdConsent">J'accepte les termes et conditions RGPD</label>
+                </div>
+                <button type="submit" className="signup-button">S'inscrire</button>
+            </form>
         </div>
-        <div className="form-group">
-          <label htmlFor="password">Mot de passe</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-          />
-        </div>
-        <button type="submit" className="signup-button">S'inscrire</button>
-        <div className="social-login">
-          <p>Ou inscrivez-vous avec</p>
-          <button type="button" className="google-button">
-  <FontAwesomeIcon icon={faGoogle} />
-</button>
-<button type="button" className="facebook-button">
-  <FontAwesomeIcon icon={faFacebookF} />
-</button>
-<button type="button" className="instagram-button">
-  <FontAwesomeIcon icon={faInstagram} />
-</button>
-        </div>
-      </form>
-    </div>
-  );
+    );
 };
 
 export default SignUpForm;
+

@@ -57,6 +57,7 @@ import CarouselLight from "../Pages/CarouselLight";
 import FullScreenShowcase from "../Pages/FullScreenShowcase";
 import LoginForm from "../Pages/Login";
 import SignUpForm from "../Pages/SignUp";
+import AdminDashboard from "../Pages/Admin";
 
 const routes = [
   { path: "/", element: <Index /> },
@@ -118,6 +119,7 @@ const routes = [
   { path: "/contact2", element: <Contact2 /> },
   { path: "/login", element: <LoginForm /> },
   { path: "/SignUp", element: <SignUpForm /> },
+  { path: "/admin", element: <AdminDashboard /> },
 ];
 
 export default routes;

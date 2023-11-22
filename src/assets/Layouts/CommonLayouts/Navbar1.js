@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import { Col, Container, Row, UncontrolledCollapse } from "reactstrap";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "../../../assets/images/logo.png";
-import LoginForm from "../../Pages/Login";
+
 //Images
 
 import navManu from "./data";
@@ -45,6 +45,14 @@ const Navbar = () => {
       }
     });
   }, []);
+
+ // Fonction pour vérifier si un utilisateur est connecté (simplifié pour le moment)
+ const isUserLoggedIn = () => {
+  const token = localStorage.getItem('token');
+  return !!token; // Retourne true si un token est présent, sinon false
+};
+
+const userIsLoggedIn = isUserLoggedIn();
 
   const toggleMenu = () => {
     document.body.style.overflow = "hidden";
@@ -156,24 +164,7 @@ const Navbar = () => {
                   />
                 </svg>
               </Link>
-              <div className="dropdown-menu">
-                <Container>
-                  <ul role="menu" className="navbar-nav row gh-1 gv-3">
-                    {navManu.map((item, key) => (
-                      <li className="col-md-6 col-lg-3 col-xl-2" key={key}>
-                        <span className="nav-item">
-                          <Link to={item.path} className="nav-link">
-                            <span className="nav-link-image">
-                              <img src={item.img} alt="" />
-                            </span>
-                            <span className="nav-link-name">{item.lable}</span>
-                          </Link>
-                        </span>
-                      </li>
-                    ))}
-                  </ul>
-                </Container>
-              </div>
+              
             </li>
             <li className="nav-item navbar-dropdown">
               <Link to="/portfolio-col-1-style-1" className="nav-link">
@@ -197,7 +188,7 @@ const Navbar = () => {
               <div className="dropdown-menu">
                 <ul className="nav navbar-nav">
                   <li className="nav-item navbar-dropdown">
-                    <Link to="/portfolio-col-1-style-1" className="nav-link">
+                    <Link to="/portfolio-col-4-style-1" className="nav-link">
                       <span className="nav-link-name">Tissus</span>
                       <svg
                         width="6"
@@ -332,56 +323,11 @@ const Navbar = () => {
                     </div>
                   </li>
                   <li className="nav-item navbar-dropdown">
-                    <Link
-                      to="/portfolio-single-style-1"
-                      className="nav-link"
-                    >
-                      <span className="nav-link-name">Single Works</span>
-                      <svg
-                        width="6"
-                        height="10"
-                        viewBox="0 0 6 10"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M1 9L5 5L1 1"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </Link>
+                    
                     <div className="dropdown-menu">
                       <ul className="nav navbar-nav">
-                        <li className="nav-item">
-                          <Link
-                            to="/portfolio-single-style-1"
-                            className="nav-link"
-                          >
-                            <span className="nav-link-name">Style 1</span>
-                          </Link>
-                        </li>
-                        <li className="nav-item">
-                          <Link
-                            to="/portfolio-single-style-2"
-                            className="nav-link"
-                          >
-                            <span className="nav-link-name">Style 2</span>
-                          </Link>
-                        </li>
-                        <li className="nav-item">
-                          <Link
-                            to="/portfolio-single-style-3"
-                            className="nav-link"
-                          >
-                            
-                           
-                            
-
-                          </Link>
-                        </li>
+                       
+                       
                       </ul>
                     </div>
                   </li>
@@ -431,10 +377,20 @@ const Navbar = () => {
                     
                   </li>
                 
-              n
+              
                 </ul>
               </div>
             </li>
+             {/* Lien Admin Dashboard (visible pour tout utilisateur connecté) */}
+          {userIsLoggedIn && (
+            <ul className="nav navbar-nav order-2">
+              <li className="nav-item">
+                <Link to="/admin" className="nav-link">
+                  <span className="nav-link-name">Admin Dashboard</span>
+                </Link>
+              </li>
+            </ul>
+          )}
             <li className="nav-item navbar-dropdown">
               <Link to="/contact2" className="nav-link">
                 <span className="nav-link-name">Contact</span>

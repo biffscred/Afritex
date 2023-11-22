@@ -60,8 +60,8 @@ const Footer = () => {
             <Col lg={3}>
               <ul className="nav flex-column text-white">
                 <li className="nav-item">
-                  <NavLink to="callto:+33612" className="nav-link">
-                   +33612
+                  <NavLink to="callto:(+33) 612 607 431S" className="nav-link">
+                  (+33) 612 607 431
                   </NavLink>
                 </li>
                 <li className="nav-item">
@@ -208,7 +208,7 @@ const Footer = () => {
             </Col>
             <Col className="col-auto">
               <div className="footer-copyright">
-                © 2020-2023 | Themebau by RunWebRun.
+                © 2019-2023 | Afritex.
               </div>
             </Col>
           </Row>
