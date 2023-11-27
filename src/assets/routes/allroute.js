@@ -58,7 +58,10 @@ import FullScreenShowcase from "../Pages/FullScreenShowcase";
 import LoginForm from "../Pages/Login";
 import SignUpForm from "../Pages/SignUp";
 import AdminDashboard from "../Pages/Admin";
-
+import Profile from "../Pages/Profile";
+import OrderHistory from "../Pages/Order-History";
+import Settings from "../Pages/Settings";
+import Cart from "../Pages/Cart";
 const routes = [
   { path: "/", element: <Index /> },
   { path: "/home", element: <Home /> },
@@ -120,6 +123,10 @@ const routes = [
   { path: "/login", element: <LoginForm /> },
   { path: "/SignUp", element: <SignUpForm /> },
   { path: "/admin", element: <AdminDashboard /> },
+  { path: "/Profile", element: <Profile /> },
+  { path: "/Order-History", element: <OrderHistory/> },
+  { path: "/Settings", element: <Settings /> },
+  { path: "/Cart", element: <Cart /> },
 ];
 
 export default routes;

@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState,useContext } from "react";
 import { Col, Container, Row, UncontrolledCollapse } from "reactstrap";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "../../../assets/images/logo.png";
+import { AuthContext } from '../../Pages/AuthContext';
 
 //Images
 
@@ -10,6 +11,12 @@ import navManu from "./data";
 const Navbar = () => {
   const [isClick, setIsClick] = useState(false);
   const location = useLocation();
+  const { isLoggedIn, userRole,logout } = useContext(AuthContext);
+  const handleLogout = () => {
+    logout();
+    // Redirection optionnelle vers la page d'accueil
+    // navigate('/home');
+  };
   const [navbarCollapseHome, setNavbarCollapseHome] = useState(false);
   const [navbarCollapseProjects, setNavbarCollapseProjects] = useState(false);
   const [navbarCollapseContact, setNavbarCollapseContact] = useState(false);
@@ -355,42 +362,61 @@ const userIsLoggedIn = isUserLoggedIn();
               </Link>
               <div className="dropdown-menu">
                 <ul className="nav navbar-nav">
-                  <li className="nav-item navbar-dropdown">
-                    <Link to="/login" className="nav-link">
-                      <span className="nav-link-name">Se connecter  </span>
-                      
-                    </Link>
-                    <div className="dropdown-menu">
-                      <ul className="nav navbar-nav">
-                       
-                        
-                      </ul>
-                    </div>
-                  </li>
-                  <li className="nav-item navbar-dropdown">
-                    <Link to="/SignUp" className="nav-link">
-                      <span className="nav-link-name">S'inscrire</span>
-                      
-                    </Link>
-                
-                  
-                    
-                  </li>
-                
+                {!isLoggedIn && (
+  <>
+    <li className="nav-item navbar-dropdown">
+      <Link to="/login" className="nav-link">
+        <span className="nav-link-name">Se connecter</span>
+      </Link>
+    </li>
+    <li className="nav-item navbar-dropdown">
+      <Link to="/SignUp" className="nav-link">
+        <span className="nav-link-name">S'inscrire</span>
+      </Link>
+    </li>
+  </>
+)}
+
+{isLoggedIn && (
+  <>
+    <li className="nav-item navbar-dropdown">
+      <Link to="/profile" className="nav-link">
+        <span className="nav-link-name">Mon Profil</span>
+      </Link>
+    </li>
+    <li className="nav-item navbar-dropdown">
+      <Link to="/order-history" className="nav-link">
+        <span className="nav-link-name">Historique des Commandes</span>
+      </Link>
+    </li>
+    <li className="nav-item navbar-dropdown">
+      <Link to="/settings" className="nav-link">
+        <span className="nav-link-name">Paramètres</span>
+      </Link>
+    </li>
+    <li className="nav-item navbar-dropdown">
+    <button onClick={handleLogout} className="nav-link">
+        <span className="nav-link-name">Se Déconnecter</span>
+        </button>
+      
+    </li>
+  </>
+)}
+
               
                 </ul>
               </div>
             </li>
              {/* Lien Admin Dashboard (visible pour tout utilisateur connecté) */}
-          {userIsLoggedIn && (
-            <ul className="nav navbar-nav order-2">
-              <li className="nav-item">
-                <Link to="/admin" className="nav-link">
-                  <span className="nav-link-name">Admin Dashboard</span>
-                </Link>
-              </li>
-            </ul>
-          )}
+             {isLoggedIn && userRole === 'admin' && (
+      <ul className="nav navbar-nav order-2">
+        <li className="nav-item">
+          <Link to="/admin" className="nav-link">
+            <span className="nav-link-name">Admin Dashboard</span>
+          </Link>
+        </li>
+      </ul>
+    )}
             <li className="nav-item navbar-dropdown">
               <Link to="/contact2" className="nav-link">
                 <span className="nav-link-name">Contact</span>
@@ -427,22 +453,15 @@ const userIsLoggedIn = isUserLoggedIn();
               </div>
             </li>
           </ul>
-          <a
-            className="d-none d-sm-inline-block btn btn-white btn-with-ball ms-auto me-40 ms-lg-60 me-lg-0 order-2 order-lg-3"
-            href="https://themes.getbootstrap.com/product/themebau/"
-            id="btn-purchase"
-          >
-            {" "}
-            Panier{" "}
-            <span className="btn-ball" style={{ transform: "translateY(0px)" }} id="btn-ball"></span>
-          </a>
-          <a
-            className="btn btn-white btn-link btn-clean d-sm-none order-2 ms-auto me-40 ms-lg-60 me-lg-0 text-decoration-none"
-            href="https://themes.getbootstrap.com/product/themebau/"
-          >
-            {" "}
-            Panier{" "}
-          </a>
+          <Link
+  className="d-none d-sm-inline-block btn btn-white btn-with-ball ms-auto me-40 ms-lg-60 me-lg-0 order-2 order-lg-3"
+  to="/" // Remplacez '/panier' par le chemin de votre page de panier
+  id="btn-purchase"
+>
+  Panier
+  <span className="btn-ball" style={{ transform: "translateY(0px)" }} id="btn-ball"></span>
+</Link>
+
         </Container>
       </header>
       <div
@@ -804,7 +823,7 @@ const userIsLoggedIn = isUserLoggedIn();
                       aria-controls="navbarCollapsePages"
                       onClick={() => setNavbarCollapsePages(!navbarCollapsePages)}
                     >
-                      <span className="nav-link-name">Tissus</span>
+                      <span className="nav-link-name">Utilisateur</span>
                       <svg
                         className="collapse-icon"
                         width="7"
@@ -824,107 +843,38 @@ const userIsLoggedIn = isUserLoggedIn();
                     </Link>
                     <UncontrolledCollapse toggler="#navbarCollapsePages" className="navbar-collapse-menu">
                       <ul className="nav navbar-nav">
+                        
                         <li className="nav-item navbar-collapse ">
                           <Link
-                            to="#navbarCollapseAboutUs"
+                            to="/login"
                             id="navbarCollapseAboutUs"
                             className="nav-link collapsed"
                             role="button"
                             data-bs-toggle="collapse"
                             aria-expanded={collapse5}
                             aria-controls="navbarCollapseAboutUs"
-                            onClick={() => setCollapse5(!collapse5)}
+                            // onClick={() => setCollapse5(!collapse5)}
                           >
-                            <span className="nav-link-name">About Us</span>
-                            <svg
-                              className="collapse-icon"
-                              width="7"
-                              height="12"
-                              viewBox="0 0 7 12"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M1 11L6 6L1 1"
-                                stroke="currentColor"
-                                strokeWidth="1.5"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                            </svg>
+                            <span className="nav-link-name">Se Connecter</span>
+                           
                           </Link>
-                          <UncontrolledCollapse toggler="#navbarCollapseAboutUs" className="navbar-collapse-menu">
-                            <ul className="nav navbar-nav">
-                              <li className="nav-item ">
-                                <Link to="/about-us" className="nav-link">
-                                  <span className="nav-link-name">
-                                    A propos
-                                  </span>
-                                </Link>
-                              </li>
-                              <li className="nav-item">
-                                <Link to="/about-us-2" className="nav-link">
-                                  
-                                </Link>
-                              </li>
-                              <li className="nav-item">
-                                <Link to="/about-me" className="nav-link">
-                                 
-                                </Link>
-                              </li>
-                            </ul>
-                          </UncontrolledCollapse>
+                        
                         </li>
                         <li className="nav-item navbar-collapse">
                           <Link
-                            to="#navbarCollapseServices"
-                            id="navbarCollapseServices"
+                            to="/SignUp"
+                            id="Inscription"
                             className="nav-link collapsed"
                             role="button"
                             data-bs-toggle="collapse"
                             aria-expanded={collapse6}
                             aria-controls="navbarCollapseServices"
-                            onClick={() => setCollapse6(!collapse6)}
+                            // onClick={() => setCollapse6(!collapse6)}
                           >
                             <span className="nav-link-name">S'inscrire</span>
-                            <svg
-                              className="collapse-icon"
-                              width="7"
-                              height="12"
-                              viewBox="0 0 7 12"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M1 11L6 6L1 1"
-                                stroke="currentColor"
-                                strokeWidth="1.5"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                            </svg>
+                            
                           </Link>
-                          <UncontrolledCollapse toggler="#navbarCollapseServices" className="navbar-collapse-menu">
-                            <ul className="nav navbar-nav">
-                              <li className="nav-item">
-                                <Link to="/services" className="nav-link">
-                                  <span className="nav-link-name">
-                                    Services
-                                  </span>
-                                </Link>
-                              </li>
-                              <li className="nav-item">
-                                <Link
-                                  to="/single-service"
-                                  className="nav-link"
-                                >
-                                  <span className="nav-link-name">
-                                    Single Service
-                                  </span>
-                                </Link>
-                              </li>
-                            </ul>
-                          </UncontrolledCollapse>
+                          
                         </li>
                         <li className="nav-item navbar-collapse">
                           <Link
@@ -935,54 +885,43 @@ const userIsLoggedIn = isUserLoggedIn();
                             data-bs-toggle="collapse"
                             aria-expanded={collapse7}
                             aria-controls="navbarCollapseBlog"
-                            onClick={() => setCollapse7(!collapse7)}
+                            // onClick={() => setCollapse7(!collapse7)}
                           >
-                            <span className="nav-link-name">Blog</span>
-                            <svg
-                              className="collapse-icon"
-                              width="7"
-                              height="12"
-                              viewBox="0 0 7 12"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M1 11L6 6L1 1"
-                                stroke="currentColor"
-                                strokeWidth="1.5"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                            </svg>
+                            
                           </Link>
-                          <UncontrolledCollapse toggler="#navbarCollapseBlog" className="navbar-collapse-menu">
-                            <ul className="nav navbar-nav">
-                              <li className="nav-item">
-                                <Link to="/blog3" className="nav-link">
-                                  <span className="nav-link-name">
-                                    3 column
-                                  </span>
-                                </Link>
-                              </li>
-                              <li className="nav-item">
-                              
-                              </li>
-                              <li className="nav-item">
-                                <Link to="/singlepost" className="nav-link">
-                                  <span className="nav-link-name">
-                                    Single Post
-                                  </span>
-                                </Link>
-                              </li>
-                            </ul>
-                          </UncontrolledCollapse>
+                          
+
                         </li>
                         
+                        {isLoggedIn && (
+  <>
+    <li className="nav-item navbar-dropdown">
+      <Link to="/profile" className="nav-link">
+        <span className="nav-link-name">Mon Profil</span>
+      </Link>
+    </li>
+    <li className="nav-item navbar-dropdown">
+      <Link to="/order-history" className="nav-link">
+        <span className="nav-link-name">Historique des Commandes</span>
+      </Link>
+    </li>
+    <li className="nav-item navbar-dropdown">
+      <Link to="/settings" className="nav-link">
+        <span className="nav-link-name">Paramètres</span>
+      </Link>
+    </li>
+    <li className="nav-item navbar-dropdown">
+      <Link to="/home" className="nav-link">
+        <span className="nav-link-name">Se Déconnecter</span>
+      </Link>
+    </li>
+  </>
+)}
                        
-                      </ul>
-                    </UncontrolledCollapse>
-                  </li>
-                  <li className="nav-item navbar-collapse">
+    </ul>
+       </UncontrolledCollapse>
+         </li>
+             <li className="nav-item navbar-collapse">
                     <Link
                       to="#navbarCollapseContact"
                       id="navbarCollapseContact"
@@ -1034,7 +973,7 @@ const userIsLoggedIn = isUserLoggedIn();
                     <li className="list-group-item">
                       Email:{" "}
                       <Link
-                        to="/mailto:hello@themebau.com?subject=Test%20Address%20Email"
+                        to="/mailto:contactafritex@gmail.com"
                         className="text-decoration-none text-white"
                       >
                        contactafritex@gmail.com
@@ -1043,10 +982,10 @@ const userIsLoggedIn = isUserLoggedIn();
                     <li className="list-group-item">
                       Phone:{" "}
                       <Link
-                        to="/callto:+33612"
+                        to="/callto: (+33)6 12 607 431"
                         className="text-decoration-none text-white"
                       >
-                        +33612
+                         (+33)6 12 607 431
                       </Link>
                     </li>
                   </ul>

@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState,useContext } from 'react';
 import axios from 'axios';
 import { useNavigate} from 'react-router-dom'; // Ajouté pour la redirection
 import '../styles/LoginForm.css'; // Assurez-vous que le chemin vers votre fichier CSS est correct
-
+import { AuthContext } from './AuthContext';
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate(); // Hook pour la redirection
+  const { login } = useContext(AuthContext); // Accéder à la fonction login de AuthContext
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -19,8 +20,9 @@ const LoginForm = () => {
       console.log('Token:', response.data.token);
       // Stockez le token dans le localStorage ou le sessionStorage
       localStorage.setItem('token', response.data.token);
-      // Redirection vers le tableau de bord administrateur après la connexion réussie
-      // navigate('/);
+     // Redirection vers la page d'accueil après la connexion réussie
+     login(); // Mettre à jour l'état de connexion
+     navigate('/'); // Redirige vers la page d'accueil
     } catch (error) {
       console.error('Erreur de connexion', error);
       // Gérez les erreurs ici (par exemple, afficher un message d'erreur)
