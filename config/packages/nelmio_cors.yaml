@@ -1,13 +1,15 @@
 nelmio_cors:
     defaults:
         origin_regex: true
-        allow_origin: ['*']
+        allow_origin: ['http://localhost:3000']
         allow_methods: ['GET', 'OPTIONS', 'POST', 'PUT', 'PATCH', 'DELETE']
-        allow_headers: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin']
+        allow_headers: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin','Access-Control-Request-Headers','Access-Control-Request-Method' ,'bearer','Content-Length','Accept-Encoding','X-CSRF-Token']
         max_age: 3600
+        hosts: []
     paths:
         '^/':
-            allow_origin: ['*']
+            allow_origin: ['http://localhost:3000']
             allow_headers: ['Content-Type', 'Authorization', 'X-Requested-With', 'Accept', 'Origin']
             allow_methods: ['POST', 'PUT', 'GET', 'DELETE', 'OPTIONS']
             max_age: 3600
+            hosts: []

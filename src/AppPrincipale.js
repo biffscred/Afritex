@@ -9,6 +9,7 @@ import "./assets/scss/themebau.scss";
 import { AuthProvider } from './assets/Pages/AuthContext'; 
 import {CartProvider } from "./assets/Pages/CartContext";
 import { ProductProvider } from "./assets/Pages/ProductContext";
+import { UserProvider } from "./assets/Pages/UserContext";
 function App() {
   useEffect(() => {
     AOS.init({
@@ -17,15 +18,18 @@ function App() {
     AOS.refresh();
   });
   return (
-    <React.Fragment>
+<React.Fragment>
   <AuthProvider>
-    <CartProvider>
-      <ProductProvider>
-        <Index />
-      </ProductProvider>
-    </CartProvider>
+    <UserProvider> 
+      <CartProvider>
+        <ProductProvider>
+          <Index />
+        </ProductProvider>
+      </CartProvider>
+    </UserProvider>
   </AuthProvider>
 </React.Fragment>
+
 
   );
 }

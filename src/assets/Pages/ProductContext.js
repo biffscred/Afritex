@@ -9,7 +9,7 @@ export const ProductProvider = ({ children }) => {
 
     const loadProducts = async () => {
         try {
-            const response = await axios.get('http://127.0.0.1:8000/product');
+            const response = await axios.get('https://127.0.0.1:8000/product');
             setProducts(response.data);
         } catch (error) {
             console.error('Erreur lors de la récupération des produits', error);

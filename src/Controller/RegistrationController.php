@@ -42,16 +42,16 @@ class RegistrationController extends AbstractController
         $entityManager->flush();
 
         // Envoi de l'email de confirmation
-        // Commenté pour empêcher l'envoi d'email
-        /*
-        $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-            (new TemplatedEmail())
-                ->from(new Address('contact@gmail.com', 'Afritex'))
-                ->to($user->getEmail())
-                ->subject('Veuillez confirmez votre email')
-                ->htmlTemplate('registration/confirmation_email.html.twig')
-        );
-        */
+
+        
+        // $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+        //     (new TemplatedEmail())
+        //         ->from(new Address('contactafritex@gmail.com', 'Afritex'))
+        //         ->to($user->getEmail())
+        //         ->subject('Veuillez confirmez votre email')
+        //         ->htmlTemplate('registration/confirmation_email.html.twig')
+        // );
+        
 
         return $this->json(['message' => 'Utilisateur créé avec succès']);
     }

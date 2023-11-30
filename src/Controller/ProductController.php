@@ -21,16 +21,10 @@ class ProductController extends AbstractController
     public function index(ProductRepository $productRepository, SerializerInterface $serializer): JsonResponse
     {
         $products = $productRepository->findAll();
-        $context = [
-            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
-                return $object->getId();
-            },
-        ];
+        $context = [AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => fn($object) => $object->getId()];
         $json = $serializer->serialize($products, 'json', $context);
 
-        $response = new JsonResponse($json, 200, [], true);
-        $response->headers->set('Access-Control-Allow-Origin', '*');
-        return $response;
+        return new JsonResponse($json, 200, [], true);
     }
 
     #[Route('/new', name: 'app_product_new', methods: ['POST'])]
@@ -44,9 +38,7 @@ class ProductController extends AbstractController
             $entityManager->persist($product);
             $entityManager->flush();
 
-            $response = new JsonResponse($serializer->serialize($product, 'json'), Response::HTTP_CREATED, [], true);
-            $response->headers->set('Access-Control-Allow-Origin', '*');
-            return $response;
+            return new JsonResponse($serializer->serialize($product, 'json'), Response::HTTP_CREATED, [], true);
         }
 
         return new JsonResponse(['error' => 'Invalid data'], Response::HTTP_BAD_REQUEST);
@@ -55,14 +47,8 @@ class ProductController extends AbstractController
     #[Route('/{id}', name: 'app_product_show', methods: ['GET'])]
     public function show(Product $product, SerializerInterface $serializer): JsonResponse
     {
-        $context = [
-            AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => function ($object) {
-                return $object->getId();
-            },
-        ];
-        $response = new JsonResponse($serializer->serialize($product, 'json', $context), 200, [], true);
-        $response->headers->set('Access-Control-Allow-Origin', '*');
-        return $response;
+        $context = [AbstractNormalizer::CIRCULAR_REFERENCE_HANDLER => fn($object) => $object->getId()];
+        return new JsonResponse($serializer->serialize($product, 'json', $context), 200, [], true);
     }
 
     #[Route('/{id}/edit', name: 'app_product_edit', methods: ['POST'])]
@@ -74,9 +60,7 @@ class ProductController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->flush();
 
-            $response = new JsonResponse($serializer->serialize($product, 'json'), Response::HTTP_OK, [], true);
-            $response->headers->set('Access-Control-Allow-Origin', '*');
-            return $response;
+            return new JsonResponse($serializer->serialize($product, 'json'), Response::HTTP_OK, [], true);
         }
 
         return new JsonResponse(['error' => 'Invalid data'], Response::HTTP_BAD_REQUEST);
@@ -89,9 +73,7 @@ class ProductController extends AbstractController
             $entityManager->remove($product);
             $entityManager->flush();
 
-            $response = new JsonResponse(null, Response::HTTP_NO_CONTENT);
-            $response->headers->set('Access-Control-Allow-Origin', '*');
-            return $response;
+            return new JsonResponse(null, Response::HTTP_NO_CONTENT);
         }
 
         return new JsonResponse(['error' => 'Invalid CSRF token'], Response::HTTP_FORBIDDEN);

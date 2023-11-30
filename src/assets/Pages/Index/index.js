@@ -3,6 +3,7 @@ import Navbar from "../../Layouts/CommonLayouts/Navbar1";
 import { ProductContext } from "../ProductContext";
 import ThemebauMain from "./ThemebauMain";
 import CarouselDark from "../CarouselDark";
+
 // import Work from "./Work";
 // import ProjectShowcase from "./ProjectShowcase";
 // import InnerPages from "./InnerPages";
@@ -27,10 +28,9 @@ const Index = () => {
       <Navbar />
       <div className="content-wrap" id="content-wrap">
         <ThemebauMain />
-        {products && products.map(product => (
-  <CarouselDark key={product.id} product={product} />
+        {/* {products && <CarouselDark products={products} />} */}
 
-))}
+
         <Footer />
         {/* <Work />
         <ProjectShowcase />

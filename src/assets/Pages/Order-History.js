@@ -6,7 +6,7 @@ const OrderHistory = () => {
 
   useEffect(() => {
     // Remplacer par l'URL de votre API pour récupérer l'historique des commandes
-    axios.get('/api/user/orders')
+    axios.get('https://127.0.0.1:8000/order/user')
       .then(response => {
         setOrders(response.data);
       })

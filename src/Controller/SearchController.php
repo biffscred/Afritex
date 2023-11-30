@@ -9,13 +9,12 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class SearchController extends AbstractController
 {
-    #[Route('/search', name: 'app_search')]
-    public function index(Request $request): Response
+    #[Route('/api/search', name: 'api_search', methods: ['GET'])]
+    public function search(Request $request, ProductRepository $productRepository): JsonResponse
     {
-        $search=$request->query->get('search');
-        
-        return $this->render('search/index.html.twig', [
-            'controller_name' => 'SearchController',
-        ]);
+        $searchTerm = $request->query->get('query');
+        $products = $productRepository->search($searchTerm);
+    
+        return $this->json(['products' => $products]);
     }
 }

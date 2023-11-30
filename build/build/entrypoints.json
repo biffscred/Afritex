@@ -1,0 +1,15 @@
+{
+  "entrypoints": {
+    "app": {
+      "js": [
+        "/build/runtime.js",
+        "/build/vendors-node_modules_aos_dist_aos_js-node_modules_aos_dist_aos_css-node_modules_react-image-l-0cd034.js",
+        "/build/app.js"
+      ],
+      "css": [
+        "/build/vendors-node_modules_aos_dist_aos_js-node_modules_aos_dist_aos_css-node_modules_react-image-l-0cd034.css",
+        "/build/app.css"
+      ]
+    }
+  }
+}

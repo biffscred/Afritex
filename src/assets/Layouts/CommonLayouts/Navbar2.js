@@ -56,8 +56,9 @@ const Navbar = ({ navClass }) => {
   }, []);
 
   useEffect(() => {
-    window.addEventListener("scroll", scrollNavigation, true);
-    window.addEventListener("scroll", scrollUpward, false);
+    window.addEventListener("scroll", scrollNavigation, { passive: true });
+    window.addEventListener("scroll", scrollUpward, { passive: true });
+    
   });
 
   let lastScrollTop = 0;

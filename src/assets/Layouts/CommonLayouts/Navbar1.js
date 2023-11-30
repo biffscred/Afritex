@@ -3,6 +3,7 @@ import { Col, Container, Row, UncontrolledCollapse } from "reactstrap";
 import { Link, useLocation } from "react-router-dom";
 import Logo from "../../../assets/images/logo.png";
 import { AuthContext } from '../../Pages/AuthContext';
+import { UserContext } from "../../Pages/UserContext";
 
 //Images
 
@@ -12,6 +13,7 @@ const Navbar = () => {
   const [isClick, setIsClick] = useState(false);
   const location = useLocation();
   const { isLoggedIn, userRole,logout } = useContext(AuthContext);
+  const { user } = useContext(UserContext);
   const handleLogout = () => {
     logout();
     // Redirection optionnelle vers la page d'accueil
@@ -408,7 +410,7 @@ const userIsLoggedIn = isUserLoggedIn();
               </div>
             </li>
              {/* Lien Admin Dashboard (visible pour tout utilisateur connecté) */}
-             {isLoggedIn && userRole === 'admin' && (
+             {isLoggedIn && userRole === 'Admin' && (
       <ul className="nav navbar-nav order-2">
         <li className="nav-item">
           <Link to="/admin" className="nav-link">

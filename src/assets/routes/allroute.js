@@ -62,6 +62,7 @@ import Profile from "../Pages/Profile";
 import OrderHistory from "../Pages/Order-History";
 import Settings from "../Pages/Settings";
 import Cart from "../Pages/Cart";
+import AccountActivation from "../Pages/Activation";
 const routes = [
   { path: "/", element: <Index /> },
   { path: "/home", element: <Home /> },
@@ -127,6 +128,8 @@ const routes = [
   { path: "/Order-History", element: <OrderHistory/> },
   { path: "/Settings", element: <Settings /> },
   { path: "/Cart", element: <Cart /> },
+  { path: "/AccountActivation", element: <AccountActivation /> },
+  
 ];
 
 export default routes;
