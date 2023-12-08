@@ -57,7 +57,7 @@ import CarouselLight from "../Pages/CarouselLight";
 import FullScreenShowcase from "../Pages/FullScreenShowcase";
 import LoginForm from "../Pages/Login";
 import SignUpForm from "../Pages/SignUp";
-import AdminDashboard from "../Pages/Admin";
+import AdminDashboard from "../Pages/Admin/Admin";
 import Profile from "../Pages/Profile";
 import OrderHistory from "../Pages/Order-History";
 import Settings from "../Pages/Settings";

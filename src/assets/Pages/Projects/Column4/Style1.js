@@ -10,7 +10,7 @@ const Style1 = () => {
   const [projects, setProjects] = useState([]);
 
   useEffect(() => {
-    axios.get('/product/') // Remplacez par l'URL appropriée de votre API
+    axios.get('https://127.0.0.1:8000/product') // Remplacez par l'URL appropriée de votre API
       .then(response => {
         // Filtrer pour obtenir uniquement les produits de la catégorie "tissus"
         const tissusProducts = response.data.filter(product => product.category.name === 'fabrics');
@@ -45,7 +45,7 @@ const Style1 = () => {
                   to={`/product/${item.id}`} // Assurez-vous que le chemin est correct
                 >
                   <span className="card-img">
-                    <img src={item.imageUrl} alt={item.name} /> {/* Remplacez par le chemin correct de l'image */}
+                  <img src={`/images/products/${item.images}`} alt={item.name} /> {/* Remplacez par le chemin correct de l'image */}
                   </span>
                 </RouterLink>
               </Col>
