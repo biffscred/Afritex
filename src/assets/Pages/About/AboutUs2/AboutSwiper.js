@@ -5,7 +5,7 @@ import { Scrollbar } from "swiper";
 import "swiper/css/scrollbar";
 import "swiper/css";
 
-import Slide1 from "../../../images/about/about-us-2-slide-1-1000-958.jpg";
+
 import Slide2 from "../../../images/about/about-us-2-slide-2-660-660.jpg";
 import Slide3 from "../../../images/about/about-us-2-slide-3-1000-958.jpg";
 import Slide4 from "../../../images/about/about-us-2-slide-4-660-660.jpg";
@@ -35,7 +35,7 @@ const AboutSwiper = () => {
                 <img
                   className="mw-100 w-xs-100"
                   width="500"
-                  src={Slide1}
+                  
                   alt=""
                 />
               </SwiperSlide>

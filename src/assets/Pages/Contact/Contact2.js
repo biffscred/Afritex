@@ -9,7 +9,7 @@ import { Button, Col, Container, Form, Input,  Row } from "reactstrap";
 const Contact2 = () => {
  
   //meta title
-  document.title = "Themebau | Contact 2";
+  document.title = "Afritex| Contact ";
   return (
     <React.Fragment>
       <Navbar navClass="navbar-dark navbar-fixed" styleClass="2" />

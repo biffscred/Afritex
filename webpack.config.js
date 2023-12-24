@@ -1,45 +1,45 @@
 const Encore = require('@symfony/webpack-encore');
 
-// Manually configure the runtime environment if not already configured yet by the "encore" command.
-// It's useful when you use tools that rely on webpack.config.js file.
+// Configurer manuellement l'environnement d'exécution si ce n'est pas déjà fait par la commande "encore".
+// C'est utile lorsque vous utilisez des outils qui dépendent du fichier webpack.config.js.
 if (!Encore.isRuntimeEnvironmentConfigured()) {
     Encore.configureRuntimeEnvironment(process.env.NODE_ENV || 'dev');
 }
 
 Encore
-    // directory where compiled assets will be stored
+    // répertoire où les actifs compilés seront stockés
     .setOutputPath('public/build/')
-    // public path used by the web server to access the output path
+    // chemin public utilisé par le serveur web pour accéder au chemin de sortie
     .setPublicPath('/build')
-    // only needed for CDN's or subdirectory deploy
+    // nécessaire uniquement pour les CDN ou le déploiement en sous-répertoire
     //.setManifestKeyPrefix('build/')
 
     /*
-     * ENTRY CONFIG
+     * CONFIGURATION D'ENTRÉE
      *
-     * Each entry will result in one JavaScript file (e.g. app.js)
-     * and one CSS file (e.g. app.css) if your JavaScript imports CSS.
+     * Chaque entrée résultera en un fichier JavaScript (par exemple, app.js)
+     * et un fichier CSS (par exemple, app.css) si votre JavaScript importe du CSS.
      */
     .addEntry('app', './assets/app.js')
 
-    // When enabled, Webpack "splits" your files into smaller pieces for greater optimization.
+    // Lorsqu'activé, Webpack "divise" vos fichiers en morceaux plus petits pour une optimisation accrue.
     .splitEntryChunks()
 
-    // will require an extra script tag for runtime.js
-    // but, you probably want this, unless you're building a single-page app
+    // nécessitera une balise script supplémentaire pour runtime.js
+    // mais vous le souhaitez probablement, à moins que vous ne construisiez une application monopage
     .enableSingleRuntimeChunk()
 
     /*
-     * FEATURE CONFIG
+     * CONFIGURATION DE FONCTIONNALITÉ
      *
-     * Enable & configure other features below. For a full
-     * list of features, see:
+     * Activez et configurez d'autres fonctionnalités ci-dessous. Pour une liste complète
+     * des fonctionnalités, voir :
      * https://symfony.com/doc/current/frontend.html#adding-more-features
      */
     .cleanupOutputBeforeBuild()
     .enableBuildNotifications()
     .enableSourceMaps(!Encore.isProduction())
-    // enables hashed filenames (e.g. app.abc123.css)
+    // active les noms de fichiers hachés (par exemple, app.abc123.css)
     .enableVersioning(Encore.isProduction())
 
     // configure Babel
@@ -47,27 +47,34 @@ Encore
     //     config.plugins.push('@babel/a-babel-plugin');
     // })
 
-    // enables and configure @babel/preset-env polyfills
+    // active et configure les polyfills @babel/preset-env
     .configureBabelPresetEnv((config) => {
         config.useBuiltIns = 'usage';
         config.corejs = '3.23';
     })
 
-    // enables Sass/SCSS support
+    // active la prise en charge de Sass/SCSS
     .enableSassLoader()
 
-    // uncomment if you use TypeScript
+    // décommentez si vous utilisez TypeScript
     //.enableTypeScriptLoader()
 
-    // uncomment if you use React
+    // décommentez si vous utilisez React
     .enableReactPreset()
 
-    // uncomment to get integrity="..." attributes on your script & link tags
-    // requires WebpackEncoreBundle 1.4 or higher
+    // décommentez pour obtenir des attributs integrity="..." sur vos balises script et link
+    // nécessite WebpackEncoreBundle 1.4 ou plus
     //.enableIntegrityHashes(Encore.isProduction())
 
-    // uncomment if you're having problems with a jQuery plugin
+    // décommentez si vous rencontrez des problèmes avec un plugin jQuery
     //.autoProvidejQuery()
 ;
 
-module.exports = Encore.getWebpackConfig();
+const webpackConfig = Encore.getWebpackConfig();
+
+// Ajouter la configuration allowedHosts
+webpackConfig.devServer = webpackConfig.devServer || {};
+webpackConfig.devServer.allowedHosts = ['localhost', 'votreapp.locale'];
+
+module.exports = webpackConfig;
+

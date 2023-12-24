@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 import AddUser from './AddUser';
 import UsersList from './UsersList';
 import DeleteUser from './DeleteUser';
-import AddCategory from './AddCategory';
+// import AddCategory from './AddCategory';
 import CategoriesList from './CategoryList';
 import DeleteCategory from './DeleteCategory';
 import AddProduct from './AddProduct';
@@ -80,14 +80,14 @@ const AdminDashboard = () => {
   };
   
   // Fonctions CRUD pour les catégories
-  const addCategory = async (categoryData) => {
-    try {
-      const response = await axios.post('/categories', categoryData);
-      setCategories(categories.concat(response.data));
-    } catch (error) {
-      console.error('Erreur lors de l’ajout d’une catégorie', error);
-    }
-  };
+  // const addCategory = async (categoryData) => {
+  //   try {
+  //     const response = await axios.post('/categories', categoryData);
+  //     setCategories(categories.concat(response.data));
+  //   } catch (error) {
+  //     console.error('Erreur lors de l’ajout d’une catégorie', error);
+  //   }
+  // };
   
   const updateCategory = async (categoryId, categoryData) => {
     try {
@@ -151,7 +151,7 @@ const AdminDashboard = () => {
 
       <section>
         <h2>Catégories</h2>
-        <AddCategory onAddCategory={addCategory} />
+        {/* <AddCategory onAddCategory={addCategory} /> */}
         <CategoriesList categories={categories} onUpdateCategory={updateCategory} onDeleteCategory={DeleteCategory} />
       </section>
 

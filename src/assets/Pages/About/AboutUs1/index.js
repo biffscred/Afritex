@@ -8,7 +8,7 @@ import Main from "./Main";
 
 const index = () => {
   //meta title
-  document.title = "Themebau | About Us 1";
+  document.title = "Afritex | A propos de nous ";
   return (
     <React.Fragment>
       <Navbar navClass="navbar-dark navbar-fixed" styleClass="2" />
