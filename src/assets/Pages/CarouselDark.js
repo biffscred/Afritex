@@ -1,91 +1,63 @@
 import React from "react";
 import Navbar from "../Layouts/CommonLayouts/Navbar4";
 import { NavLink } from "react-router-dom";
-// Swiper
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/pagination";
 import { Pagination, Navigation, Autoplay } from "swiper";
-
-const CarouselDark = ({ products }) => {
+import Card from "./CarouselCard";
+const CarouselDark = ({ categories }) => {
   // Meta title
   document.title = "Afritex | Produits";
 
-  // Vérification si products est défini et est un tableau
-  const hasProducts = Array.isArray(products) && products.length > 0;
+  // URL de base pour les images - ajustez ceci selon votre environnement
+  const baseUrl = process.env.PUBLIC_URL || 'http://localhost:3000';
+
+  // Définir un objet contenant des tableaux d'images pour chaque catégorie
+  const productImages = {
+    'Tissus': ['Akwete.jpg', 'Alindi-Somalie.jpg', 'Alindi-Somalie2.jpg', 'Alindi-Somalie3.jpg', 'Ankara2.jpg', 'Tissu-Ankara.jpg'],
+    'Accessoires': ['Echarpe-Bog-1.jpg', 'Housse-oreiller-Bog-2.jpg', 'Sac-Fait-Main-Bog-1.jpg', 'Tapis-XXL-Bog-14.jpg'],
+    // Ajoutez des tableaux similaires pour d'autres catégories si nécessaire
+  };
+
+  // Combinez les images de toutes les catégories spécifiées dans un seul tableau
+  let allImages = [];
+  categories.forEach(category => {
+    if (productImages[category]) {
+      allImages = [...allImages, ...productImages[category].map(imageName => ({ category, imageName }))];
+    }
+  });
 
   return (
     <React.Fragment>
       <Navbar navClass="navbar-dark bg-dark" styleClass="2" />
       <div className="content-wrap bg-dark" id="content-wrap">
         <Swiper
-          className="swiper text-white swiper-full swiper-full-horizontal swiper-portfolio-animejs"
+          modules={[Pagination, Navigation, Autoplay]}
           pagination={{
-            el: "swiper-pagination",
             clickable: true,
           }}
           spaceBetween={70}
-          slidesPerView={"2"}
-          navigation={true}
-          grabCursor={true}
-          centeredSlides={true}
-          modules={[Pagination, Navigation, Autoplay]}
+          slidesPerView={2}
+          navigation
+          autoplay={{ delay: 2500, disableOnInteraction: false }}
           loop={true}
-          autoplay={{ delay: 1500, disableOnInteraction: false }}
-          breakpoints={{
-            200: {
-              slidesPerView: 1,
-            },
-            640: {
-              slidesPerView: 1,
-            },
-            768: {
-              slidesPerView: 2,
-            },
-            1024: {
-              slidesPerView: 2,
-            },
-          }}
+          // ... d'autres configurations Swiper si nécessaire ...
         >
-          <div className="swiper-container">
-            <div className="swiper-wrapper">
-              {hasProducts ? (
-                products.map(product => (
-                  <SwiperSlide
-                    key={product.id}
-                    className="swiper-slide"
-                    data-cursor-style="cursor-circle"
-                    data-cursor-text="view"
-                  >
-                    <NavLink
-                      className="card card-portfolio card-overlay card-image-sm card-bg-show text-white text-center"
-                      to={`/product/${product.id}`}
-                    >
-                      <span className="card-img">
-                        <img src={product.image} alt={product.name} />
-                        <span
-                          className="background-color"
-                          style={{ backgroundColor: "rgba(14, 14, 14, .2)" }}
-                        ></span>
-                      </span>
-                      <span className="card-img-overlay">
-                        <span className="card-title h2">{product.name}</span>
-                        <span className="card-category subtitle">{product.category}</span>
-                      </span>
-                    </NavLink>
-                  </SwiperSlide>
-                ))
-              ) : (
-                <p>Aucun produit disponible</p>
-              )}
-            </div>
-          </div>
-          <div className="swiper-button-wrapper container">
-            {/* ... vos boutons de navigation Swiper ... */}
-          </div>
-          <div className="swiper-pagination"></div>
+          {allImages.length > 0 ? (
+            allImages.map((item, index) => (
+              <SwiperSlide key={index}>
+                <Card 
+            imageUrl={`${baseUrl}/images/product/${item.category}/${item.imageName}`}
+            title={item.imageName} // Vous pouvez modifier pour inclure un titre dynamique si disponible
+          />
+          
+              </SwiperSlide>
+            ))
+          ) : (
+            <p>Aucun produit disponible</p>
+          )}
         </Swiper>
-        <div id="footer"></div>
       </div>
     </React.Fragment>
   );

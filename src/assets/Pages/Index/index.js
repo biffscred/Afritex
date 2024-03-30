@@ -1,6 +1,6 @@
 import React,{useContext,useEffect} from "react";
 import Navbar from "../../Layouts/CommonLayouts/Navbar1";
-import { ProductContext } from "../ProductContext";
+// import { ProductContext } from "../ProductContext";
 import ThemebauMain from "./ThemebauMain";
 import CarouselDark from "../CarouselDark";
 
@@ -14,12 +14,12 @@ import Footer from "../../Layouts/CommonLayouts/Footer2";
 
 const Index = () => {
   // Utiliser le contexte des produits
-  const { products, loadProducts } = useContext(ProductContext);
+  // const { products, loadProducts } = useContext(ProductContext);
 
   // Charger les produits au montage du composant
-  useEffect(() => {
-    loadProducts();
-  }, [loadProducts]);
+  // useEffect(() => {
+  //   loadProducts();
+  // }, [loadProducts]);
 
   //meta title
   document.title = "Afritex ";
@@ -28,7 +28,8 @@ const Index = () => {
       <Navbar />
       <div className="content-wrap" id="content-wrap">
         <ThemebauMain />
-        {/* {products && <CarouselDark products={products} />} */}
+        <CarouselDark categories={['Tissus', 'Accessoires']} />
+
 
 
         <Footer />

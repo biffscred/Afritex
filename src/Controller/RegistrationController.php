@@ -44,31 +44,27 @@ class RegistrationController extends AbstractController
         // Envoi de l'email de confirmation
 
         
-        // $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
-        //     (new TemplatedEmail())
-        //         ->from(new Address('contactafritex@gmail.com', 'Afritex'))
-        //         ->to($user->getEmail())
-        //         ->subject('Veuillez confirmez votre email')
-        //         ->htmlTemplate('registration/confirmation_email.html.twig')
-        // );
+        $this->emailVerifier->sendEmailConfirmation('app_verify_email', $user,
+            (new TemplatedEmail())
+                ->from(new Address('contactafritex@gmail.com', 'Afritex'))
+                ->to($user->getEmail())
+                ->subject('Veuillez confirmez votre email')
+                ->htmlTemplate('registration/confirmation_email.html.twig')
+        );
         
 
         return $this->json(['message' => 'Utilisateur créé avec succès']);
     }
 
-    #[Route('/api/verify/email', name: 'api_verify_email')]
-    public function verifyUserEmail(Request $request, TranslatorInterface $translator): Response
-    {
-        $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
+    // #[Route('/AccountActivation', name: 'api_verify_email')]
+    // public function verifyUserEmail(Request $request, TranslatorInterface $translator): Response
+    // {
+    //     $this->denyAccessUnlessGranted('IS_AUTHENTICATED_FULLY');
 
-        try {
-            $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
-        } catch (VerifyEmailExceptionInterface $exception) {
-            $this->addFlash('verify_email_error', $translator->trans($exception->getReason(), [], 'VerifyEmailBundle'));
-            return $this->redirectToRoute('app_register');
-        }
-
-        $this->addFlash('success', 'Your email address has been verified.');
-        return $this->redirectToRoute('app_home');
-    }
+    //     try {
+    //         $this->emailVerifier->handleEmailConfirmation($request, $this->getUser());
+    //         return $this->json(['status' => 'success', 'message' => 'Email verified successfully!']);
+    //     } catch (VerifyEmailExceptionInterface $exception) {
+    //         return $this->json(['status' => 'error', 'message' => 'Verification failed!'], Response::HTTP_BAD_REQUEST);
+    //     }}
 }

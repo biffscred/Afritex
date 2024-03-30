@@ -1,37 +1,17 @@
 // AddUser.js
+import * as React from "react";
+import { Create, SimpleForm, TextInput } from 'react-admin';
 
-import React, { useState } from 'react';
-import axios from 'axios';
-
-const AddUser = ({ onUserAdded }) => {
-  const [userData, setUserData] = useState({
-    email: '',
-    password: '',
-    adress: '',
-  });
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setUserData({ ...userData, [name]: value });
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      // Supposons que vous avez une route d'API pour ajouter un utilisateur
-      const response = await axios.post('/api/users', userData);
-      onUserAdded(response.data); // Mettre à jour l'état du parent avec le nouvel utilisateur
-    } catch (error) {
-      console.error('Erreur lors de l’ajout d’un utilisateur', error);
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      {/* Les champs de formulaire ici */}
-      {/* ... */}
-    </form>
-  );
-};
+export const AddUser = (props) => (
+  <Create {...props}>
+    <SimpleForm>
+      {/* Assurez-vous que les noms des sources correspondent aux attributs de votre utilisateur */}
+      <TextInput source="email" />
+      <TextInput source="password" /> {/* Notez que cela affichera le mot de passe en clair, envisagez une solution plus sécurisée pour la production */}
+      <TextInput source="address" /> {/* Assurez-vous que 'address' correspond à l'attribut dans votre modèle d'utilisateur */}
+      {/* Ajoutez d'autres champs TextInput pour d'autres attributs de l'utilisateur si nécessaire */}
+    </SimpleForm>
+  </Create>
+);
 
 export default AddUser;

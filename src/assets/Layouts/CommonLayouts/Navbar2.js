@@ -1,6 +1,8 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState,useContext } from "react";
 import { Row, Col, Container, UncontrolledCollapse } from "reactstrap";
 import { Link, useLocation } from "react-router-dom";
+import { AuthContext } from '../../Pages/AuthContext';
+import { UserContext } from "../../Pages/UserContext";
 
 //Images
 import Logo from "../../images/logo.png";
@@ -20,6 +22,12 @@ import FullScreenShow from "../../images/demos/fullscreen-showcase.jpg";
 const Navbar = ({ navClass }) => {
   const [isClick, setIsClick] = useState(false);
   const location = useLocation();
+  const { isLoggedIn, userRole,logout } = useContext(AuthContext);
+  const handleLogout = () => {
+    logout();
+    // Redirection optionnelle vers la page d'accueil
+    // navigate('/home');
+  };
   const [navbarCollapseHome, setNavbarCollapseHome] = useState(false);
   const [navbarCollapseProjects, setNavbarCollapseProjects] = useState(false);
   const [navbarCollapsePages, setNavbarCollapsePages] = useState(false);
@@ -161,7 +169,7 @@ const Navbar = ({ navClass }) => {
             </li>
             <li className="nav-item navbar-dropdown">
               <Link to="/portfolio-col-1-style-1" className="nav-link">
-                <span className="nav-link-name">Tissus</span>
+                <span className="nav-link-name">Produits</span>
                 <svg
                   width="6"
                   height="10"
@@ -182,7 +190,7 @@ const Navbar = ({ navClass }) => {
                 <ul className="nav navbar-nav">
                   <li className="nav-item navbar-dropdown">
                     <Link to="/portfolio-col-4-style-1" className="nav-link">
-                      <span className="nav-link-name">Tous les tissus</span>
+                      <span className="nav-link-name">Tous les vetements  </span>
                       <svg
                         width="6"
                         height="10"
@@ -222,7 +230,7 @@ const Navbar = ({ navClass }) => {
                   </li>
                   <li className="nav-item navbar-dropdown">
                     <Link to="/portfolio-col-2-style-1" className="nav-link">
-                      <span className="nav-link-name">2 column</span>
+                      <span className="nav-link-name">Tous les tissus</span>
                       <svg
                         width="6"
                         height="10"
@@ -257,44 +265,14 @@ const Navbar = ({ navClass }) => {
                             <span className="nav-link-name">Style 2</span>
                           </Link>
                         </li>
-                        <li className="nav-item">
-                          <Link
-                            to="/portfolio-col-2-style-3"
-                            className="nav-link"
-                          >
-                            <span className="nav-link-name">Style 3</span>
-                          </Link>
-                        </li>
-                        <li className="nav-item">
-                          <Link
-                            to="/portfolio-col-2-style-4"
-                            className="nav-link"
-                          >
-                            <span className="nav-link-name">Style 4</span>
-                          </Link>
-                        </li>
-                        <li className="nav-item">
-                          <Link
-                            to="/portfolio-col-2-style-5"
-                            className="nav-link"
-                          >
-                            <span className="nav-link-name">Style 5</span>
-                          </Link>
-                        </li>
-                        <li className="nav-item">
-                          <Link
-                            to="/portfolio-col-2-style-6"
-                            className="nav-link"
-                          >
-                            <span className="nav-link-name">Style 6</span>
-                          </Link>
-                        </li>
+                       
+                           
                       </ul>
                     </div>
                   </li>
                   <li className="nav-item navbar-dropdown">
                     <Link to="/portfolio-col-3-style-1" className="nav-link">
-                      <span className="nav-link-name">3 column</span>
+                      <span className="nav-link-name">Tous les accessoires</span>
                       <svg
                         width="6"
                         height="10"
@@ -329,164 +307,14 @@ const Navbar = ({ navClass }) => {
                             <span className="nav-link-name">Style 2</span>
                           </Link>
                         </li>
-                        <li className="nav-item">
-                          <Link
-                            to="/portfolio-col-3-style-3"
-                            className="nav-link"
-                          >
-                            <span className="nav-link-name">Style 3</span>
-                          </Link>
-                        </li>
-                        <li className="nav-item">
-                          <Link
-                            to="/portfolio-col-3-style-4"
-                            className="nav-link"
-                          >
-                            <span className="nav-link-name">Style 4</span>
-                          </Link>
-                        </li>
-                        <li className="nav-item">
-                          <Link
-                            to="/portfolio-col-3-style-5"
-                            className="nav-link"
-                          >
-                            <span className="nav-link-name">Style 5</span>
-                          </Link>
-                        </li>
+                        
+                          
+                            
                       </ul>
                     </div>
                   </li>
-                  <li className="nav-item navbar-dropdown">
-                    <Link to="/portfolio-col-4-style-1" className="nav-link">
-                      <span className="nav-link-name">4 column</span>
-                      <svg
-                        width="6"
-                        height="10"
-                        viewBox="0 0 6 10"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M1 9L5 5L1 1"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </Link>
-                    <div className="dropdown-menu">
-                      <ul className="nav navbar-nav">
-                        <li className="nav-item">
-                          <Link
-                            to="/portfolio-col-4-style-1"
-                            className="nav-link"
-                          >
-                            <span className="nav-link-name">Style 1</span>
-                          </Link>
-                        </li>
-                        <li className="nav-item">
-                          <Link
-                            to="/portfolio-col-4-style-2"
-                            className="nav-link"
-                          >
-                            <span className="nav-link-name">Style 2</span>
-                          </Link>
-                        </li>
-                        <li className="nav-item">
-                          <Link
-                            to="/portfolio-col-4-style-3"
-                            className="nav-link"
-                          >
-                            <span className="nav-link-name">Style 3</span>
-                          </Link>
-                        </li>
-                        <li className="nav-item">
-                          <Link
-                            to="/portfolio-col-4-style-4"
-                            className="nav-link"
-                          >
-                            <span className="nav-link-name">Style 4</span>
-                          </Link>
-                        </li>
-                      </ul>
-                    </div>
-                  </li>
-                  <li className="nav-item navbar-dropdown">
-                    <Link
-                      to="/portfolio-single-style-1"
-                      className="nav-link"
-                    >
-                      <span className="nav-link-name">Single Works</span>
-                      <svg
-                        width="6"
-                        height="10"
-                        viewBox="0 0 6 10"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M1 9L5 5L1 1"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </Link>
-                    <div className="dropdown-menu">
-                      <ul className="nav navbar-nav">
-                        <li className="nav-item">
-                          <Link
-                            to="/portfolio-single-style-1"
-                            className="nav-link"
-                          >
-                            <span className="nav-link-name">Style 1</span>
-                          </Link>
-                        </li>
-                        <li className="nav-item">
-                          <Link
-                            to="/portfolio-single-style-2"
-                            className="nav-link"
-                          >
-                            <span className="nav-link-name">Style 2</span>
-                          </Link>
-                        </li>
-                        <li className="nav-item">
-                          <Link
-                            to="/portfolio-single-style-3"
-                            className="nav-link"
-                          >
-                            <span className="nav-link-name">Style 3</span>
-                          </Link>
-                        </li>
-                        <li className="nav-item">
-                          <Link
-                            to="/portfolio-single-style-4"
-                            className="nav-link"
-                          >
-                            <span className="nav-link-name">Style 4</span>
-                          </Link>
-                        </li>
-                        <li className="nav-item">
-                          <Link
-                            to="/portfolio-single-style-5"
-                            className="nav-link"
-                          >
-                            <span className="nav-link-name">Style 5</span>
-                          </Link>
-                        </li>
-                        <li className="nav-item">
-                          <Link
-                            to="/portfolio-single-style-6"
-                            className="nav-link"
-                          >
-                            <span className="nav-link-name">Style 6</span>
-                          </Link>
-                        </li>
-                      </ul>
-                    </div>
-                  </li>
+                  
+                  
                 </ul>
               </div>
             </li>
@@ -511,136 +339,54 @@ const Navbar = ({ navClass }) => {
               </Link>
               <div className="dropdown-menu">
                 <ul className="nav navbar-nav">
-                  <li className="nav-item navbar-dropdown">
-                    <Link to="/about-us" className="nav-link">
-                      <span className="nav-link-name">About Us</span>
-                      <svg
-                        width="6"
-                        height="10"
-                        viewBox="0 0 6 10"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M1 9L5 5L1 1"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </Link>
-                    <div className="dropdown-menu">
-                      <ul className="nav navbar-nav">
-                        <li className="nav-item">
-                          <Link to="/about-us" className="nav-link">
-                            <span className="nav-link-name">About Us</span>
-                          </Link>
-                        </li>
-                        <li className="nav-item">
-                          <Link to="/about-us-2" className="nav-link">
-                            <span className="nav-link-name">About Us 2</span>
-                          </Link>
-                        </li>
-                        <li className="nav-item">
-                          <Link to="/about-me" className="nav-link">
-                            <span className="nav-link-name">About Me</span>
-                          </Link>
-                        </li>
-                      </ul>
-                    </div>
-                  </li>
-                  <li className="nav-item navbar-dropdown">
-                    <Link to="/services" className="nav-link">
-                      <span className="nav-link-name">Services</span>
-                      <svg
-                        width="6"
-                        height="10"
-                        viewBox="0 0 6 10"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M1 9L5 5L1 1"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </Link>
-                    <div className="dropdown-menu">
-                      <ul className="nav navbar-nav">
-                        <li className="nav-item">
-                          <Link to="/services" className="nav-link">
-                            <span className="nav-link-name">Services</span>
-                          </Link>
-                        </li>
-                        <li className="nav-item">
-                          <Link to="/single-service" className="nav-link">
-                            <span className="nav-link-name">
-                              Single Service
-                            </span>
-                          </Link>
-                        </li>
-                      </ul>
-                    </div>
-                  </li>
-                  <li className="nav-item navbar-dropdown">
-                    <Link to="/blog3" className="nav-link">
-                      <span className="nav-link-name">Blog</span>
-                      <svg
-                        width="6"
-                        height="10"
-                        viewBox="0 0 6 10"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M1 9L5 5L1 1"
-                          stroke="currentColor"
-                          strokeWidth="1.5"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        />
-                      </svg>
-                    </Link>
-                    <div className="dropdown-menu">
-                      <ul className="nav navbar-nav">
-                        <li className="nav-item">
-                          <Link to="/blog3" className="nav-link">
-                            <span className="nav-link-name">3 column</span>
-                          </Link>
-                        </li>
-                        <li className="nav-item">
-                          <Link to="/blog1" className="nav-link">
-                            <span className="nav-link-name">1 column</span>
-                          </Link>
-                        </li>
-                        <li className="nav-item">
-                          <Link to="/singlepost" className="nav-link">
-                            <span className="nav-link-name">Single Post</span>
-                          </Link>
-                        </li>
-                      </ul>
-                    </div>
-                  </li>
-                  <li className="nav-item">
-                    <Link to="/coming-soon" className="nav-link">
-                      <span className="nav-link-name">Coming Soon</span>
-                    </Link>
-                  </li>
-                  <li className="nav-item">
-                    <Link to="/404" className="nav-link">
-                      <span className="nav-link-name">404</span>
-                    </Link>
-                  </li>
+                {!isLoggedIn && (
+  <>
+    <li className="nav-item navbar-dropdown">
+      <Link to="/login" className="nav-link">
+        <span className="nav-link-name">Se connecter</span>
+      </Link>
+    </li>
+    <li className="nav-item navbar-dropdown">
+      <Link to="/SignUp" className="nav-link">
+        <span className="nav-link-name">S'inscrire</span>
+      </Link>
+    </li>
+  </>
+)}
+
+{isLoggedIn && (
+  <>
+    <li className="nav-item navbar-dropdown">
+      <Link to="/profile" className="nav-link">
+        <span className="nav-link-name">Mon Profil</span>
+      </Link>
+    </li>
+    <li className="nav-item navbar-dropdown">
+      <Link to="/order-history" className="nav-link">
+        <span className="nav-link-name">Historique des Commandes</span>
+      </Link>
+    </li>
+    <li className="nav-item navbar-dropdown">
+      <Link to="/settings" className="nav-link">
+        <span className="nav-link-name">Paramètres</span>
+      </Link>
+    </li>
+    <li className="nav-item navbar-dropdown">
+    <button onClick={handleLogout} className="nav-link">
+        <span className="nav-link-name">Se Déconnecter</span>
+        </button>
+      
+    </li>
+  </>
+)}
+
+              
                 </ul>
               </div>
             </li>
             <li className="nav-item navbar-dropdown">
               <Link to="/contact1" className="nav-link">
-                <span className="nav-link-name">contact</span>
+                <span className="nav-link-name">Contact</span>
                 <svg
                   width="6"
                   height="10"
@@ -659,14 +405,15 @@ const Navbar = ({ navClass }) => {
               </Link>
               <div className="dropdown-menu">
                 <ul className="nav navbar-nav">
+                 
                   <li className="nav-item">
-                    <Link to="/contact1" className="nav-link">
-                      <span className="nav-link-name">Contact 1</span>
+                    <Link to="/contact2" className="nav-link">
+                      <span className="nav-link-name">Contact </span>
                     </Link>
                   </li>
                   <li className="nav-item">
-                    <Link to="/contact2" className="nav-link">
-                      <span className="nav-link-name">Contact 2</span>
+                    <Link to="/about-us" className="nav-link">
+                      <span className="nav-link-name">A Propos </span>
                     </Link>
                   </li>
                 </ul>
@@ -676,7 +423,7 @@ const Navbar = ({ navClass }) => {
           <ul className="nav nav-gap-sm navbar-nav nav-social align-items-center text-white">
             <li className="nav-item">
               <Link
-                to="//facebook.com/runwebrun"
+                to="//facebook.com/afritex"
                 className="nav-link"
               >
                 <svg
@@ -711,7 +458,7 @@ const Navbar = ({ navClass }) => {
             </li>
             <li className="nav-item">
               <Link
-                to="//www.instagram.com/runwebrun/"
+                to="//www.instagram.com/afritex.fr/"
                 className="nav-link"
               >
                 <svg
@@ -777,7 +524,7 @@ const Navbar = ({ navClass }) => {
                       aria-controls="navbarCollapseHome"
                       onClick={() => setNavbarCollapseHome(!navbarCollapseHome)}
                     >
-                      <span className="nav-link-name">home</span>
+                      <span className="nav-link-name">Accueil</span>
                       <svg
                         className="collapse-icon"
                         width="7"

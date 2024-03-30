@@ -1,19 +1,16 @@
 // CategoriesList.js
+import * as React from "react";
+import { List, Datagrid, TextField, EditButton, DeleteButton } from 'react-admin';
 
-import React from 'react';
+export const CategoryList = props => (
+    <List {...props}>
+        <Datagrid>
+            <TextField source="id" />
+            <TextField source="name" /> {/* Assurez-vous que 'name' correspond à un attribut de votre catégorie */}
+            <EditButton basePath="/categories" />
+            <DeleteButton basePath="/categories" />
+        </Datagrid>
+    </List>
+);
 
-const CategoriesList = ({ categories, onEdit, onDelete }) => {
-  return (
-    <div>
-      {categories.map((category) => (
-        <div key={category.id}>
-          <span>{category.name}</span>
-          <button onClick={() => onEdit(category.id)}>Modifier</button>
-          <button onClick={() => onDelete(category.id)}>Supprimer</button>
-        </div>
-      ))}
-    </div>
-  );
-};
-
-export default CategoriesList;
+export default CategoryList;

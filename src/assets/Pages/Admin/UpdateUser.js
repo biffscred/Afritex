@@ -1,23 +1,17 @@
 // UpdateUser.js
+import * as React from "react";
+import { Edit, SimpleForm, TextInput } from 'react-admin';
 
-import React from 'react';
-import axios from 'axios';
-
-const UpdateUser = ({ userData, onUserUpdated }) => {
-  // Formulaire et logique pour mettre à jour un utilisateur
-  // ...
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      // Mettre à jour l'utilisateur via l'API
-      const response = await axios.put(`/api/users/${userData.id}`, userData);
-      onUserUpdated(response.data); // Mettre à jour l'état du parent avec les données de l'utilisateur modifié
-    } catch (error) {
-      console.error('Erreur lors de la mise à jour de l’utilisateur', error);
-    }
-  };
-
-  // Formulaire de mise à jour ici
-};
+export const UpdateUser = (props) => (
+  <Edit {...props}>
+    <SimpleForm>
+      {/* Utilisez TextInput ou un autre composant de champ pour chaque champ que vous souhaitez modifier */}
+      <TextInput source="name" />
+      <TextInput source="email" />
+      {/* Ajoutez d'autres champs comme nécessaire */}
+    </SimpleForm>
+  </Edit>
+);
 
 export default UpdateUser;
+

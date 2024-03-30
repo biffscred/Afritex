@@ -1,35 +1,25 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-
-// import ReCAPTCHA from "react-google-recaptcha";
+import { useNavigate } from 'react-router-dom';
+ // Assurez-vous d'importer useHistory
 import '../styles/SignUpForm.css';
 
 const SignUpForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [isVerified, setIsVerified] = useState(false);
     const [rgpdConsent, setRgpdConsent] = useState(false);
-
-    // const handleCaptcha = (value) => {
-    //     console.log("Captcha value:", value);
-    //     setIsVerified(true);
-    // };
-
-    
-
-    
-    
+    const [message, setMessage] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const navigate = useNavigate(); // Initialise useHistory pour la redirection
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
-        // if (!isVerified) {
-        //     alert('Veuillez valider le CAPTCHA');
-        //     return;
-        // }
+        setIsSubmitting(true);
+        setMessage('');
 
         if (!rgpdConsent) {
-            alert('Veuillez accepter les termes et conditions RGPD');
+            setMessage('Veuillez accepter les termes et conditions RGPD.');
+            setIsSubmitting(false);
             return;
         }
 
@@ -39,10 +29,13 @@ const SignUpForm = () => {
                 password
             });
             console.log('Réponse:', response.data);
-            // Traitez la réponse, par exemple redirigez vers la page de connexion ou affichez un message de succès
+            setMessage('Inscription réussie ! Veuillez vérifier votre e-mail pour activer votre compte.');
+            setIsSubmitting(false);
+            navigate('/'); // Modifier '/accueil' par le chemin de redirection souhaité
         } catch (error) {
             console.error("Erreur lors de l'inscription", error);
-            // Gérez les erreurs d'inscription ici
+            setMessage("Erreur lors de l'inscription. Veuillez essayer de nouveau.");
+            setIsSubmitting(false);
         }
     };
 
@@ -67,11 +60,6 @@ const SignUpForm = () => {
                         onChange={(e) => setPassword(e.target.value)}
                     />
                 </div>
-               
-                {/* <ReCAPTCHA
-                    sitekey="YOUR_RECAPTCHA_SITE_KEY"
-                    onChange={handleCaptcha}
-                /> */}
                 <div className="form-group">
                     <input 
                         type="checkbox" 
@@ -81,11 +69,15 @@ const SignUpForm = () => {
                     />
                     <label htmlFor="rgpdConsent">J'accepte les termes et conditions RGPD</label>
                 </div>
-                <button type="submit" className="signup-button">S'inscrire</button>
+                <div className="form-message">
+                    {message && <p>{message}</p>}
+                </div>
+                <button type="submit" className="signup-button" disabled={isSubmitting}>
+                    {isSubmitting ? 'Inscription en cours...' : "S'inscrire"}
+                </button>
             </form>
         </div>
     );
 };
 
 export default SignUpForm;
-

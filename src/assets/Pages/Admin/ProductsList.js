@@ -1,21 +1,19 @@
 // ProductsList.js
+import * as React from "react";
+import { List, Datagrid, TextField, NumberField, EditButton, DeleteButton } from 'react-admin';
 
-import React from 'react';
-
-const ProductsList = ({ products, onEdit, onDelete }) => {
-  return (
-    <div>
-      {products.map((product) => (
-        <div key={product.id}>
-          <span>{product.name}</span>
-          <span>{product.price}</span>
-          {/* Affichez d'autres propriétés du produit ici */}
-          <button onClick={() => onEdit(product.id)}>Modifier</button>
-          <button onClick={() => onDelete(product.id)}>Supprimer</button>
-        </div>
-      ))}
-    </div>
-  );
-};
+export const ProductsList = props => (
+    <List {...props}>
+        <Datagrid>
+            <TextField source="id" />
+            <TextField source="name" /> {/* Assurez-vous que 'name' correspond à un attribut de votre produit */}
+            <NumberField source="price" /> {/* Assurez-vous que 'price' correspond à un attribut de votre produit */}
+            {/* Ajoutez d'autres TextField ou NumberField pour d'autres attributs de produit ici */}
+            <EditButton basePath="/products" />
+            <DeleteButton basePath="/products" />
+        </Datagrid>
+    </List>
+);
 
 export default ProductsList;
+

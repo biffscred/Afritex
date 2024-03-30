@@ -53,7 +53,7 @@ import InteractiveLight from "../Pages/InteractiveLight";
 import LeftMenu from "../Pages/LeftMenu";
 import DigitalAgency from "../Pages/DigitalAgency";
 import CarouselDark from "../Pages/CarouselDark";
-import CarouselLight from "../Pages/CarouselLight";
+
 import FullScreenShowcase from "../Pages/FullScreenShowcase";
 import LoginForm from "../Pages/Login";
 import SignUpForm from "../Pages/SignUp";
@@ -74,7 +74,7 @@ const routes = [
   { path: "/left-menu", element: <LeftMenu /> },
   { path: "/digital-agency", element: <DigitalAgency /> },
   { path: "/carousel-dark", element: <CarouselDark /> },
-  { path: "/carousel-light", element: <CarouselLight /> },
+  
   { path: "/fullscreen-showcase", element: <FullScreenShowcase /> },
 
   { path: "/portfolio-col-1-style-1", element: <C1Style1 /> },

@@ -11,7 +11,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Serializer\SerializerInterface;
 
 #[Route('/users')]
-class UserController extends AbstractController
+class UsersController extends AbstractController
 {
     // Route to get all users
     #[Route('/users', name: 'get_users', methods: ['GET'])]
