@@ -1,0 +1,137 @@
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  password  String
+  role      Role     @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  orders    Order[]
+}
+
+model Product {
+  id          Int          @id @default(autoincrement())
+  name        String
+  description String
+  price       Float
+  category    ProductCategory
+  image       String
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+
+  // Relations to specific product types with unique constraints
+  fabric      Fabric?       @relation("ProductFabric", fields: [fabricId], references: [id])
+  model       Model?        @relation("ProductModel", fields: [modelId], references: [id])
+  accessory   Accessory?    @relation("ProductAccessory", fields: [accessoryId], references: [id])
+
+  fabricId    Int?          @unique
+  modelId     Int?          @unique
+  accessoryId Int?          @unique
+}
+
+model Fabric {
+  id          Int          @id @default(autoincrement())
+  material    String       // e.g., Coton, Soie, Lin
+  pattern     String?      // e.g., Wax, Bogolan, Kenté
+  origin      String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  product     Product?     @relation("ProductFabric")
+  countries   Country[]    @relation("FabricCountries")
+  models      Model[]
+  accessories Accessory[]
+}
+
+model Model {
+  id          Int          @id @default(autoincrement())
+  name        String
+  description String
+  price       Float
+  fabricId    Int
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  product     Product?     @relation("ProductModel")
+  fabric      Fabric       @relation(fields: [fabricId], references: [id])
+  images      ModelImage[]
+  countries   Country[]    @relation("ModelCountries")
+  orderItems  OrderItem[]  // Relation inverse avec OrderItem
+}
+
+model Accessory {
+  id          Int          @id @default(autoincrement())
+  name        String
+  description String
+  price       Float
+  fabricId    Int
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+  product     Product?     @relation("ProductAccessory")
+  fabric      Fabric       @relation(fields: [fabricId], references: [id])
+  images      AccessoryImage[]
+  countries   Country[]    @relation("AccessoryCountries")
+  orderItems  OrderItem[]  // Relation inverse avec OrderItem
+}
+
+model Country {
+  id          Int          @id @default(autoincrement())
+  name        String       @unique
+  fabrics     Fabric[]     @relation("FabricCountries")
+  models      Model[]      @relation("ModelCountries")
+  accessories Accessory[]  @relation("AccessoryCountries")
+}
+
+model ModelImage {
+  id      Int     @id @default(autoincrement())
+  url     String
+  altText String?
+  modelId Int
+  model   Model   @relation(fields: [modelId], references: [id])
+}
+
+model AccessoryImage {
+  id          Int       @id @default(autoincrement())
+  url         String
+  altText     String?
+  accessoryId Int
+  accessory   Accessory @relation(fields: [accessoryId], references: [id])
+}
+
+model Order {
+  id        Int         @id @default(autoincrement())
+  userId    Int
+  total     Float
+  createdAt DateTime    @default(now())
+  user      User        @relation(fields: [userId], references: [id])
+  items     OrderItem[]
+}
+
+model OrderItem {
+  id          Int        @id @default(autoincrement())
+  orderId     Int
+  modelId     Int?
+  accessoryId Int?
+  quantity    Int
+  price       Float
+  order       Order      @relation(fields: [orderId], references: [id])
+  model       Model?     @relation(fields: [modelId], references: [id])
+  accessory   Accessory? @relation(fields: [accessoryId], references: [id])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum ProductCategory {
+  FABRIC
+  MODEL
+  ACCESSORY
+}
