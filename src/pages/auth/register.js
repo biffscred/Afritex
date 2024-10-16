@@ -32,18 +32,17 @@ export default function Register() {
   };
 
   return (
-    <>
+   
       
-      <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-orange-200 to-red-400 py-12 px-4">
+      <div >
   <form onSubmit={handleSubmit} className="bg-white p-10 rounded-3xl shadow-2xl max-w-lg w-full border-t-8 border-yellow-600">
-    <h1 className="text-4xl font-extrabold text-center text-yellow-900 mb-8">
-      Bienvenue chez Afritex
-    </h1>
+  <h1 className="text-blue-500">Texte ruge</h1>
+  
     {error && <p className="text-red-600 font-medium mb-4 text-center">{error}</p>}
 
     <input
       type="text"
-      placeholder="Nom complet"
+      placeholder="Nom "
       className="block w-full p-4 mb-4 border border-yellow-300 rounded-xl focus:outline-none focus:ring-4 focus:ring-yellow-600"
       required
     />
@@ -103,6 +102,6 @@ export default function Register() {
   </form>
 </div>
 
-    </>
+    
   );
 }

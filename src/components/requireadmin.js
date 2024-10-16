@@ -11,7 +11,7 @@ export default function RequireAdmin({ children }) {
   useEffect(() => {
     if (status === "loading") return;
     if (!session || session.user.role !== 'ADMIN') {
-      router.push('/auth/login');
+      router.push('pages/auth/login');
     }
   }, [session, status, router]);
 

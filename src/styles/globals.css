@@ -3,171 +3,22 @@
 @tailwind utilities;
 
 /* Palette de couleurs basée sur des tons africains */
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --color-terre: #D9534F;    /* Rouge terre cuite */
-  --color-jaune: #FFC107;    /* Jaune doré */
-  --color-vert: #4CAF50;     /* Vert olive */
-  --color-bleu: #3F51B5;     /* Bleu indigo */
-  --color-beige: #F5F5DC;    /* Blanc cassé / Beige */
-  --color-gris-fonce: #333333;
-}
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
 
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: 'Poppins', Arial, Helvetica, sans-serif;
-}
 
-/* Typographie mise à jour pour la lisibilité et le style moderne */
-h1, h2, h3 {
-  font-family: 'Poppins', sans-serif;
-  color: var(--color-bleu);
-}
 
-p, a, li, span {
-  font-family: 'Roboto', sans-serif;
-  color: var(--foreground);
-}
-
-/* Application des couleurs africaines dans les sections */
-.bg-hero {
-  background-image: url('/images/hero-bg.jpg');
-  background-size: cover;
-  background-position: center;
-  color: var(--foreground);
-}
-
-.bg-terre {
-  background-color: var(--color-terre);
-}
-
-.bg-jaune {
-  background-color: var(--color-jaune);
-}
-
-.bg-vert {
-  background-color: var(--color-vert);
-}
-
-.bg-beige {
-  background-color: var(--color-beige);
-}
-
-/* Classes Tailwind personnalisées */
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
-
-  /* Général */
-  .no-padding {
-    padding: 0px;
-  }
-
-  /* Flexbox pour les rangées */
-  .tv-row-flex {
-    display: flex;
-  }
-
-  .row-flex-wrap {
-    align-content: flex-start;
-  }
-
-  /* Largeurs des colonnes (dans un contexte responsive) */
-  .col-md-4, .col-sm-4, .col-xs-12 {
-    width: 100%;
-  }
-
-  /* Pour les images de la section "À propos" */
-  .tv-about-img img {
-    width: 100%;
-    border-radius: 10px;
-  }
-
-  /* Boîte des services */
-  .tv-service-box {
-    position: relative;
-    padding: 26px 20px;
-    transition: all 0.3s ease-in-out 0s;
-    background-color: var(--color-beige);
-    border-radius: 10px;
-  }
-
-  /* Effet au survol sur les boîtes des services */
-  .tv-service-box:hover {
-    background-color: var(--color-bleu);
-    color: var(--color-beige);
-  }
-
-  .tv-service-box:hover .tv-service-item-name h4,
-  .tv-service-box:hover .tv-service-item-name h5,
-  .tv-service-box:hover .tv-service-item-name h3 {
-    color: var(--color-jaune);
-  }
-
-  /* Nom des services (textes) */
-  .tv-service-item-name h3 {
-    color: #161616;
-    font-size: 24px;
-    font-weight: 600;
-    text-transform: uppercase;
-  }
-
-  .tv-service-item-name h4 {
-    color: var(--color-jaune);
-    font-size: 30px;
-    font-weight: 900;
-    margin: 15px 0;
-    text-transform: uppercase;
-  }
-
-  .tv-service-item-name h5 {
-    font-size: 70px;
-  }
-
-  /* Classes pour boutons d'appel à l'action */
-  .btn-primary {
-    background-color: var(--color-terre);
-    color: white;
-    padding: 10px 20px;
-    font-size: 1rem;
-    border-radius: 8px;
-    transition: background-color 0.3s ease;
-  }
-
-  .btn-primary:hover {
-    background-color: var(--color-jaune);
-    color: var(--color-foreground);
-  }
-
-  /* Classes pour les titres */
-  .section-title {
-    color: var(--color-bleu);
-    font-family: 'Poppins', sans-serif;
-    font-size: 3rem;
-    margin-bottom: 1.5rem;
-  }
-
-  .text-lg-custom {
-    font-size: 1.25rem;
-    color: var(--color-foreground);
-  }
-
-  .rounded-custom {
-    border-radius: 12px;
-  }
-}
 
 /* Font-face pour les polices personnalisées */
+@font-face {
+  font-family: 'GeistMono';
+  src: url('/fonts/GeistMonoVF.woff') format('woff');
+}
+
+@font-face {
+  font-family: 'GeistVF';
+  src: url('/fonts/GeistVF.woff') format('woff');
+}
+
 @font-face {
   font-family: 'cabinbold';
   src: url('/fonts/cabin-bold-webfont.woff2') format('woff2'),
@@ -207,27 +58,4 @@ p, a, li, span {
   font-weight: normal;
   font-style: normal;
 }
-/* Animation fade-in pour le texte */
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
 
-.animate-fadeIn {
-  animation: fadeIn 1.2s ease-in-out;
-}
-
-/* Boutons d'appel à l'action */
-a {
-  transition: all 0.3s ease-in-out;
-}
-
-a:hover {
-  transform: scale(1.05);
-}

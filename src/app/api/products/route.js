@@ -1,4 +1,3 @@
-// src/app/api/products/route.js
 import prisma from '../../../lib/prisma';
 
 export async function handler(req) {
@@ -16,8 +15,19 @@ export async function handler(req) {
 
     case 'POST':
       try {
-        const data = await req.json();
-        const product = await prisma.product.create({ data });
+        const { name, description, price, category, image } = await req.json();
+        
+        // Crée le produit dans la base de données
+        const product = await prisma.product.create({
+          data: {
+            name,
+            description,
+            price: parseFloat(price), // S'assurer que le prix est un nombre
+            category,
+            image,
+          },
+        });
+
         return new Response(JSON.stringify(product), { status: 201, headers: { 'Content-Type': 'application/json' } });
       } catch (error) {
         console.error("Erreur lors de l'ajout du produit:", error);
@@ -27,10 +37,17 @@ export async function handler(req) {
     case 'PUT':
       try {
         const id = req.url.split('/').pop();
-        const data = await req.json();
+        const { name, description, price, category, image } = await req.json();
+        
         const product = await prisma.product.update({
           where: { id: parseInt(id) },
-          data,
+          data: {
+            name,
+            description,
+            price: parseFloat(price),
+            category,
+            image,
+          },
         });
         return new Response(JSON.stringify(product), { status: 200, headers: { 'Content-Type': 'application/json' } });
       } catch (error) {

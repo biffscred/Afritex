@@ -1,4 +1,3 @@
-// components/Header.js
 "use client";
 import { useState } from 'react';
 import Link from 'next/link';
@@ -8,6 +7,7 @@ import { useSession, signIn, signOut } from 'next-auth/react';
 export default function Header() {
   const { data: session } = useSession(); // Vérifie l'état de connexion de l'utilisateur
   const [isOpen, setIsOpen] = useState(false);
+  const [isEspaceOpen, setIsEspaceOpen] = useState(false); // État pour contrôler le menu Espace
 
   return (
     <header className="bg-yellow-600 shadow-lg w-full border-b-4 border-green-700">
@@ -99,17 +99,27 @@ export default function Header() {
                 )}
               </>
             ) : (
-              <>
-                {/* Utilisateur non connecté */}
-                <li>
-                  <Link href="/auth/register">
-                    <span className="text-white text-lg font-bold hover:text-blue-400 transition-colors duration-300 cursor-pointer">Inscription</span>
-                  </Link>
-                </li>
-                <li>
-                  <button onClick={() => signIn()} className="text-white text-lg font-bold hover:text-green-500 transition-colors duration-300 cursor-pointer">Connexion</button>
-                </li>
-              </>
+              <li className="relative">
+                {/* Menu Espace */}
+                <button
+                  onClick={() => setIsEspaceOpen(!isEspaceOpen)}
+                  className="text-white text-lg font-bold hover:text-blue-400 transition-colors duration-300 cursor-pointer"
+                >
+                  Espace
+                </button>
+                {isEspaceOpen && (
+                  <ul className="absolute bg-yellow-600 shadow-lg rounded-md mt-2 w-32 p-2 space-y-2">
+                    <li>
+                      <button onClick={() => signIn()} className="w-full text-left text-white text-lg font-bold hover:text-green-500 transition-colors duration-300">Connexion</button>
+                    </li>
+                    <li>
+                      <Link href="/auth/register">
+                        <span className="text-white text-lg font-bold hover:text-blue-400 transition-colors duration-300 cursor-pointer">Inscription</span>
+                      </Link>
+                    </li>
+                  </ul>
+                )}
+              </li>
             )}
           </ul>
         </nav>

@@ -14,7 +14,7 @@ const Banner = () => {
           <p className="text-white text-lg font-light">
             Découvrez nos tissus africains authentiques et sublimez vos créations.
           </p>
-          <a href="/produits" className="mt-6 inline-block bg-red-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-red-700 transition duration-300">
+          <a href="/shop" className="mt-6 inline-block bg-red-600 text-white font-bold py-3 px-6 rounded-lg hover:bg-red-700 transition duration-300">
             Voir nos produits
           </a>
         </div>
