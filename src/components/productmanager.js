@@ -1,12 +1,19 @@
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from "react";
 
 export default function ProductManager() {
   const [products, setProducts] = useState([]);
-  const [form, setForm] = useState({ name: '', description: '', price: '', category: '', image: '' });
+  const [form, setForm] = useState({
+    name: "",
+    description: "",
+    price: "",
+    category: "",
+    image: "",
+  });
   const [editId, setEditId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [images, setImages] = useState([]);
+  const [success, setSuccess] = useState(null);
 
   // Récupération des produits
   useEffect(() => {
@@ -16,7 +23,7 @@ export default function ProductManager() {
 
   async function fetchProducts() {
     try {
-      const res = await fetch('/api/products');
+      const res = await fetch("/api/products");
       const data = await res.json();
       setProducts(data);
     } catch (error) {
@@ -26,7 +33,7 @@ export default function ProductManager() {
 
   async function fetchImages() {
     try {
-      const res = await fetch('/api/images'); // Endpoint pour récupérer les images du dossier public
+      const res = await fetch("/api/images"); // Endpoint pour récupérer les images du dossier public
       const data = await res.json();
       setImages(data);
     } catch (error) {
@@ -37,24 +44,31 @@ export default function ProductManager() {
   async function handleSubmit(e) {
     e.preventDefault();
     setLoading(true);
-    
-    const method = editId ? 'PUT' : 'POST';
-    const url = editId ? `/api/products/${editId}` : '/api/products';
+
+    const method = editId ? "PUT" : "POST";
+    const url = editId ? `/api/products/${editId}` : "/api/products";
 
     try {
       const res = await fetch(url, {
         method,
-        headers: { 'Content-Type': 'application/json' },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(form),
       });
 
       if (res.ok) {
         fetchProducts();
-        setForm({ name: '', description: '', price: '', category: '', image: '' });
+        setForm({
+          name: "",
+          description: "",
+          price: "",
+          category: "",
+          image: "",
+        });
         setEditId(null);
+        setSuccess("Produit ajouté avec succès !");
       } else {
         const { message } = await res.json();
-        setError(message || 'Une erreur est survenue.');
+        setError(message || "Une erreur est survenue.");
       }
     } catch (error) {
       setError("Erreur de réseau, veuillez réessayer.");
@@ -62,7 +76,12 @@ export default function ProductManager() {
       setLoading(false);
     }
   }
-
+  {
+    useEffect(() => {
+      setError(null);
+      setSuccess(null);
+    }, [form]);
+  }
   function handleEdit(product) {
     setForm(product);
     setEditId(product.id);
@@ -71,7 +90,7 @@ export default function ProductManager() {
   async function handleDelete(id) {
     setLoading(true);
     try {
-      await fetch(`/api/products/${id}`, { method: 'DELETE' });
+      await fetch(`/api/products/${id}`, { method: "DELETE" });
       fetchProducts();
     } catch (error) {
       console.error("Erreur lors de la suppression :", error);
@@ -82,90 +101,105 @@ export default function ProductManager() {
 
   return (
     <div className="bg-gradient-to-b from-yellow-100 to-orange-200 p-8 rounded-lg shadow-md">
-      <h1 className="text-3xl font-bold mb-6 text-center text-yellow-900">Gestion des Produits</h1>
-      {error && <p className="text-red-500 text-center mb-4">{error}</p>}
-      
-      <form onSubmit={handleSubmit} className="mb-6 grid gap-4 bg-white p-6 rounded-lg shadow-lg border border-orange-300">
-        <input 
-          type="text" 
-          placeholder="Nom (max 50 caractères)" 
-          value={form.name} 
-          onChange={(e) => setForm({ ...form, name: e.target.value })} 
-          maxLength={50} 
-          className="w-full p-3 border rounded-md focus:outline-none focus:ring focus:ring-orange-300" 
-          required 
+      <h1 className="text-3xl font-bold mb-6 text-center text-yellow-900">
+        Gestion des Produits
+      </h1>
+      {error && !loading && (
+        <p className="text-red-500 text-center mb-4">{error}</p>
+      )}
+
+{success && !loading && (
+        <p className="text-green-500 text-center mb-4">{success}</p>
+      )}
+
+      <form
+        onSubmit={handleSubmit}
+        className="mb-6 grid gap-4 bg-white p-6 rounded-lg shadow-lg border border-orange-300"
+      >
+        <input
+          type="text"
+          placeholder="Nom (max 50 caractères)"
+          value={form.name}
+          onChange={(e) => setForm({ ...form, name: e.target.value })}
+          maxLength={50}
+          className="w-full p-3 border rounded-md focus:outline-none focus:ring focus:ring-orange-300"
+          required
         />
-        <textarea 
-          placeholder="Description (max 200 caractères)" 
-          value={form.description} 
-          onChange={(e) => setForm({ ...form, description: e.target.value })} 
-          maxLength={500} 
-          className="w-full p-3 border rounded-md focus:outline-none focus:ring focus:ring-orange-300" 
+        <textarea
+          placeholder="Description (max 200 caractères)"
+          value={form.description}
+          onChange={(e) => setForm({ ...form, description: e.target.value })}
+          maxLength={500}
+          className="w-full p-3 border rounded-md focus:outline-none focus:ring focus:ring-orange-300"
           required
         ></textarea>
-        <input 
-          type="number" 
-          placeholder="Prix" 
-          value={form.price} 
-          onChange={(e) => setForm({ ...form, price: e.target.value })} 
-          className="w-full p-3 border rounded-md focus:outline-none focus:ring focus:ring-orange-300" 
-          required 
+        <input
+          type="number"
+          placeholder="Prix"
+          value={form.price}
+          onChange={(e) => setForm({ ...form, price: e.target.value })}
+          className="w-full p-3 border rounded-md focus:outline-none focus:ring focus:ring-orange-300"
+          required
         />
-        
-        <select 
-          value={form.category} 
-          onChange={(e) => setForm({ ...form, category: e.target.value })} 
-          className="w-full p-3 border rounded-md focus:outline-none focus:ring focus:ring-orange-300" 
+
+        <select
+          value={form.category}
+          onChange={(e) => setForm({ ...form, category: e.target.value })}
+          className="w-full p-3 border rounded-md focus:outline-none focus:ring focus:ring-orange-300"
           required
         >
           <option value="">Sélectionnez une catégorie</option>
-          <option value="Fabrics">Tissus</option>
-          <option value="Models">Modèles</option>
-          <option value="Accessories">Accessoires</option>
+          <option value="FABRIC">Tissus</option>
+          <option value="MODEL">Modèles</option>
+          <option value="ACCESSORY">Accessoires</option>
         </select>
 
-        <select 
-          value={form.image} 
-          onChange={(e) => setForm({ ...form, image: e.target.value })} 
-          className="w-full p-3 border rounded-md focus:outline-none focus:ring focus:ring-orange-300" 
+        <select
+          value={form.image}
+          onChange={(e) => setForm({ ...form, image: e.target.value })}
+          className="w-full p-3 border rounded-md focus:outline-none focus:ring focus:ring-orange-300"
           required
         >
           <option value="">Sélectionnez une image</option>
           {images.map((img, index) => (
-            <option key={index} value={img}>{img}</option>
+            <option key={index} value={img}>
+              {img}
+            </option>
           ))}
         </select>
 
-        <button 
-          type="submit" 
-          className="w-full bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition-all duration-300 disabled:opacity-50"
+        <button
+          type="submit"
+          className="w-full bg-green-600 text-white py-3 px-6 rounded-lg hover:bg-green-700 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
           disabled={loading}
         >
-          {loading ? 'Chargement...' : editId ? "Modifier" : "Ajouter"} Produit
+          {loading ? "Chargement..." : editId ? "Modifier" : "Ajouter"} Produit
         </button>
       </form>
-    
+
       <ul className="space-y-6">
         {products.map((product) => (
-          <li 
-            key={product.id} 
-            className="bg-white p-6 rounded-lg shadow-md border border-yellow-300 flex justify-between items-start space-x-4 transition-transform duration-300 transform hover:scale-105"
+          <li
+            key={product.id}
+            className="bg-white p-6 rounded-lg shadow-md border border-yellow-300 flex justify-between items-start space-x-4 transition-transform duration-300 transform hover:scale-105 cursor-pointer"
           >
             <div>
-              <h3 className="text-xl font-semibold text-orange-800">{product.name}</h3>
+              <h3 className="text-xl font-semibold text-orange-800">
+                {product.name}
+              </h3>
               <p className="text-gray-600">{product.description}</p>
               <p className="text-green-700 font-bold mt-2">{product.price} €</p>
             </div>
             <div className="flex space-x-3">
-              <button 
-                onClick={() => handleEdit(product)} 
-                className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-all duration-300"
+              <button
+                onClick={() => handleEdit(product)}
+                className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 Modifier
               </button>
-              <button 
-                onClick={() => handleDelete(product.id)} 
-                className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-all duration-300"
+              <button
+                onClick={() => handleDelete(product.id)}
+                className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                 disabled={loading}
               >
                 Supprimer

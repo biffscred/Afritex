@@ -13,10 +13,10 @@ export async function handler(req) {
         return new Response(JSON.stringify({ message: "Erreur lors de la récupération des produits" }), { status: 500 });
       }
 
-    case 'POST':
+      case "POST":
+      console.log(req.body);
       try {
         const { name, description, price, category, image } = await req.json();
-        
         // Crée le produit dans la base de données
         const product = await prisma.product.create({
           data: {
@@ -27,12 +27,20 @@ export async function handler(req) {
             image,
           },
         });
-
-        return new Response(JSON.stringify(product), { status: 201, headers: { 'Content-Type': 'application/json' } });
+        console.log(product);
+        return new Response(JSON.stringify(product), {
+          status: 201,
+          headers: { "Content-Type": "application/json" },
+        });
       } catch (error) {
         console.error("Erreur lors de l'ajout du produit:", error);
-        return new Response(JSON.stringify({ message: "Erreur lors de l'ajout du produit" }), { status: 500 });
+        return new Response(
+          JSON.stringify({ message: "Erreur lors de l'ajout du produit" }),
+          { status: 500 },
+          console.error("Erreur lors de l'ajout du produit:", error.message)
+        );
       }
+
 
     case 'PUT':
       try {
