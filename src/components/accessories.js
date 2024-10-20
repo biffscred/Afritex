@@ -9,7 +9,8 @@ const accessories = [
 
 export default function AccessoriesSection() {
   return (
-    <section className="py-12 bg-gradient-to-b from-yellow-50 to-yellow-200">
+    <section className="py-12 bg-gradient-to-b from-yellow-100 via-orange-200 to-green-200
+">
       <div className="container mx-auto text-center">
         <h2 className="text-4xl font-extrabold text-yellow-800 mb-8">Nos Accessoires</h2>
         

@@ -1,6 +1,6 @@
 "use client";
-import RequireAdmin from '../../components/requireadmin';
-import ProductManager from '../../components/productmanager';
+import RequireAdmin from '../../../components/requireadmin';
+import ProductManager from '../../../components/productmanager';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 

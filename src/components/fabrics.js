@@ -3,7 +3,8 @@ import Link from 'next/link';
 
 const FabricsSection = () => {
   return (
-    <section className="py-12 bg-gradient-to-b from-yellow-100 to-yellow-300">
+    <section className="py-12 bg-gradient-to-b from-yellow-100 via-orange-200 to-green-200
+">
       <div className="container mx-auto text-center">
         <h2 className="text-4xl font-extrabold text-yellow-900 mb-6">Nos Tissus Africains</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

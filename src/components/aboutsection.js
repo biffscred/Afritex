@@ -5,7 +5,8 @@ import Image from 'next/image';
 
 const AboutSection = () => {
   return (
-    <section id="about" className="py-12">
+    <section id="about" className="py-12 bg-gradient-to-b from-yellow-100 via-orange-200 to-green-200
+">
       <div className="container mx-auto px-4">
         {/* Première rangée */}
         <div className="flex flex-wrap">
@@ -24,10 +25,8 @@ const AboutSection = () => {
           {/* Colonne 2 */}
           <div className="w-full md:w-1/3 p-2">
           <div className="service-box bg-white text-black hover:bg-black hover:text-white transition duration-300 p-6 rounded-lg">
-              <h3 className="text-xl font-bold">Une sélection des plus beaux</h3>
-              <h4 className="text-lg">Tissus & Accessoires</h4>
-              <h5 className="text-md">Africains</h5>
-              <h2 className="text-2xl">Issus de l'artisanat d'art</h2>
+              <h3 className="text-xl font-bold">Une sélection des plus beaux Tissus & Accessoires Africains Issus de l'artisanat d'art </h3>
+              
             </div>
           </div>
           {/* Colonne 3 */}
@@ -49,10 +48,8 @@ const AboutSection = () => {
           {/* Colonne 1 */}
           <div className="w-full md:w-1/3 p-2">
           <div className="service-box bg-white text-black hover:bg-black hover:text-white transition duration-300 p-6 rounded-lg">
-              <h3 className="text-xl font-bold">Des produits de qualité</h3>
-              <h4 className="text-lg">exclusivement à base</h4>
-              <h5 className="text-md">de coton africain</h5>
-              <h2 className="text-2xl">Pour soutenir la chaîne de valeur de la filière coton</h2>
+              <h3 className="text-xl font-bold">Des produits de qualité exclusivement à base de coton africain Pour soutenir la chaîne de valeur de la filière coton </h3>
+              
             </div>
           </div>
           {/* Colonne 2 */}
@@ -70,10 +67,8 @@ const AboutSection = () => {
           {/* Colonne 3 */}
           <div className="w-full md:w-1/3 p-2">
           <div className="service-box bg-white text-black hover:bg-black hover:text-white transition duration-300 p-6 rounded-lg">
-              <h3 className="text-xl font-bold">Nous travaillons avec</h3>
-              <h4 className="text-lg">des tisserands</h4>
-              <h2 className="text-2xl">au sommet de leur art et des centres de tissage</h2>
-              <h5 className="text-md">agréés et compétents</h5>
+              <h3 className="text-xl font-bold">Nous travaillons avec des tisserands au sommet de leur art et des centres de tissage agréés et compétents</h3>
+             
             </div>
           </div>
         </div>

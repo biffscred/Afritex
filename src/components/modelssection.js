@@ -22,7 +22,8 @@ export default function ModelsSection() {
   };
 
   return (
-    <section className="w-full py-12 bg-gradient-to-b from-yellow-50 to-yellow-200">
+    <section className="py-12 bg-gradient-to-b from-yellow-100 via-orange-200 to-green-200
+">
       <div className="container mx-auto text-center">
         <h2 className="text-4xl font-extrabold text-yellow-800 mb-8">Nos Modèles</h2>
         <div className="relative w-full max-w-md mx-auto">

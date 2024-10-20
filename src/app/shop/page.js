@@ -15,7 +15,7 @@ export default function Shop() {
     <div>
       <Header />
       
-      <main className="container mx-auto py-12">
+      <main className="container mx-auto ">
        
 
         <h1 className="text-4xl font-bold text-center text-yellow-800 my-8">Boutique</h1>

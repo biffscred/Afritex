@@ -1,16 +1,29 @@
 "use client";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSession, signIn, signOut } from 'next-auth/react';
 
 export default function Header() {
-  const { data: session } = useSession(); // Vérifie l'état de connexion de l'utilisateur
+  const { data: session, status } = useSession(); // Vérifie l'état de connexion de l'utilisateur
   const [isOpen, setIsOpen] = useState(false);
   const [isEspaceOpen, setIsEspaceOpen] = useState(false); // État pour contrôler le menu Espace
 
+  // Fonction pour vérifier si l'utilisateur est admin
+  const isAdmin = session?.user?.role === 'admin';
+
+  // Debug: Afficher le contenu de session.user
+  useEffect(() => {
+    console.log('Session User:', session?.user);
+    console.log('Is Admin:', isAdmin);
+  }, [session]);
+
+  if (status === 'loading') {
+    return <p>Chargement...</p>;
+  }
+
   return (
-    <header className="bg-yellow-600 shadow-lg w-full border-b-4 border-green-700">
+    <header className="bg-red-900 text-gray-200  border-t-4 border-green-800">
       <div className="container mx-auto flex justify-between items-center p-4">
         
         {/* Logo */}
@@ -73,12 +86,15 @@ export default function Header() {
             {/* Affichage conditionnel en fonction de la session */}
             {session ? (
               <>
-                {/* Utilisateur connecté */}
-                <li>
-                  <Link href="/account">
-                    <span className="text-white text-lg font-bold hover:text-pink-400 transition-colors duration-300 cursor-pointer">Compte</span>
-                  </Link>
-                </li>
+                {/* Si l'utilisateur est un administrateur, afficher l'onglet Admin */}
+                {isAdmin && (
+                  <li>
+                    <Link href="/admin">
+                      <span className="text-white text-lg font-bold hover:text-pink-400 transition-colors duration-300 cursor-pointer">Admin</span>
+                    </Link>
+                  </li>
+                )}
+
                 <li>
                   <button onClick={() => signOut()} className="text-white text-lg font-bold hover:text-red-500 transition-colors duration-300 cursor-pointer">Déconnexion</button>
                 </li>
@@ -99,7 +115,7 @@ export default function Header() {
                 )}
               </>
             ) : (
-              <li className="relative">
+              <li className="relative z-50">
                 {/* Menu Espace */}
                 <button
                   onClick={() => setIsEspaceOpen(!isEspaceOpen)}
@@ -108,13 +124,20 @@ export default function Header() {
                   Espace
                 </button>
                 {isEspaceOpen && (
-                  <ul className="absolute bg-yellow-600 shadow-lg rounded-md mt-2 w-32 p-2 space-y-2">
+                  <ul className="absolute bg-yellow-600 shadow-lg rounded-md mt-2 w-32 p-2 space-y-2 z-50">
                     <li>
-                      <button onClick={() => signIn()} className="w-full text-left text-white text-lg font-bold hover:text-green-500 transition-colors duration-300">Connexion</button>
+                      <button
+                        onClick={() => signIn()}
+                        className="w-full text-left text-white text-lg font-bold hover:text-green-500 transition-colors duration-300"
+                      >
+                        Connexion
+                      </button>
                     </li>
                     <li>
                       <Link href="/auth/register">
-                        <span className="text-white text-lg font-bold hover:text-blue-400 transition-colors duration-300 cursor-pointer">Inscription</span>
+                        <span className="text-white text-lg font-bold hover:text-blue-400 transition-colors duration-300 cursor-pointer">
+                          Inscription
+                        </span>
                       </Link>
                     </li>
                   </ul>
