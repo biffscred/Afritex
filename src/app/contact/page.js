@@ -13,6 +13,8 @@ export default function ContactPage() {
     message: ''
   });
 
+  const [status, setStatus] = useState(null); // État pour gérer le statut de l'envoi
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prevData) => ({
@@ -21,16 +23,35 @@ export default function ContactPage() {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form data submitted:", formData);
-    // Reset form after submit
-    setFormData({
-      name: '',
-      email: '',
-      subject: '',
-      message: ''
-    });
+    setStatus('sending'); // Mettre à jour le statut à "en cours d'envoi"
+
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (response.ok) {
+        setStatus('success'); // Si l'e-mail est envoyé avec succès
+        // Réinitialiser le formulaire après envoi
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: ''
+        });
+      } else {
+        setStatus('error'); // En cas d'erreur
+      }
+    } catch (error) {
+      console.error('Erreur lors de l\'envoi du formulaire :', error);
+      setStatus('error'); // Si une erreur est levée
+    }
   };
 
   return (
@@ -103,10 +124,13 @@ export default function ContactPage() {
             <button
               type="submit"
               className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+              disabled={status === 'sending'} // Désactiver le bouton si en cours d'envoi
             >
-              Envoyer
+              {status === 'sending' ? 'Envoi...' : 'Envoyer'}
             </button>
           </div>
+          {status === 'success' && <p className="text-green-500 text-center mt-4">E-mail envoyé avec succès !</p>}
+          {status === 'error' && <p className="text-red-500 text-center mt-4">Erreur lors de l'envoi de l'e-mail.</p>}
         </form>
       </main>
       <Footer />

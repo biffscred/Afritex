@@ -2,18 +2,35 @@
 
 import { useState, useEffect } from 'react';
 import { signIn } from 'next-auth/react';
-import { useRouter } from 'next/navigation';
+import { useRouter } from 'next/navigation'; // Utilisation de useRouter
 
 export default function Login() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
-  const [isMounted, setIsMounted] = useState(false); // Utilisation d'un état pour vérifier si le composant est monté
+  const [confirmationMessage, setConfirmationMessage] = useState(''); // Message de confirmation
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
-    setIsMounted(true); // Le composant est maintenant monté côté client
+    // Marquer le composant comme monté côté client
+    setIsMounted(true);
+
+    // Vérification si window est défini et extraction des paramètres d'URL uniquement côté client
+    if (typeof window !== 'undefined') {
+      const params = new URLSearchParams(window.location.search);
+      const confirmed = params.get('confirmed');
+      
+      if (confirmed) {
+        setConfirmationMessage("Votre compte a été confirmé avec succès ! Vous pouvez maintenant vous connecter.");
+      }
+    }
   }, []);
+
+  // Rendre uniquement une fois monté côté client
+  if (!isMounted) {
+    return null; // Ne pas afficher tant que le composant n'est pas monté côté client
+  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -22,6 +39,7 @@ export default function Login() {
       redirect: false,
       email,
       password,
+      callbackUrl: '/',
     });
 
     if (result.error) {
@@ -32,25 +50,28 @@ export default function Login() {
   };
 
   const handleProviderLogin = async (provider) => {
-    if (isMounted) { // Ne fait l'appel qu'après que le composant est monté
-      await signIn(provider, { callbackUrl: '/' }); // Rediriger vers l'accueil après connexion avec un provider
+    try {
+      await signIn(provider, { callbackUrl: '/' });
+    } catch (err) {
+      console.error('Erreur lors de la connexion avec le fournisseur :', err);
+      setError('Erreur lors de la connexion avec le fournisseur.');
     }
   };
-
-  if (!isMounted) {
-    // Rendu conditionnel pour éviter les erreurs d’hydratation avant le montage
-    return <div>Chargement...</div>;
-  }
 
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-b from-yellow-300 via-red-500 to-green-700 py-12 px-4">
       <div className="w-full max-w-md bg-white p-8 rounded-3xl shadow-2xl border-4 border-yellow-700">
         <h1 className="text-4xl font-bold text-center text-green-900 mb-6">Bienvenue chez Afritex</h1>
-        
+
+        {/* Message de confirmation d'inscription */}
+        {confirmationMessage && (
+          <p className="text-green-600 font-semibold mb-4 text-center">{confirmationMessage}</p>
+        )}
+
         {/* Formulaire de Connexion */}
         <form onSubmit={handleSubmit} className="space-y-6">
           {error && <p className="text-red-600 font-semibold mb-4 text-center">{error}</p>}
-          
+
           {/* Email Input */}
           <div>
             <label htmlFor="email" className="block text-lg font-medium text-green-900 mb-2">
@@ -95,7 +116,6 @@ export default function Login() {
           <button onClick={() => handleProviderLogin('google')} className="bg-red-600 text-white py-2 px-4 rounded-lg hover:bg-red-700 transition-colors duration-300">
             Connexion avec Google
           </button>
-         
         </div>
 
         {/* Lien d'inscription */}

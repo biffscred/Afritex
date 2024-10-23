@@ -9,19 +9,15 @@ export default function Header() {
   const [isOpen, setIsOpen] = useState(false);
   const [isEspaceOpen, setIsEspaceOpen] = useState(false); // État pour contrôler le menu Espace
 
-  // Fonction pour vérifier si l'utilisateur est admin
-  const isAdmin = session?.user?.role === 'admin';
+  const isAdmin = status === 'authenticated' && session?.user?.role?.toLowerCase() === 'admin';
 
-  // Debug: Afficher le contenu de session.user
   useEffect(() => {
-    console.log('Session User:', session?.user);
-    console.log('Is Admin:', isAdmin);
-  }, [session]);
-
-  if (status === 'loading') {
-    return <p>Chargement...</p>;
-  }
-
+    if (status === 'authenticated') {
+      console.log('Session User:', session?.user);
+      console.log('Rôle de l\'utilisateur:', session?.user?.role);
+      console.log('Is Admin:', isAdmin);
+    }
+  }, [session, status]);
   return (
     <header className="bg-red-900 text-gray-200  border-t-4 border-green-800">
       <div className="container mx-auto flex justify-between items-center p-4">

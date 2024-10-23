@@ -26,7 +26,7 @@ export default function Register() {
       });
 
       if (res.ok) {
-        router.push('/auth/login'); // Redirection vers la page de connexion après inscription
+        router.push('/auth/confirmation'); 
       } else {
         const { message } = await res.json();
         setError(message || 'Erreur lors de l’inscription.');

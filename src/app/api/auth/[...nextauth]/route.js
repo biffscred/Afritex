@@ -26,7 +26,7 @@ const options = {
           where: { email: credentials.email },
           select: {
             id: true,
-            name: true,
+            
             email: true,
             password: true,
             role: true,

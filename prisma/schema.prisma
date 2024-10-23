@@ -1,136 +1,155 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
 datasource db {
   provider = "mysql"
   url      = env("DATABASE_URL")
 }
 
-generator client {
-  provider = "prisma-client-js"
+model accessory {
+  id             Int              @id @default(autoincrement())
+  name           String
+  description    String
+  price          Float
+  fabricId       Int
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime
+  fabric         fabric           @relation(fields: [fabricId], references: [id], map: "Accessory_fabricId_fkey")
+  accessoryimage accessoryimage[]
+  orderitem      orderitem[]
+  product        product?
+  country        country[]        @relation("accessorycountries")
+
+  @@index([fabricId], map: "Accessory_fabricId_fkey")
 }
 
-model User {
-  id        Int      @id @default(autoincrement())
-  email     String   @unique
-  password  String
-  role      Role     @default(USER)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-  orders    Order[]
-}
-
-model Product {
-  id          Int          @id @default(autoincrement())
-  name        String
-  description String
-  price       Float
-  category    ProductCategory
-  image       String
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-
-  // Relations to specific product types with unique constraints
-  fabric      Fabric?       @relation("ProductFabric", fields: [fabricId], references: [id])
-  model       Model?        @relation("ProductModel", fields: [modelId], references: [id])
-  accessory   Accessory?    @relation("ProductAccessory", fields: [accessoryId], references: [id])
-
-  fabricId    Int?          @unique
-  modelId     Int?          @unique
-  accessoryId Int?          @unique
-}
-
-model Fabric {
-  id          Int          @id @default(autoincrement())
-  material    String       // e.g., Coton, Soie, Lin
-  pattern     String?      // e.g., Wax, Bogolan, Kenté
-  origin      String?
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  product     Product?     @relation("ProductFabric")
-  countries   Country[]    @relation("FabricCountries")
-  models      Model[]
-  accessories Accessory[]
-}
-
-model Model {
-  id          Int          @id @default(autoincrement())
-  name        String
-  description String
-  price       Float
-  fabricId    Int
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  product     Product?     @relation("ProductModel")
-  fabric      Fabric       @relation(fields: [fabricId], references: [id])
-  images      ModelImage[]
-  countries   Country[]    @relation("ModelCountries")
-  orderItems  OrderItem[]  // Relation inverse avec OrderItem
-}
-
-model Accessory {
-  id          Int          @id @default(autoincrement())
-  name        String
-  description String
-  price       Float
-  fabricId    Int
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  product     Product?     @relation("ProductAccessory")
-  fabric      Fabric       @relation(fields: [fabricId], references: [id])
-  images      AccessoryImage[]
-  countries   Country[]    @relation("AccessoryCountries")
-  orderItems  OrderItem[]  // Relation inverse avec OrderItem
-}
-
-model Country {
-  id          Int          @id @default(autoincrement())
-  name        String       @unique
-  fabrics     Fabric[]     @relation("FabricCountries")
-  models      Model[]      @relation("ModelCountries")
-  accessories Accessory[]  @relation("AccessoryCountries")
-}
-
-model ModelImage {
-  id      Int     @id @default(autoincrement())
-  url     String
-  altText String?
-  modelId Int
-  model   Model   @relation(fields: [modelId], references: [id])
-}
-
-model AccessoryImage {
+model accessoryimage {
   id          Int       @id @default(autoincrement())
   url         String
   altText     String?
   accessoryId Int
-  accessory   Accessory @relation(fields: [accessoryId], references: [id])
+  accessory   accessory @relation(fields: [accessoryId], references: [id], map: "AccessoryImage_accessoryId_fkey")
+
+  @@index([accessoryId], map: "AccessoryImage_accessoryId_fkey")
 }
 
-model Order {
+model country {
+  id        Int         @id @default(autoincrement())
+  name      String      @unique(map: "Country_name_key")
+  accessory accessory[] @relation("accessorycountries")
+  fabric    fabric[]    @relation("fabriccountries")
+  model     model[]     @relation("modelcountries")
+}
+
+model fabric {
+  id        Int         @id @default(autoincrement())
+  material  String
+  pattern   String?
+  origin    String?
+  createdAt DateTime    @default(now())
+  updatedAt DateTime
+  accessory accessory[]
+  model     model[]
+  product   product?
+  country   country[]   @relation("fabriccountries")
+}
+
+model model {
+  id          Int          @id @default(autoincrement())
+  name        String
+  description String
+  price       Float
+  fabricId    Int
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime
+  fabric      fabric       @relation(fields: [fabricId], references: [id], map: "Model_fabricId_fkey")
+  modelimage  modelimage[]
+  orderitem   orderitem[]
+  product     product?
+  country     country[]    @relation("modelcountries")
+
+  @@index([fabricId], map: "Model_fabricId_fkey")
+}
+
+model modelimage {
+  id      Int     @id @default(autoincrement())
+  url     String
+  altText String?
+  modelId Int
+  model   model   @relation(fields: [modelId], references: [id], map: "ModelImage_modelId_fkey")
+
+  @@index([modelId], map: "ModelImage_modelId_fkey")
+}
+
+model order {
   id        Int         @id @default(autoincrement())
   userId    Int
   total     Float
   createdAt DateTime    @default(now())
-  user      User        @relation(fields: [userId], references: [id])
-  items     OrderItem[]
+  user      user        @relation(fields: [userId], references: [id], map: "Order_userId_fkey")
+  orderitem orderitem[]
+
+  @@index([userId], map: "Order_userId_fkey")
 }
 
-model OrderItem {
+model orderitem {
   id          Int        @id @default(autoincrement())
   orderId     Int
   modelId     Int?
   accessoryId Int?
   quantity    Int
   price       Float
-  order       Order      @relation(fields: [orderId], references: [id])
-  model       Model?     @relation(fields: [modelId], references: [id])
-  accessory   Accessory? @relation(fields: [accessoryId], references: [id])
+  accessory   accessory? @relation(fields: [accessoryId], references: [id], map: "OrderItem_accessoryId_fkey")
+  model       model?     @relation(fields: [modelId], references: [id], map: "OrderItem_modelId_fkey")
+  order       order      @relation(fields: [orderId], references: [id], map: "OrderItem_orderId_fkey")
+
+  @@index([accessoryId], map: "OrderItem_accessoryId_fkey")
+  @@index([modelId], map: "OrderItem_modelId_fkey")
+  @@index([orderId], map: "OrderItem_orderId_fkey")
 }
 
-enum Role {
+model product {
+  id          Int              @id @default(autoincrement())
+  name        String
+  description String
+  price       Float
+  category    product_category
+  image       String
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime
+  fabricId    Int?             @unique(map: "Product_fabricId_key")
+  modelId     Int?             @unique(map: "Product_modelId_key")
+  accessoryId Int?             @unique(map: "Product_accessoryId_key")
+  accessory   accessory?       @relation(fields: [accessoryId], references: [id], map: "Product_accessoryId_fkey")
+  fabric      fabric?          @relation(fields: [fabricId], references: [id], map: "Product_fabricId_fkey")
+  model       model?           @relation(fields: [modelId], references: [id], map: "Product_modelId_fkey")
+}
+
+model user {
+  id            Int       @id @default(autoincrement())
+  email         String    @unique(map: "User_email_key")
+  password      String
+  role          user_role @default(USER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime
+  emailVerified DateTime?
+  order         order[]
+}
+
+model verificationtoken {
+  id      Int      @id @default(autoincrement())
+  email   String
+  token   String   @unique(map: "VerificationToken_token_key")
+  expires DateTime
+}
+
+enum user_role {
   USER
   ADMIN
 }
 
-enum ProductCategory {
+enum product_category {
   FABRIC
   MODEL
   ACCESSORY
