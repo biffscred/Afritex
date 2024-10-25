@@ -18,6 +18,7 @@ export default function Header() {
       console.log('Is Admin:', isAdmin);
     }
   }, [session, status]);
+
   return (
     <header className="bg-red-900 text-gray-200  border-t-4 border-green-800">
       <div className="container mx-auto flex justify-between items-center p-4">
@@ -84,11 +85,30 @@ export default function Header() {
               <>
                 {/* Si l'utilisateur est un administrateur, afficher l'onglet Admin */}
                 {isAdmin && (
+                <li className="relative group">
+                <Link href="/admin">
+                  <span className="text-white text-lg font-bold hover:text-pink-400 transition-colors duration-300 cursor-pointer">
+                    Admin
+                  </span>
+                </Link>
+                <ul className="absolute hidden group-hover:block bg-gray-800 rounded-lg shadow-lg mt-2 z-50">
                   <li>
-                    <Link href="/admin">
-                      <span className="text-white text-lg font-bold hover:text-pink-400 transition-colors duration-300 cursor-pointer">Admin</span>
+                    <Link href="/admin/product">
+                      <span className="text-white text-lg font-bold hover:text-pink-400 transition-colors duration-300 cursor-pointer block px-4 py-2">
+                        Gestion des produits
+                      </span>
                     </Link>
                   </li>
+                  <li>
+                    <Link href="/admin/users">
+                      <span className="text-white text-lg font-bold hover:text-pink-400 transition-colors duration-300 cursor-pointer block px-4 py-2">
+                        Gestion des utilisateurs
+                      </span>
+                    </Link>
+                  </li>
+                </ul>
+              </li>
+              
                 )}
 
                 <li>

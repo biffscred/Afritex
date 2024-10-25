@@ -13,15 +13,18 @@ model accessory {
   description    String
   price          Float
   fabricId       Int
+  color          String?          // Champ pour la couleur de l'accessoire
   createdAt      DateTime         @default(now())
   updatedAt      DateTime
-  fabric         fabric           @relation(fields: [fabricId], references: [id], map: "Accessory_fabricId_fkey")
+  fabric         fabric           @relation(fields: [fabricId], references: [id])
+  artisanId      Int?             // L'artisan qui a conçu cet accessoire
+  artisan        artisan?         @relation(fields: [artisanId], references: [id])
   accessoryimage accessoryimage[]
   orderitem      orderitem[]
-  product        product?
+  products       product[]        // Relation un-à-plusieurs avec les produits
   country        country[]        @relation("accessorycountries")
 
-  @@index([fabricId], map: "Accessory_fabricId_fkey")
+  @@index([fabricId])
 }
 
 model accessoryimage {
@@ -29,30 +32,46 @@ model accessoryimage {
   url         String
   altText     String?
   accessoryId Int
-  accessory   accessory @relation(fields: [accessoryId], references: [id], map: "AccessoryImage_accessoryId_fkey")
+  accessory   accessory @relation(fields: [accessoryId], references: [id])
 
-  @@index([accessoryId], map: "AccessoryImage_accessoryId_fkey")
+  @@index([accessoryId])
 }
 
 model country {
-  id        Int         @id @default(autoincrement())
-  name      String      @unique(map: "Country_name_key")
-  accessory accessory[] @relation("accessorycountries")
-  fabric    fabric[]    @relation("fabriccountries")
-  model     model[]     @relation("modelcountries")
+  id         Int         @id @default(autoincrement())
+  name       String      @unique
+  accessory  accessory[] @relation("accessorycountries")
+  fabric     fabric[]    @relation("fabriccountries") // Relation inverse avec les tissus
+  model      model[]     @relation("modelcountries")
+  artisan    artisan[]   @relation("countryArtisans") // Relation pour les artisans
+  products   product[]   @relation("ProductCountries") // Relation avec le modèle product
+
 }
 
 model fabric {
-  id        Int         @id @default(autoincrement())
-  material  String
-  pattern   String?
-  origin    String?
-  createdAt DateTime    @default(now())
-  updatedAt DateTime
-  accessory accessory[]
-  model     model[]
-  product   product?
-  country   country[]   @relation("fabriccountries")
+  id         Int           @id @default(autoincrement())
+  material   String
+  pattern    String?
+  origin     String?
+  color      String?        // Champ pour la couleur dominante du tissu
+  size       Float?         // Champ pour la taille ou la longueur du tissu
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime
+  accessory  accessory[]    // Relation avec les accessoires utilisant ce tissu
+  model      model[]        // Relation avec les modèles utilisant ce tissu
+  products   product[]      // Relation un-à-plusieurs avec les produits
+  fabricimage  fabricimage[]  // Ajout de la relation inverse avec fabricimage
+  country      country[]      @relation("fabriccountries") // Relation avec plusieurs pays
+}
+
+model fabricimage {
+  id        Int     @id @default(autoincrement())
+  url       String
+  altText   String?
+  fabricId  Int
+  fabric    fabric   @relation(fields: [fabricId], references: [id])
+
+  @@index([fabricId])
 }
 
 model model {
@@ -61,15 +80,18 @@ model model {
   description String
   price       Float
   fabricId    Int
+  color       String?       // Champ pour la couleur du modèle
   createdAt   DateTime     @default(now())
   updatedAt   DateTime
-  fabric      fabric       @relation(fields: [fabricId], references: [id], map: "Model_fabricId_fkey")
+  fabric      fabric       @relation(fields: [fabricId], references: [id])
+  artisanId   Int?         // L'artisan qui a conçu ce modèle
+  artisan     artisan?     @relation(fields: [artisanId], references: [id])
   modelimage  modelimage[]
   orderitem   orderitem[]
-  product     product?
+  products    product[]    // Relation un-à-plusieurs avec les produits
   country     country[]    @relation("modelcountries")
 
-  @@index([fabricId], map: "Model_fabricId_fkey")
+  @@index([fabricId])
 }
 
 model modelimage {
@@ -77,9 +99,9 @@ model modelimage {
   url     String
   altText String?
   modelId Int
-  model   model   @relation(fields: [modelId], references: [id], map: "ModelImage_modelId_fkey")
+  model   model   @relation(fields: [modelId], references: [id])
 
-  @@index([modelId], map: "ModelImage_modelId_fkey")
+  @@index([modelId])
 }
 
 model order {
@@ -87,10 +109,10 @@ model order {
   userId    Int
   total     Float
   createdAt DateTime    @default(now())
-  user      user        @relation(fields: [userId], references: [id], map: "Order_userId_fkey")
+  user      user        @relation(fields: [userId], references: [id])
   orderitem orderitem[]
 
-  @@index([userId], map: "Order_userId_fkey")
+  @@index([userId])
 }
 
 model orderitem {
@@ -100,13 +122,13 @@ model orderitem {
   accessoryId Int?
   quantity    Int
   price       Float
-  accessory   accessory? @relation(fields: [accessoryId], references: [id], map: "OrderItem_accessoryId_fkey")
-  model       model?     @relation(fields: [modelId], references: [id], map: "OrderItem_modelId_fkey")
-  order       order      @relation(fields: [orderId], references: [id], map: "OrderItem_orderId_fkey")
+  accessory   accessory? @relation(fields: [accessoryId], references: [id])
+  model       model?     @relation(fields: [modelId], references: [id])
+  order       order      @relation(fields: [orderId], references: [id])
 
-  @@index([accessoryId], map: "OrderItem_accessoryId_fkey")
-  @@index([modelId], map: "OrderItem_modelId_fkey")
-  @@index([orderId], map: "OrderItem_orderId_fkey")
+  @@index([accessoryId])
+  @@index([modelId])
+  @@index([orderId])
 }
 
 model product {
@@ -114,21 +136,25 @@ model product {
   name        String
   description String
   price       Float
+  countries   country[]        @relation("ProductCountries") // Relation many-to-many avec country}
   category    product_category
   image       String
+  available   Boolean          @default(true)
   createdAt   DateTime         @default(now())
-  updatedAt   DateTime
-  fabricId    Int?             @unique(map: "Product_fabricId_key")
-  modelId     Int?             @unique(map: "Product_modelId_key")
-  accessoryId Int?             @unique(map: "Product_accessoryId_key")
-  accessory   accessory?       @relation(fields: [accessoryId], references: [id], map: "Product_accessoryId_fkey")
-  fabric      fabric?          @relation(fields: [fabricId], references: [id], map: "Product_fabricId_fkey")
-  model       model?           @relation(fields: [modelId], references: [id], map: "Product_modelId_fkey")
+  updatedAt   DateTime         @updatedAt
+  fabricId    Int?             // Relation un-à-plusieurs avec fabric
+  modelId     Int?             // Relation un-à-plusieurs avec model
+  accessoryId Int?             // Relation un-à-plusieurs avec accessory
+  artisanId   Int?             // Relation avec artisan
+  accessory   accessory?       @relation(fields: [accessoryId], references: [id])
+  fabric      fabric?          @relation(fields: [fabricId], references: [id])
+  model       model?           @relation(fields: [modelId], references: [id])
+  artisan     artisan?         @relation(fields: [artisanId], references: [id], name: "artisanProducts")
 }
 
 model user {
   id            Int       @id @default(autoincrement())
-  email         String    @unique(map: "User_email_key")
+  email         String    @unique
   password      String
   role          user_role @default(USER)
   createdAt     DateTime  @default(now())
@@ -140,8 +166,18 @@ model user {
 model verificationtoken {
   id      Int      @id @default(autoincrement())
   email   String
-  token   String   @unique(map: "VerificationToken_token_key")
+  token   String   @unique
   expires DateTime
+}
+
+model artisan {
+  id        Int      @id @default(autoincrement())
+  name      String
+  countryId Int
+  country   country   @relation(fields: [countryId], references: [id], name: "countryArtisans")
+  models    model[]   // L'artisan conçoit des modèles
+  accessories accessory[] // L'artisan conçoit des accessoires
+  products  product[] @relation(name: "artisanProducts") // Relation inverse avec les produits
 }
 
 enum user_role {
