@@ -10,10 +10,12 @@ function CartPage() {
   useEffect(() => {
     async function fetchCartItems() {
       try {
+        console.log("Fetching cart items from API...");
         const res = await fetch('/api/cart');
         const data = await res.json();
 
         if (res.ok) {
+          console.log("Cart items fetched:", data);
           setCartItems(data);
           calculateTotal(data);
         } else {
@@ -29,14 +31,18 @@ function CartPage() {
 
   const calculateTotal = (items) => {
     const totalPrice = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
+    console.log("Total calculé pour le panier:", totalPrice);
     setTotal(totalPrice);
   };
 
   const handleRemoveItem = async (itemId) => {
+    console.log("Tentative de suppression pour itemId:", itemId); // Log pour vérifier quel `itemId` est utilisé
     try {
       const res = await fetch(`/api/cart/${itemId}`, { method: 'DELETE' });
       if (res.ok) {
+        console.log("Article supprimé avec succès pour itemId:", itemId);
         const updatedCartItems = cartItems.filter(item => item.id !== itemId);
+        console.log("Cart items après suppression:", updatedCartItems);
         setCartItems(updatedCartItems);
         calculateTotal(updatedCartItems); // Mise à jour du total
       } else {
@@ -61,14 +67,17 @@ function CartPage() {
             {cartItems.map((item, index) => (
               <div key={`${item.id}-${index}`} className="cart-item flex items-center justify-between border-2 border-red-700 bg-yellow-200 p-4 rounded-lg shadow-md">
                 <div className="item-info flex items-center space-x-4">
-                  <img src={item.image} alt={item.name} className="w-16 h-16 rounded-md border border-green-500" />
+                  <img src={item.image || '/images/default.png'} alt={item.name} className="w-16 h-16 rounded-md border border-green-500" />
                   <div>
                     <p className="text-lg font-bold text-green-700">{item.name}</p>
                     <p className="text-gray-700">{item.price} €</p>
                   </div>
                 </div>
                 <button
-                  onClick={() => handleRemoveItem(item.id)}
+                  onClick={() => {
+                    console.log("Suppression demandée pour item:", item); // Log pour voir l'item complet
+                    handleRemoveItem(item.id);
+                  }}
                   className="bg-red-600 text-white px-4 py-1 rounded-md hover:bg-red-700 transition duration-200"
                 >
                   Supprimer

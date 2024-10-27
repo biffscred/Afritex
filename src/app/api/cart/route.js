@@ -9,24 +9,30 @@ export async function GET(req) {
   console.log("Début de la requête GET pour le panier");
 
   const token = await getToken({ req, secret });
+  console.log("Token récupéré :", token);
+
   if (!token || !token.id) {
     console.log("Token non trouvé ou ID utilisateur manquant dans le token.");
     return NextResponse.json({ message: 'Vous devez être connecté pour accéder au panier.' }, { status: 401 });
   }
 
   const userId = token.id;
+  console.log("ID utilisateur extrait du token :", userId);
+
   try {
+    console.log("Recherche de la commande de l'utilisateur avec userId :", userId);
+
     const order = await prisma.order.findFirst({
       where: { userId },
       include: {
-        orderitem: {
+        orderItems: { 
           include: {
             model: {
               select: {
                 id: true,
                 name: true,
                 price: true,
-                modelimage: { select: { url: true } },
+                modelImages: { select: { url: true } },
               },
             },
             accessory: {
@@ -42,7 +48,7 @@ export async function GET(req) {
                 id: true,
                 name: true,
                 price: true,
-                fabricimage: { select: { url: true } },
+                fabricImages: { select: { url: true } },
               },
             },
           },
@@ -50,18 +56,30 @@ export async function GET(req) {
       },
     });
 
-    const items = order ? order.orderitem.map(item => {
+    console.log("Commande récupérée :", order);
+
+    const items = order ? order.orderItems.map(item => {
       const product = item.model || item.accessory || item.fabric;
-      const imageUrl = product.modelimage?.[0]?.url || product.accessoryimage?.[0]?.url || product.fabricimage?.[0]?.url || '/images/default.png';
+      const imageUrl = product.modelImages?.[0]?.url || product.accessoryimage?.[0]?.url || product.fabricImages?.[0]?.url || '/images/default.png';
+
+      console.log("Produit dans le panier :", {
+        id: product.id,
+        name: product.name,
+        price: product.price,
+        image: imageUrl,
+        quantity: item.quantity,
+      });
 
       return {
-        id: product.id,
+        id:  item.id,
         name: product.name,
         price: product.price,
         image: imageUrl,
         quantity: item.quantity,
       };
     }) : [];
+
+    console.log("Articles formatés pour le panier :", items);
 
     return NextResponse.json(items, { status: 200 });
   } catch (error) {
@@ -131,7 +149,7 @@ export async function POST(req) {
 
     // Création d'un nouvel article de commande
     console.log("Création d'un nouvel article de commande...");
-    const newOrderItem = await prisma.orderitem.create({
+    const newOrderItem = await prisma.orderItem.create({
       data: {
         quantity,
         price: product.price,
