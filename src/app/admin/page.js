@@ -2,21 +2,23 @@
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export default function AdminDashboard() {
   const { data: session, status } = useSession();
   const router = useRouter();
+  const [isRedirecting, setIsRedirecting] = useState(false);
 
   // Vérifier si l'utilisateur est admin
   useEffect(() => {
     if (status === "loading") return; // Attendre que la session soit chargée
     if (!session || session.user.role !== "ADMIN") {
-      router.push("/auth/login"); // Rediriger vers la page de connexion si l'utilisateur n'est pas admin
+      setIsRedirecting(true); // Indiquer qu'une redirection est en cours
+      router.push("/auth/login");
     }
   }, [session, status, router]);
 
-  if (status === "loading") return <p>Chargement...</p>;
+  if (status === "loading" || isRedirecting) return <p>Chargement...</p>; // Afficher pendant le chargement ou la redirection
 
   return (
     <div className="container mx-auto py-12 px-6">

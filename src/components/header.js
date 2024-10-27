@@ -3,21 +3,59 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSession, signIn, signOut } from 'next-auth/react';
+import { useCart } from '../app/context/CartContext'; // Import du contexte du panier
 
 export default function Header() {
   const { data: session, status } = useSession(); // Vérifie l'état de connexion de l'utilisateur
+  const { itemCount } = useCart(); // Accède au nombre d'articles dans le panier
   const [isOpen, setIsOpen] = useState(false);
   const [isEspaceOpen, setIsEspaceOpen] = useState(false); // État pour contrôler le menu Espace
 
   const isAdmin = status === 'authenticated' && session?.user?.role?.toLowerCase() === 'admin';
 
+  // Transfert du panier local vers le panier serveur après connexion
   useEffect(() => {
     if (status === 'authenticated') {
+      const localCart = JSON.parse(localStorage.getItem('cart')) || [];
+
+      if (localCart.length > 0) {
+        // Transférer le panier local vers le serveur
+        localCart.forEach(async (product) => {
+          await addProductToServerCart(product);
+        });
+
+        // Après le transfert, vider le panier local
+        localStorage.removeItem('cart');
+      }
+
       console.log('Session User:', session?.user);
       console.log('Rôle de l\'utilisateur:', session?.user?.role);
       console.log('Is Admin:', isAdmin);
     }
   }, [session, status]);
+
+  // Fonction pour ajouter un produit au panier serveur
+  async function addProductToServerCart(product) {
+    try {
+      const res = await fetch('/api/cart', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          productId: product.id,
+          quantity: product.quantity,
+          price: product.price,
+          category: product.category,
+        }),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json();
+        console.error(`Erreur lors du transfert au panier serveur : ${errorData.message}`);
+      }
+    } catch (error) {
+      console.error("Erreur lors du transfert au panier serveur :", error);
+    }
+  }
 
   return (
     <header className="bg-red-900 text-gray-200  border-t-4 border-green-800">
@@ -76,7 +114,9 @@ export default function Header() {
             </li>
             <li>
               <Link href="/cart">
-                <span className="text-white text-lg font-bold hover:text-yellow-400 transition-colors duration-300 cursor-pointer">Panier</span>
+                <span className="text-white text-lg font-bold hover:text-yellow-400 transition-colors duration-300 cursor-pointer">
+                  Panier {itemCount > 0 && <span className="bg-red-600 text-white px-2 py-1 rounded-full">{itemCount}</span>}
+                </span>
               </Link>
             </li>
             

@@ -1,4 +1,3 @@
-// src/app/api/auth/[...nextauth]/route.js
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
@@ -6,13 +5,13 @@ import prisma from "../../../../lib/prisma";
 import { compare } from "bcryptjs";
 import GoogleProvider from "next-auth/providers/google";
 
-const options = {
+// Définition de la configuration NextAuth
+export const authOptions = {
   providers: [
     GoogleProvider({
       clientId: process.env.GOOGLE_CLIENT_ID,
       clientSecret: process.env.GOOGLE_CLIENT_SECRET,
     }),
-
     CredentialsProvider({
       name: "Email et Mot de Passe",
       credentials: {
@@ -20,35 +19,20 @@ const options = {
         password: { label: "Mot de passe", type: "password" },
       },
       authorize: async (credentials) => {
-        console.log('Credentials received:', credentials);
-
         const user = await prisma.user.findUnique({
           where: { email: credentials.email },
-          select: {
-            id: true,
-            
-            email: true,
-            password: true,
-            role: true,
-          },
+          select: { id: true, email: true, password: true, role: true },
         });
-
+        console.log("User in authorize:", user);
         if (user) {
           const isValidPassword = await compare(credentials.password, user.password);
-          if (isValidPassword) {
-            return user;
-          } else {
-            console.log('Invalid password');
-            return null;
-          }
-        } else {
-          console.log('User not found');
-          return null;
+          return isValidPassword ? user : null;
         }
+        return null;
       },
     }),
   ],
-  adapter: PrismaAdapter(prisma), // Inclusion du PrismaAdapter
+  adapter: PrismaAdapter(prisma),
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: "jwt",
@@ -59,12 +43,11 @@ const options = {
     error: "/auth/error",
   },
   callbacks: {
-    async signIn({ user, account, profile }) {
+    async signIn({ user, account }) {
       if (account.provider === 'google') {
         const existingUser = await prisma.user.findUnique({
           where: { email: user.email },
         });
-
         if (!existingUser) {
           await prisma.user.create({
             data: {
@@ -79,7 +62,7 @@ const options = {
     },
     async jwt({ token, user }) {
       if (user) {
-        console.log('User during JWT callback:', user);
+        console.log('JWT Callback - User:', user); 
         token.id = user.id;
         token.email = user.email;
         token.name = user.name;
@@ -94,7 +77,6 @@ const options = {
       return token;
     },
     async session({ session, token }) {
-      console.log('Token during session callback:', token);
       if (token) {
         session.user = {
           id: token.id,
@@ -106,8 +88,9 @@ const options = {
       return session;
     },
   },
-  debug: true, // Optionnel : Active le mode débogage pour plus de détails
+  debug: true,
 };
 
-export const GET = NextAuth(options);
-export const POST = NextAuth(options);
+// Exports nommés pour les méthodes GET et POST
+export const GET = NextAuth(authOptions);
+export const POST = NextAuth(authOptions);

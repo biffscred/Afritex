@@ -1,75 +1,85 @@
-import prisma from '../../../lib/prisma';
+import { NextResponse } from 'next/server';
+import prisma from '../../../lib/prisma'; // Assurez-vous que prisma est correctement importé
 
-// Gestion de la méthode GET (Récupération des produits avec filtres)
-export async function GET(req) {
-  try {
-    console.log("Démarrage de la récupération des produits...");
-
-    const url = new URL(req.url);
-    const minPrice = url.searchParams.get("minPrice");
-    const maxPrice = url.searchParams.get("maxPrice");
-    const category = url.searchParams.get("category");
-
-    // Filtrage basé sur les paramètres de requête
-    const filters = {};
-    if (minPrice) filters.price = { gte: parseFloat(minPrice) };
-    if (maxPrice) filters.price = { ...filters.price, lte: parseFloat(maxPrice) };
-    if (category) filters.category = category;
-
-    console.log("Filtres appliqués :", filters);
-
-    const products = await prisma.product.findMany({
-      where: filters,
-    });
-    
-    console.log("Produits récupérés avec succès:", products);
-
-    return new Response(JSON.stringify(products), { 
-      status: 200, 
-      headers: { 'Content-Type': 'application/json' } 
-    });
-  } catch (error) {
-    console.error("Erreur lors de la récupération des produits:", error);
-    return new Response(JSON.stringify({ message: "Erreur lors de la récupération des produits" }), { 
-      status: 500 
-    });
-  }
-}
-
-// Gestion de la méthode POST (Ajout d'un produit)
+// Gestion de la requête POST
 export async function POST(req) {
   try {
     console.log("Réception de la requête POST pour ajouter un produit...");
-    
+
     const requestBody = await req.json();
-    console.log("Corps de la requête reçu:", requestBody);
+    console.log("Contenu de la requête:", requestBody);
 
-    const { name, description, price, category, image, fabricId, modelId, accessoryId, artisanId } = requestBody;
+    const { name, description, price, category, image, artisanId } = requestBody;
 
-    // Validation des champs obligatoires
+    // Vérification des champs obligatoires
     if (!name || !description || !price || !category || !image) {
       console.log("Un ou plusieurs champs obligatoires sont manquants.");
-      return new Response(JSON.stringify({ message: "Champs obligatoires manquants" }), { status: 400 });
+      return NextResponse.json({ message: "Champs obligatoires manquants" }, { status: 400 });
     }
 
+    // Conversion des valeurs
     const parsedPrice = parseFloat(price);
-    const parsedFabricId = fabricId ? parseInt(fabricId) : null;
-    const parsedModelId = modelId ? parseInt(modelId) : null;
-    const parsedAccessoryId = accessoryId ? parseInt(accessoryId) : null;
     const parsedArtisanId = artisanId ? parseInt(artisanId) : null;
+    let categoryId;
 
-    console.log("Données transformées avant l'ajout au Prisma:", {
-      name,
-      description,
-      parsedPrice,
-      category,
-      image,
-      parsedFabricId,
-      parsedModelId,
-      parsedAccessoryId,
-      parsedArtisanId
-    });
+    console.log("Catégorie sélectionnée:", category);
 
+    // Création des entrées selon la catégorie
+    if (category === 'FABRIC') {
+      console.log("Création d'un tissu...");
+      const fabric = await prisma.fabric.create({
+        data: {
+          name,
+          price: parsedPrice,
+          material: requestBody.material || null,
+          pattern: requestBody.pattern || null,
+          origin: requestBody.origin || null,
+          color: requestBody.color || null,
+          size: requestBody.size || null,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      });
+      console.log("Tissu créé:", fabric);
+      categoryId = fabric.id;
+
+    } else if (category === 'MODEL') {
+      console.log("Création d'un modèle...");
+      const model = await prisma.model.create({
+        data: {
+          name,
+          description,
+          price: parsedPrice,
+          fabricId: requestBody.fabricId || null,
+          color: requestBody.color || null,
+          // artisanId: parsedArtisanId,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      });
+      console.log("Modèle créé:", model);
+      categoryId = model.id;
+
+    } else if (category === 'ACCESSORY') {
+      console.log("Création d'un accessoire...");
+      const accessory = await prisma.accessory.create({
+        data: {
+          name,
+          description,
+          price: parsedPrice,
+          fabricId: requestBody.fabricId || null,
+          color: requestBody.color || null,
+          // artisanId: parsedArtisanId,
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      });
+      console.log("Accessoire créé:", accessory);
+      categoryId = accessory.id;
+    }
+
+    // Création du produit principal
+    console.log("Création du produit principal...");
     const product = await prisma.product.create({
       data: {
         name,
@@ -77,24 +87,80 @@ export async function POST(req) {
         price: parsedPrice,
         category,
         image,
-        fabricId: parsedFabricId,
-        modelId: parsedModelId,
-        accessoryId: parsedAccessoryId,
-        artisanId: parsedArtisanId,
+        fabricId: category === 'FABRIC' ? categoryId : null,
+        modelId: category === 'MODEL' ? categoryId : null,
+        accessoryId: category === 'ACCESSORY' ? categoryId : null,
+        // artisanId: parsedArtisanId,
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
     });
 
     console.log("Produit ajouté avec succès:", product);
-    
-    return new Response(JSON.stringify(product), { 
-      status: 201, 
-      headers: { 'Content-Type': 'application/json' } 
-    });
+    return NextResponse.json(product, { status: 201 });
 
   } catch (error) {
     console.error("Erreur lors de l'ajout du produit:", error);
-    return new Response(JSON.stringify({ message: "Erreur lors de l'ajout du produit" }), { 
-      status: 500 
+    return NextResponse.json({ message: "Erreur lors de l'ajout du produit" }, { status: 500 });
+  }
+}
+// Gestion de la requête GET
+export async function GET(req) {
+  try {
+    console.log("Récupération de la liste des produits avec filtres...");
+
+    // Extraction des paramètres de la requête
+    const { searchParams } = new URL(req.url);
+    const categoryFilter = searchParams.get('category');
+    const countryFilter = searchParams.get('country');
+    const priceMin = parseFloat(searchParams.get('priceMin'));
+    const priceMax = parseFloat(searchParams.get('priceMax'));
+
+    // Configuration des filtres pour Prisma
+    const filters = {};
+    
+    if (categoryFilter) {
+      filters.category = categoryFilter;
+    }
+    
+    if (countryFilter) {
+      filters.countries = {
+        some: {
+          name: countryFilter,
+        },
+      };
+    }
+
+    // Ajout de filtres de prix si valides
+    if (!isNaN(priceMin) || !isNaN(priceMax)) {
+      filters.price = {};
+      if (!isNaN(priceMin)) {
+        filters.price.gte = priceMin;
+      }
+      if (!isNaN(priceMax)) {
+        filters.price.lte = priceMax;
+      }
+    }
+
+    console.log("Filtres appliqués :", filters);
+
+    // Exécution de la requête Prisma avec les filtres
+    const products = await prisma.product.findMany({
+      where: filters,
+      include: {
+        fabric: true,
+        model: true,
+        accessory: true,
+        // artisan: true,
+        countries: true,
+      },
     });
+
+    console.log("Produits récupérés avec filtres:", products);
+    return NextResponse.json(products, { status: 200 });
+
+  } catch (error) {
+    console.error("Erreur lors de la récupération des produits avec filtres:", error);
+    return NextResponse.json({ message: "Erreur lors de la récupération des produits" }, { status: 500 });
   }
 }

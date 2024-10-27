@@ -2,6 +2,7 @@
 import localFont from "next/font/local";
 import '../styles/globals.css';
 import ClientProvider from '../components/clientProvider';
+import { CartProvider } from '../app/context/CartContext';
 
 // Charger les polices locales avec gestion des poids
 const geistSans = localFont({
@@ -63,7 +64,9 @@ export default function RootLayout({ children }) {
       </head>
       <body className="antialiased">
       <ClientProvider>
+        <CartProvider>
           {children}
+        </CartProvider>
         </ClientProvider>
       </body>
     </html>
