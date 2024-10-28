@@ -15,23 +15,28 @@ export default function ProductsSection({ price = 0, color = "", material = "", 
     async function fetchProducts() {
       try {
         setLoading(true);
+        console.log("Fetching products with filters:", { price, color, material, country, category, artisan });
 
         const queryParams = new URLSearchParams({
-          price: price.toString(),
+          priceMax: price.toString(),
           color,
           material,
           country,
           category,
-          minPrice: price,
           artisan,
         }).toString();
 
+        console.log("Constructed query params:", queryParams);
+
         const res = await fetch(`/api/products?${queryParams}`);
+        console.log("Fetch response:", res);
+
         if (!res.ok) {  
           throw new Error("Erreur lors de la récupération des produits");
         }
         const data = await res.json();
-        
+        console.log("Fetched product data:", data);
+
         if (Array.isArray(data)) {
           setProducts(data);
         } else {
@@ -44,34 +49,40 @@ export default function ProductsSection({ price = 0, color = "", material = "", 
         setLoading(false);
       }
     }
-    
+
     fetchProducts();
   }, [price, color, material, country, category, artisan]); // Dépendances stables
 
   // Fonction pour ajouter un produit au panier (localStorage si non connecté)
   const handleAddToCart = async (product) => {
+    console.log("Add to cart clicked for product:", product);
+
     if (!session) {
-      // Si l'utilisateur n'est pas connecté, ajouter le produit dans localStorage
+      console.log("User not logged in, saving to localStorage.");
       const cart = JSON.parse(localStorage.getItem('cart')) || [];
       const existingProduct = cart.find((item) => item.id === product.id);
 
       if (existingProduct) {
-        existingProduct.quantity += 1; // Incrémenter la quantité si déjà dans le panier
+        existingProduct.quantity += 1;
+        console.log("Incremented quantity for existing product in localStorage:", existingProduct);
       } else {
         cart.push({ ...product, quantity: 1 });
+        console.log("Added new product to localStorage:", product);
       }
 
-      localStorage.setItem('cart', JSON.stringify(cart)); // Mettre à jour le panier local
+      localStorage.setItem('cart', JSON.stringify(cart));
       setCartMessage(`Le produit ${product.name} a été ajouté au panier.`);
       setTimeout(() => setCartMessage(''), 3000);
     } else {
-      // Si l'utilisateur est connecté, ajouter directement dans le panier serveur
+      console.log("User logged in, saving to server.");
       await addProductToServerCart(product);
     }
   };
 
   // Fonction pour ajouter un produit au panier serveur
   const addProductToServerCart = async (product) => {
+    console.log("Adding product to server cart:", product);
+
     try {
       const res = await fetch('/api/cart', {
         method: 'POST',
@@ -86,11 +97,14 @@ export default function ProductsSection({ price = 0, color = "", material = "", 
         }),
       });
 
+      console.log("Server response for add to cart:", res);
+
       if (res.ok) {
         setCartMessage(`Le produit ${product.name} a été ajouté au panier.`);
         setTimeout(() => setCartMessage(''), 3000);
       } else {
         const errorData = await res.json();
+        console.error("Erreur lors de l'ajout au panier:", errorData);
         setError(`Erreur lors de l'ajout au panier : ${errorData.message}`);
       }
     } catch (error) {

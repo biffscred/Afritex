@@ -40,7 +40,7 @@ export default function Shop() {
                 max="500"
                 value={price}
                 onChange={(e) => {
-                  setPrice(e.target.value);
+                  setPrice(e.target.value,10);
                   console.log("Changement du prix :", e.target.value);
                 }}
                 className="w-full"

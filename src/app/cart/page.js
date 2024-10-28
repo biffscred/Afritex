@@ -2,10 +2,15 @@
 import Footer from '@/components/footer';
 import Header from '@/components/header';
 import { useEffect, useState } from 'react';
+import { loadStripe } from '@stripe/stripe-js';
+
+const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
 
 function CartPage() {
   const [cartItems, setCartItems] = useState([]);
   const [total, setTotal] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
   useEffect(() => {
     async function fetchCartItems() {
@@ -36,21 +41,44 @@ function CartPage() {
   };
 
   const handleRemoveItem = async (itemId) => {
-    console.log("Tentative de suppression pour itemId:", itemId); // Log pour vérifier quel `itemId` est utilisé
+    console.log("Tentative de suppression pour itemId:", itemId);
     try {
       const res = await fetch(`/api/cart/${itemId}`, { method: 'DELETE' });
       if (res.ok) {
         console.log("Article supprimé avec succès pour itemId:", itemId);
         const updatedCartItems = cartItems.filter(item => item.id !== itemId);
-        console.log("Cart items après suppression:", updatedCartItems);
         setCartItems(updatedCartItems);
-        calculateTotal(updatedCartItems); // Mise à jour du total
+        calculateTotal(updatedCartItems);
+        setMessage("Article supprimé avec succès !");
       } else {
         const data = await res.json();
         console.error("Erreur lors de la suppression de l'article :", data.message);
+        setMessage("Erreur lors de la suppression de l'article.");
       }
     } catch (error) {
       console.error("Erreur lors de la suppression de l'article :", error);
+      setMessage("Erreur de connexion au serveur.");
+    }
+  };
+
+  const handleCheckout = async () => {
+    setLoading(true);
+    const stripe = await stripePromise;
+
+    try {
+      const response = await fetch('/api/checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ cartItems }),
+      });
+
+      const { id } = await response.json();
+      await stripe.redirectToCheckout({ sessionId: id });
+      setLoading(false);
+    } catch (error) {
+      console.error("Erreur lors de la création de la session de paiement :", error);
+      setMessage("Erreur lors de la création de la session de paiement.");
+      setLoading(false);
     }
   };
 
@@ -59,6 +87,7 @@ function CartPage() {
       <Header />
       <main className="max-w-4xl mx-auto p-6">
         <h1 className="text-3xl font-bold text-green-700 mb-4">Votre panier</h1>
+        {message && <p className="text-center text-red-500">{message}</p>}
 
         {cartItems.length === 0 ? (
           <p className="text-lg text-gray-700">Votre panier est vide.</p>
@@ -74,10 +103,7 @@ function CartPage() {
                   </div>
                 </div>
                 <button
-                  onClick={() => {
-                    console.log("Suppression demandée pour item:", item); // Log pour voir l'item complet
-                    handleRemoveItem(item.id);
-                  }}
+                  onClick={() => handleRemoveItem(item.id)}
                   className="bg-red-600 text-white px-4 py-1 rounded-md hover:bg-red-700 transition duration-200"
                 >
                   Supprimer
@@ -88,8 +114,12 @@ function CartPage() {
         )}
         <div className="cart-summary mt-8 p-4 bg-green-100 rounded-lg shadow-md">
           <h3 className="text-xl font-bold text-green-700">Total : {total.toFixed(2)} €</h3>
-          <button className="mt-4 w-full bg-yellow-500 text-white py-2 rounded-md font-semibold hover:bg-yellow-600 transition duration-200">
-            Passer à la caisse
+          <button
+            onClick={handleCheckout}
+            disabled={loading}
+            className={`mt-4 w-full bg-yellow-500 text-white py-2 rounded-md font-semibold hover:bg-yellow-600 transition duration-200 ${loading ? "opacity-50 cursor-not-allowed" : ""}`}
+          >
+            {loading ? "Chargement..." : "Passer à la caisse"}
           </button>
         </div>
       </main>

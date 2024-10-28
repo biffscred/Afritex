@@ -1,0 +1,22 @@
+export const colorOptions = [
+    { value: '', label: 'Toutes les couleurs' },
+    { value: 'Rouge', label: 'Rouge' },
+    { value: 'Bleu', label: 'Bleu' },
+    { value: 'Vert', label: 'Vert' },
+    { value: 'Jaune', label: 'Jaune' },
+    { value: 'Orange', label: 'Orange' },
+    { value: 'Marron', label: 'Marron' },
+    { value: 'Noir', label: 'Noir' },
+    { value: 'Blanc', label: 'Blanc' },
+    { value: 'Violet', label: 'Violet' },
+    { value: 'Rose', label: 'Rose' },
+    { value: 'Turquoise', label: 'Turquoise' },
+    { value: 'Doré', label: 'Doré' },
+    { value: 'Argenté', label: 'Argenté' },
+    { value: 'Crème', label: 'Crème' },
+    { value: 'Indigo', label: 'Indigo' },
+    { value: 'Beige', label: 'Beige' },
+    { value: 'Olive', label: 'Olive' },
+    { value: 'Bordeaux', label: 'Bordeaux' },
+  ];
+  

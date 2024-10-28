@@ -182,7 +182,7 @@ export default function AdminDashboardProduct() {
 
       {/* Formulaire d'ajout / modification */}
       <div className="bg-white p-10 rounded-xl shadow-lg border border-yellow-400 mb-6">
-        <h2 className="text-2xl font-semibold mb-4 text-orange-700">Ajouter / Modifier un Produit</h2>
+        <h2 className="text-2xl font-semibold mb-4 text-orange-700">Ajouter  un Produit</h2>
         <form onSubmit={handleSubmit} className="space-y-4">
           <input
             type="text"

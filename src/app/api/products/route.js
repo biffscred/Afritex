@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import prisma from '../../../lib/prisma'; // Assurez-vous que prisma est correctement importé
 
 // Gestion de la requête POST
-export async function POST(req) {
+export async function POST(req) { 
   try {
     console.log("Réception de la requête POST pour ajouter un produit...");
 
@@ -107,22 +107,27 @@ export async function POST(req) {
 // Gestion de la requête GET
 export async function GET(req) {
   try {
-    console.log("Récupération de la liste des produits avec filtres...");
+    console.log("Récupération de la liste des produits avec tous les filtres...");
 
     // Extraction des paramètres de la requête
     const { searchParams } = new URL(req.url);
     const categoryFilter = searchParams.get('category');
     const countryFilter = searchParams.get('country');
-    const priceMin = parseFloat(searchParams.get('priceMin'));
-    const priceMax = parseFloat(searchParams.get('priceMax'));
+    const priceMin = parseFloat(searchParams.get('priceMin')) || 0;
+    const priceMax = parseFloat(searchParams.get('priceMax')) || 500;
+    const colorFilter = searchParams.get('color');
+    const materialFilter = searchParams.get('material');
+    const artisanFilter = searchParams.get('artisan');
 
     // Configuration des filtres pour Prisma
     const filters = {};
-    
+
+    // Application du filtre de catégorie
     if (categoryFilter) {
       filters.category = categoryFilter;
     }
-    
+
+    // Application du filtre de pays
     if (countryFilter) {
       filters.countries = {
         some: {
@@ -131,7 +136,7 @@ export async function GET(req) {
       };
     }
 
-    // Ajout de filtres de prix si valides
+    // Application des filtres de prix
     if (!isNaN(priceMin) || !isNaN(priceMax)) {
       filters.price = {};
       if (!isNaN(priceMin)) {
@@ -142,16 +147,30 @@ export async function GET(req) {
       }
     }
 
+    // Application du filtre d'artisan
+    if (artisanFilter) {
+      filters.artisan = {
+        contains: artisanFilter, // Utilisation de contains pour permettre une recherche partielle
+      };
+    }
+
+    // Filtrage basé sur les champs 'material' et 'color' dans la table 'fabric'
+    if (materialFilter || colorFilter) {
+      filters.fabric = {
+        material: materialFilter ? { equals: materialFilter } : undefined,
+        color: colorFilter ? { equals: colorFilter } : undefined,
+      };
+    }
+
     console.log("Filtres appliqués :", filters);
 
-    // Exécution de la requête Prisma avec les filtres
+    // Exécution de la requête Prisma avec tous les filtres
     const products = await prisma.product.findMany({
       where: filters,
       include: {
         fabric: true,
         model: true,
         accessory: true,
-        // artisan: true,
         countries: true,
       },
     });

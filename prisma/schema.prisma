@@ -160,6 +160,8 @@ model Product {
   fabric      Fabric?          @relation(fields: [fabricId], references: [id])
   model       Model?           @relation(fields: [modelId], references: [id])
   artisan     Artisan?         @relation(fields: [artisanId], references: [id], name: "artisanProducts")
+   color       String?
+  material    String?
 }
 
 model User {
