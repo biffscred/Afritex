@@ -10,6 +10,8 @@ export default function ProductsSection({ price = 0, color = "", material = "", 
   const [cartMessage, setCartMessage] = useState(''); // Pour afficher un message après ajout au panier
   const { data: session, status } = useSession(); // Vérifier si l'utilisateur est connecté
   const router = useRouter(); // Utiliser router pour rediriger
+   
+
 
   useEffect(() => {
     async function fetchProducts() {
@@ -80,7 +82,9 @@ export default function ProductsSection({ price = 0, color = "", material = "", 
   };
 
   // Fonction pour ajouter un produit au panier serveur
-  const addProductToServerCart = async (product) => {
+
+  
+    const addProductToServerCart = async (product) => {
     console.log("Adding product to server cart:", product);
 
     try {

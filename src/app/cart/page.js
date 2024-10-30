@@ -14,15 +14,25 @@ function CartPage() {
 
   useEffect(() => {
     async function fetchCartItems() {
+      console.log("Début de la récupération des articles du panier.");
       try {
-        console.log("Fetching cart items from API...");
         const res = await fetch('/api/cart');
         const data = await res.json();
 
         if (res.ok) {
-          console.log("Cart items fetched:", data);
-          setCartItems(data);
-          calculateTotal(data);
+          console.log("Données du panier récupérées avec succès :", data);
+          const groupedItems = data.reduce((acc, item) => {
+            const existingItem = acc.find(cartItem => cartItem.id === item.id);
+            if (existingItem) {
+              existingItem.quantity += item.quantity;
+            } else {
+              acc.push({ ...item });
+            }
+            return acc;
+          }, []);
+
+          setCartItems(groupedItems);
+          calculateTotal(groupedItems);
         } else {
           console.error("Erreur lors du chargement du panier :", data.message);
         }
@@ -47,6 +57,7 @@ function CartPage() {
       if (res.ok) {
         console.log("Article supprimé avec succès pour itemId:", itemId);
         const updatedCartItems = cartItems.filter(item => item.id !== itemId);
+        console.log("Nouveau contenu du panier après suppression :", updatedCartItems);
         setCartItems(updatedCartItems);
         calculateTotal(updatedCartItems);
         setMessage("Article supprimé avec succès !");
@@ -62,6 +73,7 @@ function CartPage() {
   };
 
   const handleCheckout = async () => {
+    console.log("Début de la procédure de checkout.");
     setLoading(true);
     const stripe = await stripePromise;
 
@@ -73,6 +85,7 @@ function CartPage() {
       });
 
       const { id } = await response.json();
+      console.log("ID de session de paiement Stripe reçu :", id);
       await stripe.redirectToCheckout({ sessionId: id });
       setLoading(false);
     } catch (error) {
@@ -100,6 +113,7 @@ function CartPage() {
                   <div>
                     <p className="text-lg font-bold text-green-700">{item.name}</p>
                     <p className="text-gray-700">{item.price} €</p>
+                    <p className="text-gray-700">Quantité : {item.quantity}</p>
                   </div>
                 </div>
                 <button

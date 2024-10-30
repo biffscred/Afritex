@@ -1,65 +1,31 @@
-import { NextResponse } from 'next/server';
-import prisma from '../../../../lib/prisma';
+import prisma from '../../../lib/prisma';
 
-// Récupérer tous les tissus
-export async function GET() {
-  try {
-    const fabrics = await prisma.fabric.findMany();
-    return NextResponse.json(fabrics, { status: 200 });
-  } catch (error) {
-    console.error("Erreur lors de la récupération des tissus :", error);
-    return NextResponse.json({ message: "Erreur lors de la récupération des tissus" }, { status: 500 });
-  }
-}
+export async function GET(req) {
+  console.log("API /api/fabric appelée"); // Log pour vérifier que l'API est bien appelée
 
-// Ajouter un nouveau tissu
-export async function POST(req) {
-  const data = await req.json();
   try {
-    const fabric = await prisma.fabric.create({
-      data: {
-        material: data.material || null,
-        pattern: data.pattern || null,
-        origin: data.origin || null,
-        color: data.color || null,
-        size: data.size || null,
-        createdAt: new Date(),
-        updatedAt: new Date(),
+    console.log("Tentative de récupération des produits de type FABRIC...");
+    const fabrics = await prisma.product.findMany({
+      where: {
+        category: "FABRIC", // Filtre pour les produits de type "FABRIC"
+      },
+      select: {
+        id: true,
+        name: true,
+        description: true,
+        price: true,
+        category: true,
+        image: true,
       },
     });
-    return NextResponse.json(fabric, { status: 201 });
+    
+    console.log("Produits récupérés :", fabrics); // Log pour afficher les données récupérées
+    return new Response(JSON.stringify(fabrics), { status: 200, headers: { 'Content-Type': 'application/json' } });
   } catch (error) {
-    console.error("Erreur lors de la création du tissu :", error);
-    return NextResponse.json({ message: "Erreur lors de la création du tissu" }, { status: 500 });
-  }
-}
-
-// Mettre à jour un tissu existant
-export async function PUT(req) {
-  const data = await req.json();
-  const { id, ...updateData } = data;
-  try {
-    const fabric = await prisma.fabric.update({
-      where: { id: parseInt(id) },
-      data: { ...updateData, updatedAt: new Date() },
+    console.error("Erreur lors de la récupération des produits fabric :", error); // Log pour afficher l'erreur
+    return new Response(JSON.stringify({ message: "Erreur lors de la récupération des produits fabric", error }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' },
     });
-    return NextResponse.json(fabric, { status: 200 });
-  } catch (error) {
-    console.error("Erreur lors de la mise à jour du tissu :", error);
-    return NextResponse.json({ message: "Erreur lors de la mise à jour du tissu" }, { status: 500 });
-  }
-}
-
-// Supprimer un tissu
-export async function DELETE(req) {
-  const { id } = await req.json();
-  try {
-    await prisma.fabric.delete({
-      where: { id: parseInt(id) },
-    });
-    return NextResponse.json({ message: "Tissu supprimé avec succès" }, { status: 200 });
-  } catch (error) {
-    console.error("Erreur lors de la suppression du tissu :", error);
-    return NextResponse.json({ message: "Erreur lors de la suppression du tissu" }, { status: 500 });
   }
 }

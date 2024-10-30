@@ -1,5 +1,5 @@
 // components/AccessoriesSection.js
-
+import Link from 'next/link';
 const accessories = [
   { id: 1, name: "Kente Bag", price: 40, imgSrc: "/images/accessoireskanga-accueil.webp" },
   { id: 2, name: "Wax Scarf", price: 15, imgSrc: "/images/accessoiresbogolan-accueil.webp" },
@@ -30,12 +30,14 @@ export default function AccessoriesSection() {
 
         {/* Bouton pour voir plus d'accessoires */}
         <div className="mt-8">
-          <a 
-            href="/accessories" 
-            className="inline-block bg-yellow-800 text-white py-3 px-6 rounded-lg font-semibold hover:bg-yellow-700 transition-colors duration-300"
-          >
-            Voir plus d'accessoires
-          </a>
+        <Link
+  href="accessory"
+  className="inline-block bg-yellow-800 text-white py-3 px-6 rounded-lg font-semibold hover:bg-yellow-700 transition-colors duration-300"
+>
+  Voir plus d'accessoires
+</Link>
+
+   
         </div>
       </div>
     </section>

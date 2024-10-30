@@ -20,7 +20,7 @@ export async function PUT(req) {
 
   if (isNaN(itemId)) {
     console.log("ID de l'article manquant ou non valide.");
-    return NextResponse.json({ message: 'ID de l\'article requis pour la mise à jour.' }, { status: 400 });
+    return NextResponse.json({ message: "ID de l'article requis pour la mise à jour." }, { status: 400 });
   }
 
   const { quantity } = await req.json();
@@ -30,7 +30,19 @@ export async function PUT(req) {
   }
 
   try {
-    const updatedItem = await prisma.orderitem.update({
+    // Vérifiez que l'item appartient à l'utilisateur
+    const orderItem = await prisma.orderItem.findUnique({
+      where: { id: itemId },
+      include: { order: true },
+    });
+
+    if (!orderItem || orderItem.order.userId !== token.id) {
+      console.log("L'article à mettre à jour n'appartient pas à l'utilisateur ou est introuvable.");
+      return NextResponse.json({ message: 'Article introuvable ou non autorisé.' }, { status: 404 });
+    }
+
+    // Mettre à jour la quantité de l'article
+    const updatedItem = await prisma.orderItem.update({
       where: { id: itemId },
       data: { quantity },
     });
@@ -46,6 +58,14 @@ export async function PUT(req) {
 export async function DELETE(req) {
   console.log("Requête DELETE reçue pour la suppression d'un article spécifique du panier.");
 
+  const token = await getToken({ req, secret });
+  if (!token || !token.id) {
+    console.log("Utilisateur non authentifié");
+    return NextResponse.json({ message: 'Vous devez être connecté pour interagir avec le panier.' }, { status: 401 });
+  }
+
+  const userId = token.id;
+
   // Extraction de l'ID de l'article (itemId) à partir de l'URL
   const urlParts = req.url.split('/');
   const itemId = parseInt(urlParts[urlParts.length - 1]); // Dernier segment de l'URL
@@ -58,7 +78,18 @@ export async function DELETE(req) {
   }
 
   try {
-    // Suppression de l'article en fonction de `itemId`
+    // Vérifier si l'item appartient à la commande de l'utilisateur
+    const orderItem = await prisma.orderItem.findUnique({
+      where: { id: itemId },
+      include: { order: true },
+    });
+
+    if (!orderItem || orderItem.order.userId !== userId) {
+      console.log("L'article à supprimer n'appartient pas à l'utilisateur ou est introuvable.");
+      return NextResponse.json({ message: 'Article introuvable ou non autorisé.' }, { status: 404 });
+    }
+
+    // Supprimer l'article du panier
     const deletedItem = await prisma.orderItem.delete({
       where: { id: itemId },
     });

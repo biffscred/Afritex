@@ -1,6 +1,7 @@
 "use client"; // Ajoute cette ligne pour indiquer que c'est un composant client
 import Link from 'next/link';
 
+
 const FabricsSection = () => {
   return (
     <section className="py-12 bg-gradient-to-b from-yellow-100 via-orange-200 to-green-200
@@ -12,7 +13,7 @@ const FabricsSection = () => {
             <img src="/images/shweshwe-accueil.jpg" alt="Shweshwe" className="w-full h-64 object-cover mb-4 rounded-lg" />
             <h3 className="text-2xl font-bold text-indigo-900 mb-2">Shweshwe</h3>
             <p className="text-gray-700 mb-4">Tissu imprimé traditionnel d’Afrique du Sud, utilisé pour des tenues culturelles.</p>
-            <Link href="/fabrics/" className="text-yellow-800 font-semibold hover:underline">
+            <Link href="fabric/" className="text-yellow-800 font-semibold hover:underline">
               Voir plus de tissus 
             </Link>
           </div>
@@ -20,7 +21,7 @@ const FabricsSection = () => {
             <img src="/images/kenté-accueil.jpg" alt="Kente" className="w-full h-64 object-cover mb-4 rounded-lg" />
             <h3 className="text-2xl font-bold text-indigo-900 mb-2">Kente</h3>
             <p className="text-gray-700 mb-4">Tissu royal du Ghana, tissé à la main.</p>
-            <Link href="/fabrics/" className="text-yellow-800 font-semibold hover:underline">
+            <Link href="fabric/" className="text-yellow-800 font-semibold hover:underline">
               Voir plus de tissus
             </Link>
           </div>
@@ -28,7 +29,7 @@ const FabricsSection = () => {
             <img src="/images/bogolan-accueil.jpg" alt="Bogolan" className="w-full h-64 object-cover mb-4 rounded-lg" />
             <h3 className="text-2xl font-bold text-indigo-900 mb-2">Bogolan</h3>
             <p className="text-gray-700 mb-4">Tissu traditionnel malien teint à la main.</p>
-            <Link href="/fabrics/" className="text-yellow-800 font-semibold hover:underline">
+            <Link href="fabric/" className="text-yellow-800 font-semibold hover:underline">
               Voir plus de tissus 
             </Link>
           </div>

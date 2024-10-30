@@ -3,11 +3,9 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSession, signIn, signOut } from 'next-auth/react';
-import { useCart } from '../app/context/CartContext'; // Import du contexte du panier
 
 export default function Header() {
   const { data: session, status } = useSession(); // Vérifie l'état de connexion de l'utilisateur
-  const { itemCount } = useCart(); // Accède au nombre d'articles dans le panier
   const [isOpen, setIsOpen] = useState(false);
   const [isEspaceOpen, setIsEspaceOpen] = useState(false); // État pour contrôler le menu Espace
 
@@ -28,9 +26,7 @@ export default function Header() {
         localStorage.removeItem('cart');
       }
 
-      console.log('Session User:', session?.user);
-      console.log('Rôle de l\'utilisateur:', session?.user?.role);
-      console.log('Is Admin:', isAdmin);
+    
     }
   }, [session, status]);
 
@@ -114,9 +110,7 @@ export default function Header() {
             </li>
             <li>
               <Link href="/cart">
-                <span className="text-white text-lg font-bold hover:text-yellow-400 transition-colors duration-300 cursor-pointer">
-                  Panier {itemCount > 0 && <span className="bg-red-600 text-white px-2 py-1 rounded-full">{itemCount}</span>}
-                </span>
+                <span className="text-white text-lg font-bold hover:text-yellow-400 transition-colors duration-300 cursor-pointer">Panier</span>
               </Link>
             </li>
             

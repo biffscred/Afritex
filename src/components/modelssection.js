@@ -49,7 +49,7 @@ export default function ModelsSection() {
         </div>
 
         {/* Bouton pour voir plus de modèles */}
-        <Link href="/models" className="inline-block mt-8 bg-yellow-800 text-white py-3 px-6 rounded-lg font-semibold hover:bg-yellow-700 transition-colors duration-300">
+        <Link href="/model" className="inline-block mt-8 bg-yellow-800 text-white py-3 px-6 rounded-lg font-semibold hover:bg-yellow-700 transition-colors duration-300">
           Voir plus de modèles
         </Link>
       </div>

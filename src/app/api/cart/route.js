@@ -58,20 +58,13 @@ export async function GET(req) {
 
     console.log("Commande récupérée :", order);
 
+    // Regrouper les articles identiques en fonction de leur `orderItem.id`
     const items = order ? order.orderItems.map(item => {
       const product = item.model || item.accessory || item.fabric;
       const imageUrl = product.modelImages?.[0]?.url || product.accessoryimage?.[0]?.url || product.fabricImages?.[0]?.url || '/images/default.png';
 
-      console.log("Produit dans le panier :", {
-        id: product.id,
-        name: product.name,
-        price: product.price,
-        image: imageUrl,
-        quantity: item.quantity,
-      });
-
       return {
-        id:  item.id,
+        id: item.id,  // Utilise l'ID de l'orderItem ici pour la suppression
         name: product.name,
         price: product.price,
         image: imageUrl,
@@ -93,8 +86,6 @@ export async function POST(req) {
   console.log("Début de la requête POST pour ajouter un article au panier.");
 
   const token = await getToken({ req, secret });
-  console.log("Token utilisateur récupéré :", token);
-
   if (!token || !token.id) {
     console.log("Token non trouvé ou ID utilisateur manquant.");
     return NextResponse.json({ message: 'Vous devez être connecté pour ajouter des articles au panier.' }, { status: 401 });
@@ -105,50 +96,66 @@ export async function POST(req) {
 
   try {
     const { productId, quantity, category } = await req.json();
-    console.log("Données reçues dans le corps de la requête :", { productId, quantity, category });
-
     if (!productId || !quantity || !category) {
       console.log("Paramètres de la requête manquants ou incorrects.");
       return NextResponse.json({ message: 'Données de la requête invalides.' }, { status: 400 });
     }
 
-    // Recherche de la commande de l'utilisateur
+    // Recherche ou création de la commande pour l'utilisateur
     let userOrder = await prisma.order.findFirst({ where: { userId } });
-    console.log("Commande existante trouvée pour l'utilisateur :", userOrder);
-
-    // Si aucune commande n'existe, en créer une nouvelle
     if (!userOrder) {
       userOrder = await prisma.order.create({
         data: { user: { connect: { id: userId } }, total: 0 },
       });
-      console.log("Nouvelle commande créée pour l'utilisateur :", userOrder);
     }
 
+    // Définir `product` et `existingOrderItem` en fonction de la catégorie
     let product;
-    let connectData;
+    let existingOrderItem;
 
-    // Vérification de la catégorie du produit et recherche du produit associé
     if (category === 'FABRIC') {
       product = await prisma.fabric.findUnique({ where: { id: productId } });
-      console.log("Produit trouvé dans la catégorie FABRIC :", product);
-      connectData = { fabric: { connect: { id: productId } } };
+      existingOrderItem = await prisma.orderItem.findFirst({
+        where: { orderId: userOrder.id, fabricId: productId },
+      });
     } else if (category === 'MODEL') {
       product = await prisma.model.findUnique({ where: { id: productId } });
-      console.log("Produit trouvé dans la catégorie MODEL :", product);
-      connectData = { model: { connect: { id: productId } } };
+      existingOrderItem = await prisma.orderItem.findFirst({
+        where: { orderId: userOrder.id, modelId: productId },
+      });
     } else if (category === 'ACCESSORY') {
       product = await prisma.accessory.findUnique({ where: { id: productId } });
-      console.log("Produit trouvé dans la catégorie ACCESSORY :", product);
-      connectData = { accessory: { connect: { id: productId } } };
+      existingOrderItem = await prisma.orderItem.findFirst({
+        where: { orderId: userOrder.id, accessoryId: productId },
+      });
+    } else {
+      console.log("Catégorie inconnue :", category);
+      return NextResponse.json({ message: 'Catégorie de produit invalide.' }, { status: 400 });
     }
 
+    // Vérification si le produit a été trouvé
     if (!product) {
-      console.log(`${category} spécifié avec ID ${productId} n'existe pas.`);
-      return NextResponse.json({ message: `${category} spécifié n'existe pas.` }, { status: 404 });
+      console.log(`Produit ${category} avec ID ${productId} n'existe pas.`);
+      return NextResponse.json({ message: `Produit ${category} spécifié n'existe pas.` }, { status: 404 });
     }
 
-    // Création d'un nouvel article de commande
-    console.log("Création d'un nouvel article de commande...");
+    // Si l'article existe déjà, mettre à jour la quantité
+    if (existingOrderItem) {
+      const updatedOrderItem = await prisma.orderItem.update({
+        where: { id: existingOrderItem.id },
+        data: { quantity: existingOrderItem.quantity + quantity },
+      });
+      console.log("Quantité mise à jour pour l'article existant :", updatedOrderItem);
+      return NextResponse.json(updatedOrderItem, { status: 200 });
+    }
+
+    // Définir `connectData` en fonction de la catégorie
+    const connectData = {};
+    if (category === 'FABRIC') connectData.fabric = { connect: { id: productId } };
+    else if (category === 'MODEL') connectData.model = { connect: { id: productId } };
+    else if (category === 'ACCESSORY') connectData.accessory = { connect: { id: productId } };
+
+    // Créer un nouvel article de commande
     const newOrderItem = await prisma.orderItem.create({
       data: {
         quantity,
@@ -158,7 +165,7 @@ export async function POST(req) {
       },
     });
 
-    console.log("Nouvel article de commande créé avec succès :", newOrderItem);
+    console.log("Nouvel article ajouté au panier :", newOrderItem);
     return NextResponse.json(newOrderItem, { status: 200 });
   } catch (error) {
     console.error("Erreur lors de l'ajout de l'article au panier :", error);
