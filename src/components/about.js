@@ -1,4 +1,5 @@
 // src/components/About.js
+import Image from 'next/image';
 
 export default function About() {
     return (
@@ -7,10 +8,13 @@ export default function About() {
           
           {/* Image de Présentation */}
           <div className="w-full md:w-1/2 mb-8 md:mb-0">
-            <img
-              src="/images/about-us.jpg"
+            <Image
+              src="/logo.png"
               alt="Présentation de l'entreprise"
-              className="rounded-lg shadow-lg w-full h-auto"
+              className="rounded-lg shadow-lg"
+              width={500} // peut être ajusté selon l'image réelle
+              height={500} // peut être ajusté selon l'image réelle
+              layout="responsive" // rend l'image responsive
             />
           </div>
           
@@ -32,4 +36,3 @@ export default function About() {
       </section>
     );
   }
-  

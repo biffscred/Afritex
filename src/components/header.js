@@ -3,12 +3,13 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useSession, signIn, signOut } from 'next-auth/react';
+import { useCart } from '../app/context/CartContext';
 
 export default function Header() {
   const { data: session, status } = useSession(); // Vérifie l'état de connexion de l'utilisateur
   const [isOpen, setIsOpen] = useState(false);
   const [isEspaceOpen, setIsEspaceOpen] = useState(false); // État pour contrôler le menu Espace
-
+  const { itemCount } = useCart(); 
   const isAdmin = status === 'authenticated' && session?.user?.role?.toLowerCase() === 'admin';
 
   // Transfert du panier local vers le panier serveur après connexion
@@ -110,7 +111,11 @@ export default function Header() {
             </li>
             <li>
               <Link href="/cart">
-                <span className="text-white text-lg font-bold hover:text-yellow-400 transition-colors duration-300 cursor-pointer">Panier</span>
+                <span className="text-white text-lg font-bold hover:text-yellow-400 transition-colors duration-300 cursor-pointer">Panier {itemCount > 0 && (
+                    <span className="absolute top-0 right-0 mt-[-10px] mr-[-10px] bg-red-600 text-white rounded-full h-6 w-6 flex items-center justify-center text-xs font-bold">
+                      {itemCount}
+                    </span>
+                  )}</span>
               </Link>
             </li>
             

@@ -44,8 +44,8 @@ function createMailtrapTransporter() {
     port: 587,
     secure: false,
     auth: {
-      user: 'claud.keeling27@ethereal.email',
-        pass: 'TTGSGjTzYnRFZuX3gQ'
+     user: 'justus.luettgen@ethereal.email',
+        pass: 'M9k3c6CJzTYqwUPKNH'
     },
     tls: {
       rejectUnauthorized: false, // Ignorer les erreurs de certificat auto-signé en développement
