@@ -58,13 +58,15 @@ export async function GET(req) {
 
     console.log("Commande récupérée :", order);
 
-    // Regrouper les articles identiques en fonction de leur `orderItem.id`
     const items = order ? order.orderItems.map(item => {
       const product = item.model || item.accessory || item.fabric;
       const imageUrl = product.modelImages?.[0]?.url || product.accessoryimage?.[0]?.url || product.fabricImages?.[0]?.url || '/images/default.png';
 
+      // Log de l'URL de l'image pour chaque produit
+      console.log(`Produit ID: ${product.id}, Nom: ${product.name}, URL de l'image: ${imageUrl}`);
+
       return {
-        id: item.id,  // Utilise l'ID de l'orderItem ici pour la suppression
+        id: item.id,
         name: product.name,
         price: product.price,
         image: imageUrl,
@@ -106,7 +108,7 @@ export async function POST(req) {
     if (!userOrder) {
       userOrder = await prisma.order.create({
         data: { user: { connect: { id: userId } }, total: 0 },
-      });
+      }); 
     }
 
     // Définir `product` et `existingOrderItem` en fonction de la catégorie

@@ -9,15 +9,7 @@
 
 
 /* Font-face pour les polices personnalisées */
-@font-face {
-  font-family: 'GeistMono';
-  src: url('/fonts/GeistMonoVF.woff') format('woff');
-}
 
-@font-face {
-  font-family: 'GeistVF';
-  src: url('/fonts/GeistVF.woff') format('woff');
-}
 
 @font-face {
   font-family: 'cabinbold';

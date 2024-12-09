@@ -1,76 +1,41 @@
 "use client";
-import { useState, useEffect } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { useSession, signIn, signOut } from 'next-auth/react';
-import { useCart } from '../app/context/CartContext';
+import { useState, useEffect } from "react";
+import Link from "next/link";
+import Image from "next/image";
+import { useSession, signIn, signOut } from "next-auth/react";
+import { useCart } from "../app/context/CartContext";
 
 export default function Header() {
-  const { data: session, status } = useSession(); // Vérifie l'état de connexion de l'utilisateur
-  const [isOpen, setIsOpen] = useState(false);
-  const [isEspaceOpen, setIsEspaceOpen] = useState(false); // État pour contrôler le menu Espace
-  const { itemCount } = useCart(); 
-  const isAdmin = status === 'authenticated' && session?.user?.role?.toLowerCase() === 'admin';
+  const { data: session, status } = useSession(); // Récupère les données de session
+  const { itemCount, cartItems } = useCart(); // Accès au contexte du panier
+  const [isOpen, setIsOpen] = useState(false); // Gère le menu mobile
+  const [isEspaceOpen, setIsEspaceOpen] = useState(false); // Gère le menu "Espace"
+  const isAdmin =
+    status === "authenticated" &&
+    session?.user?.role?.toLowerCase() === "admin"; // Vérifie si l'utilisateur est admin
 
-  // Transfert du panier local vers le panier serveur après connexion
+  // Log des données du panier pour debugging
   useEffect(() => {
-    if (status === 'authenticated') {
-      const localCart = JSON.parse(localStorage.getItem('cart')) || [];
-
-      if (localCart.length > 0) {
-        // Transférer le panier local vers le serveur
-        localCart.forEach(async (product) => {
-          await addProductToServerCart(product);
-        });
-
-        // Après le transfert, vider le panier local
-        localStorage.removeItem('cart');
-      }
-
-    
-    }
-  }, [session, status]);
-
-  // Fonction pour ajouter un produit au panier serveur
-  async function addProductToServerCart(product) {
-    try {
-      const res = await fetch('/api/cart', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          productId: product.id,
-          quantity: product.quantity,
-          price: product.price,
-          category: product.category,
-        }),
-      });
-
-      if (!res.ok) {
-        const errorData = await res.json();
-        console.error(`Erreur lors du transfert au panier serveur : ${errorData.message}`);
-      }
-    } catch (error) {
-      console.error("Erreur lors du transfert au panier serveur :", error);
-    }
-  }
+    console.log("Nombre total d'articles dans le panier :", itemCount);
+    console.log("Articles du panier :", cartItems);
+  }, [itemCount, cartItems]);
 
   return (
-    <header className="bg-red-900 text-gray-200  border-t-4 border-green-800">
+    <header className="bg-red-900 text-gray-200 border-t-4 border-green-800">
       <div className="container mx-auto flex justify-between items-center p-4">
-        
         {/* Logo */}
         <Link href="/">
-          <Image 
-            src="/logo.png" 
-            alt="AfriTex Logo" 
-            width={50} 
-            height={50} 
+          <Image
+            src="/logo.png"
+            alt="AfriTex Logo"
+            width={50}
+            height={50}
             priority={true}
-            className="rounded-full border-4 border-red-500 shadow-md cursor-pointer" 
+            className="rounded-full border-4 border-red-500 shadow-md cursor-pointer"
           />
         </Link>
 
-        {/* Hamburger menu for mobile */}
+        {/* Hamburger menu pour mobile */}
         <div className="md:hidden">
           <button
             className="text-white text-2xl focus:outline-none"
@@ -81,97 +46,84 @@ export default function Header() {
         </div>
 
         {/* Navigation Menu */}
-        <nav className={`fixed md:relative top-0 left-0 w-full md:w-auto bg-yellow-600 md:bg-transparent p-6 md:p-0 transform transition-transform duration-500 ease-in-out ${isOpen ? "translate-y-0" : "-translate-y-full"} md:transform-none md:flex`}>
+        <nav
+          className={`fixed md:relative top-0 left-0 w-full md:w-auto bg-yellow-600 md:bg-transparent p-6 md:p-0 transform transition-transform duration-500 ease-in-out ${
+            isOpen ? "translate-y-0" : "-translate-y-full"
+          } md:transform-none md:flex`}
+        >
           <ul className="flex flex-col md:flex-row space-y-4 md:space-y-0 md:space-x-6">
             {/* Liens de navigation */}
             <li>
               <Link href="/">
-                <span className="text-white text-lg font-bold hover:text-red-400 transition-colors duration-300 cursor-pointer">Accueil</span>
+                <span className="text-white text-lg font-bold hover:text-red-400 transition-colors duration-300 cursor-pointer">
+                  Accueil
+                </span>
               </Link>
             </li>
             <li>
               <Link href="/shop">
-                <span className="text-white text-lg font-bold hover:text-green-400 transition-colors duration-300 cursor-pointer">Boutique</span>
+                <span className="text-white text-lg font-bold hover:text-green-400 transition-colors duration-300 cursor-pointer">
+                  Boutique
+                </span>
               </Link>
             </li>
             <li>
               <Link href="/about">
-                <span className="text-white text-lg font-bold hover:text-orange-400 transition-colors duration-300 cursor-pointer">À propos</span>
+                <span className="text-white text-lg font-bold hover:text-orange-400 transition-colors duration-300 cursor-pointer">
+                  À propos
+                </span>
               </Link>
             </li>
             <li>
               <Link href="/contact">
-                <span className="text-white text-lg font-bold hover:text-blue-400 transition-colors duration-300 cursor-pointer">Contact</span>
+                <span className="text-white text-lg font-bold hover:text-blue-400 transition-colors duration-300 cursor-pointer">
+                  Contact
+                </span>
               </Link>
             </li>
             <li>
               <Link href="/faq">
-                <span className="text-white text-lg font-bold hover:text-purple-400 transition-colors duration-300 cursor-pointer">FAQ</span>
+                <span className="text-white text-lg font-bold hover:text-purple-400 transition-colors duration-300 cursor-pointer">
+                  FAQ
+                </span>
               </Link>
             </li>
+            {/* Panier */}
             <li>
               <Link href="/cart">
-                <span className="text-white text-lg font-bold hover:text-yellow-400 transition-colors duration-300 cursor-pointer">Panier {itemCount > 0 && (
+                <span className="relative text-white text-lg font-bold hover:text-yellow-400 transition-colors duration-300 cursor-pointer">
+                  Panier
+                  {itemCount > 0 && (
                     <span className="absolute top-0 right-0 mt-[-10px] mr-[-10px] bg-red-600 text-white rounded-full h-6 w-6 flex items-center justify-center text-xs font-bold">
                       {itemCount}
                     </span>
-                  )}</span>
+                  )}
+                </span>
               </Link>
             </li>
-            
-            {/* Affichage conditionnel en fonction de la session */}
+            {/* Utilisateur connecté */}
             {session ? (
               <>
-                {/* Si l'utilisateur est un administrateur, afficher l'onglet Admin */}
                 {isAdmin && (
-                <li className="relative group">
-                <Link href="/admin">
-                  <span className="text-white text-lg font-bold hover:text-pink-400 transition-colors duration-300 cursor-pointer">
-                    Admin
-                  </span>
-                </Link>
-                <ul className="absolute hidden group-hover:block bg-gray-800 rounded-lg shadow-lg mt-2 z-50">
                   <li>
-                    <Link href="/admin/product">
-                      <span className="text-white text-lg font-bold hover:text-pink-400 transition-colors duration-300 cursor-pointer block px-4 py-2">
-                        Gestion des produits
+                    <Link href="/admin">
+                      <span className="text-white text-lg font-bold hover:text-pink-400 transition-colors duration-300 cursor-pointer">
+                        Admin
                       </span>
                     </Link>
                   </li>
-                  <li>
-                    <Link href="/admin/users">
-                      <span className="text-white text-lg font-bold hover:text-pink-400 transition-colors duration-300 cursor-pointer block px-4 py-2">
-                        Gestion des utilisateurs
-                      </span>
-                    </Link>
-                  </li>
-                </ul>
-              </li>
-              
                 )}
-
                 <li>
-                  <button onClick={() => signOut()} className="text-white text-lg font-bold hover:text-red-500 transition-colors duration-300 cursor-pointer">Déconnexion</button>
+                  <button
+                    onClick={() => signOut()}
+                    className="text-white text-lg font-bold hover:text-red-500 transition-colors duration-300 cursor-pointer"
+                  >
+                    Déconnexion
+                  </button>
                 </li>
-                {/* Affiche le nom de l'utilisateur et son avatar si disponible */}
-                {session.user && (
-                  <li className="flex items-center space-x-2">
-                    {session.user.image && (
-                      <Image
-                        src={session.user.image}
-                        alt="Avatar"
-                        width={30}
-                        height={30}
-                        className="rounded-full border-2 border-white"
-                      />
-                    )}
-                    <span className="text-white text-sm font-medium">{session.user.name}</span>
-                  </li>
-                )}
               </>
             ) : (
-              <li className="relative z-50">
-                {/* Menu Espace */}
+              <li>
                 <button
                   onClick={() => setIsEspaceOpen(!isEspaceOpen)}
                   className="text-white text-lg font-bold hover:text-blue-400 transition-colors duration-300 cursor-pointer"

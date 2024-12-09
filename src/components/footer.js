@@ -12,7 +12,7 @@ export default function Footer() {
           <div>
             <h3 className="text-2xl font-semibold mb-4 text-yellow-300">Afritex</h3>
             <p className="text-yellow-100">
-              Explore a curated selection of authentic African fabrics, clothing, and accessories made with high-quality materials.
+              Explorez une  selection de l'authentisme des tissus africains  , vètements  , et accesoires  faits avec des materaiux de hautes qualités .
             </p>
           </div>
           
@@ -20,10 +20,10 @@ export default function Footer() {
           <div>
             <h3 className="text-2xl font-semibold mb-4 text-yellow-300">Navigation</h3>
             <ul className="space-y-2">
-              <li><Link href="/fabrics"><span className="hover:text-green-200 cursor-pointer">Fabrics</span></Link></li>
-              <li><Link href="/models"><span className="hover:text-green-200 cursor-pointer">Models</span></Link></li>
-              <li><Link href="/accessories"><span className="hover:text-green-200 cursor-pointer">Accessories</span></Link></li>
-              <li><Link href="/contact"><span className="hover:text-green-200 cursor-pointer">Contact Us</span></Link></li>
+              <li><Link href="/fabrics"><span className="hover:text-green-200 cursor-pointer">Tissus</span></Link></li>
+              <li><Link href="/models"><span className="hover:text-green-200 cursor-pointer">Modèles</span></Link></li>
+              <li><Link href="/accessories"><span className="hover:text-green-200 cursor-pointer">Accessoires</span></Link></li>
+              <li><Link href="/contact"><span className="hover:text-green-200 cursor-pointer">Contactez Nous </span></Link></li>
             </ul>
           </div>
 
@@ -50,7 +50,7 @@ export default function Footer() {
 
         {/* Section Newsletter */}
         <div className="mt-12 border-t border-red-800 pt-8">
-          <h3 className="text-2xl font-semibold mb-4 text-center text-yellow-300">Subscribe to our Newsletter</h3>
+          <h3 className="text-2xl font-semibold mb-4 text-center text-yellow-300">Souscrivez a notre Newsletter </h3>
           <form className="flex flex-col md:flex-row justify-center items-center space-y-4 md:space-y-0 md:space-x-4">
             <input
               type="email"
@@ -58,7 +58,7 @@ export default function Footer() {
               className="p-3 w-full md:w-auto rounded bg-red-800 text-gray-100 placeholder-yellow-500 focus:outline-none focus:ring focus:ring-green-500"
             />
             <button type="submit" className="px-6 py-3 bg-green-600 text-white rounded hover:bg-green-700 transition-transform transform hover:scale-105">
-              Subscribe
+              Souscrire
             </button>
           </form>
         </div>
@@ -67,8 +67,8 @@ export default function Footer() {
         <div className="mt-12 border-t border-red-800 pt-8 flex flex-col md:flex-row justify-between items-center text-yellow-100 text-sm">
           <p>&copy; {new Date().getFullYear()} Afritex. All rights reserved.</p>
           <div className="flex space-x-4">
-            <Link href="/privacy-policy"><span className="hover:text-green-200 cursor-pointer">Privacy Policy</span></Link>
-            <Link href="/terms-of-service"><span className="hover:text-green-200 cursor-pointer">Terms of Service</span></Link>
+            <Link href="/privacy-policy"><span className="hover:text-green-200 cursor-pointer">Politique de confidentialité</span></Link>
+            <Link href="/terms-of-service"><span className="hover:text-green-200 cursor-pointer">Conditions d'utilisation </span></Link>
           </div>
         </div>
       </div>
