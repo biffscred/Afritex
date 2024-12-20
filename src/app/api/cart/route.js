@@ -1,69 +1,60 @@
 import { getToken } from "next-auth/jwt";
-import prisma from '../../../lib/prisma';
-import { NextResponse } from 'next/server';
+import prisma from "../../../lib/prisma";
+import { NextResponse } from "next/server";
 
 const secret = process.env.NEXTAUTH_SECRET;
 
-// Gestion de la méthode GET pour récupérer les articles du panier
+// 🚀 Fonction GET : Récupération des articles du panier
 export async function GET(req) {
-  console.log("Début de la requête GET pour le panier");
+  console.log("🚀 Début de la requête GET pour récupérer le panier.");
+
+  // Vérifiez si Prisma est bien initialisé
+  console.log("🔧 Vérification de Prisma instance :", prisma);
+
+  if (!prisma) {
+    console.error("❌ Prisma est undefined. Vérifiez l'importation.");
+    return NextResponse.json({ message: "Erreur serveur. Prisma non initialisé." }, { status: 500 });
+  }
 
   const token = await getToken({ req, secret });
-  console.log("Token récupéré :", token);
+  console.log("🔑 Token récupéré :", token);
 
   if (!token || !token.id) {
-    console.log("Token non trouvé ou ID utilisateur manquant dans le token.");
-    return NextResponse.json({ message: 'Vous devez être connecté pour accéder au panier.' }, { status: 401 });
+    console.log("❌ Token ou ID utilisateur manquant.");
+    return NextResponse.json({ message: "Vous devez être connecté pour accéder au panier." }, { status: 401 });
   }
 
   const userId = token.id;
-  console.log("ID utilisateur extrait du token :", userId);
 
   try {
-    console.log("Recherche de la commande de l'utilisateur avec userId :", userId);
-
+    console.log(`🔍 Recherche de la commande pour l'utilisateur ID : ${userId}`);
     const order = await prisma.order.findFirst({
       where: { userId },
       include: {
-        orderItems: { 
+        orderitem: {
           include: {
-            model: {
-              select: {
-                id: true,
-                name: true,
-                price: true,
-                modelImages: { select: { url: true } },
-              },
-            },
-            accessory: {
-              select: {
-                id: true,
-                name: true,
-                price: true,
-                accessoryimage: { select: { url: true } },
-              },
-            },
-            fabric: {
-              select: {
-                id: true,
-                name: true,
-                price: true,
-                fabricImages: { select: { url: true } },
-              },
-            },
+            model: { select: { id: true, name: true, price: true, modelimage: { select: { url: true } } } },
+            accessory: { select: { id: true, name: true, price: true, accessoryimage: { select: { url: true } } } },
+            fabric: { select: { id: true, name: true, price: true, fabricimage: { select: { url: true } } } },
           },
         },
       },
     });
 
-    console.log("Commande récupérée :", order);
+    console.log("✅ Résultat de la commande :", order);
 
-    const items = order ? order.orderItems.map(item => {
+    if (!order) {
+      console.log("⚠️ Aucune commande trouvée pour cet utilisateur.");
+      return NextResponse.json([], { status: 200 });
+    }
+
+    const items = order.orderitem.map((item) => {
       const product = item.model || item.accessory || item.fabric;
-      const imageUrl = product.modelImages?.[0]?.url || product.accessoryimage?.[0]?.url || product.fabricImages?.[0]?.url || '/images/default.png';
-
-      // Log de l'URL de l'image pour chaque produit
-      console.log(`Produit ID: ${product.id}, Nom: ${product.name}, URL de l'image: ${imageUrl}`);
+      const imageUrl =
+        product?.modelImages?.[0]?.url ||
+        product?.accessoryimage?.[0]?.url ||
+        product?.fabricImages?.[0]?.url ||
+        "/images/default.png";
 
       return {
         id: item.id,
@@ -72,93 +63,113 @@ export async function GET(req) {
         image: imageUrl,
         quantity: item.quantity,
       };
-    }) : [];
+    });
 
-    console.log("Articles formatés pour le panier :", items);
-
+    console.log("✅ Articles du panier formatés :", items);
     return NextResponse.json(items, { status: 200 });
   } catch (error) {
-    console.error("Erreur lors de la récupération des articles du panier :", error);
-    return NextResponse.json({ message: 'Erreur lors de la récupération des articles du panier.' }, { status: 500 });
+    console.error("❌ Erreur GET panier :", error);
+    return NextResponse.json({ message: "Erreur serveur lors de la récupération du panier." }, { status: 500 });
   }
 }
 
-// Gestion de la méthode POST pour ajouter un article au panier
+// 🚀 Fonction POST : Ajout d'article au panier
 export async function POST(req) {
-  console.log("Début de la requête POST pour ajouter un article au panier.");
+  console.log("🚀 Début de la requête POST pour ajouter un article au panier.");
+
+  // Vérifiez si Prisma est bien initialisé
+  console.log("🔧 Vérification de Prisma instance :", prisma);
+
+  if (!prisma) {
+    console.error("❌ Prisma est undefined. Vérifiez l'importation.");
+    return NextResponse.json({ message: "Erreur serveur. Prisma non initialisé." }, { status: 500 });
+  }
 
   const token = await getToken({ req, secret });
+  console.log("🔑 Token récupéré :", token);
+
   if (!token || !token.id) {
-    console.log("Token non trouvé ou ID utilisateur manquant.");
-    return NextResponse.json({ message: 'Vous devez être connecté pour ajouter des articles au panier.' }, { status: 401 });
+    console.log("❌ Token ou ID utilisateur manquant.");
+    return NextResponse.json({ message: "Vous devez être connecté pour ajouter des articles." }, { status: 401 });
   }
 
   const userId = token.id;
-  console.log("ID utilisateur récupéré à partir du token :", userId);
+  console.log("✅ ID utilisateur récupéré :", userId);
 
   try {
     const { productId, quantity, category } = await req.json();
+    console.log("🔍 Paramètres reçus :", { productId, quantity, category });
+
     if (!productId || !quantity || !category) {
-      console.log("Paramètres de la requête manquants ou incorrects.");
-      return NextResponse.json({ message: 'Données de la requête invalides.' }, { status: 400 });
+      console.log("❌ Paramètres manquants.");
+      return NextResponse.json({ message: "Données invalides." }, { status: 400 });
     }
 
-    // Recherche ou création de la commande pour l'utilisateur
+    // 📦 Récupération ou création de la commande
+    console.log("🔧 Recherche de la commande utilisateur dans Prisma...");
     let userOrder = await prisma.order.findFirst({ where: { userId } });
+    console.log("🔍 Résultat de la recherche :", userOrder);
+
     if (!userOrder) {
-      userOrder = await prisma.order.create({
-        data: { user: { connect: { id: userId } }, total: 0 },
-      }); 
+      console.log("⚠️ Aucune commande trouvée. Création d'une nouvelle commande...");
+      userOrder = await prisma.order.create({ data: { userId, total: 0 } });
+      console.log("✅ Nouvelle commande créée :", userOrder);
     }
 
-    // Définir `product` et `existingOrderItem` en fonction de la catégorie
-    let product;
-    let existingOrderItem;
+    // 🔍 Recherche du produit et de l'article existant
+    console.log(`🔍 Recherche du produit (Catégorie : ${category}, ID : ${productId})...`);
+    let product = null;
+    let existingOrderItem = null;
 
-    if (category === 'FABRIC') {
-      product = await prisma.fabric.findUnique({ where: { id: productId } });
-      existingOrderItem = await prisma.orderItem.findFirst({
-        where: { orderId: userOrder.id, fabricId: productId },
-      });
-    } else if (category === 'MODEL') {
-      product = await prisma.model.findUnique({ where: { id: productId } });
-      existingOrderItem = await prisma.orderItem.findFirst({
-        where: { orderId: userOrder.id, modelId: productId },
-      });
-    } else if (category === 'ACCESSORY') {
-      product = await prisma.accessory.findUnique({ where: { id: productId } });
-      existingOrderItem = await prisma.orderItem.findFirst({
-        where: { orderId: userOrder.id, accessoryId: productId },
-      });
-    } else {
-      console.log("Catégorie inconnue :", category);
-      return NextResponse.json({ message: 'Catégorie de produit invalide.' }, { status: 400 });
+    switch (category) {
+      case "FABRIC":
+        product = await prisma.fabric.findUnique({ where: { id: productId } });
+        existingOrderItem = await prisma.orderitem.findFirst({
+          where: { orderId: userOrder.id, fabricId: productId },
+        });
+        break;
+      case "MODEL":
+        product = await prisma.model.findUnique({ where: { id: productId } });
+        existingOrderItem = await prisma.orderitem.findFirst({
+          where: { orderId: userOrder.id, modelId: productId },
+        });
+        break;
+      case "ACCESSORY":
+        product = await prisma.accessory.findUnique({ where: { id: productId } });
+        existingOrderItem = await prisma.orderitem.findFirst({
+          where: { orderId: userOrder.id, accessoryId: productId },
+        });
+        break;
+      default:
+        console.log("❌ Catégorie invalide :", category);
+        return NextResponse.json({ message: "Catégorie invalide." }, { status: 400 });
     }
 
-    // Vérification si le produit a été trouvé
+    console.log("✅ Produit récupéré :", product);
+
     if (!product) {
-      console.log(`Produit ${category} avec ID ${productId} n'existe pas.`);
-      return NextResponse.json({ message: `Produit ${category} spécifié n'existe pas.` }, { status: 404 });
+      console.log("❌ Produit introuvable.");
+      return NextResponse.json({ message: "Produit introuvable." }, { status: 404 });
     }
 
-    // Si l'article existe déjà, mettre à jour la quantité
+    // 🔄 Mise à jour de la quantité si l'article existe
     if (existingOrderItem) {
-      const updatedOrderItem = await prisma.orderItem.update({
+      console.log("🔄 Mise à jour de la quantité de l'article existant...");
+      const updatedOrderItem = await prisma.orderitem.update({
         where: { id: existingOrderItem.id },
         data: { quantity: existingOrderItem.quantity + quantity },
       });
-      console.log("Quantité mise à jour pour l'article existant :", updatedOrderItem);
+      console.log("✅ Quantité mise à jour :", updatedOrderItem);
       return NextResponse.json(updatedOrderItem, { status: 200 });
     }
 
-    // Définir `connectData` en fonction de la catégorie
+    // ➕ Ajout d'un nouvel article
     const connectData = {};
-    if (category === 'FABRIC') connectData.fabric = { connect: { id: productId } };
-    else if (category === 'MODEL') connectData.model = { connect: { id: productId } };
-    else if (category === 'ACCESSORY') connectData.accessory = { connect: { id: productId } };
+    if (category === "FABRIC") connectData.fabric = { connect: { id: productId } };
+    else if (category === "MODEL") connectData.model = { connect: { id: productId } };
+    else if (category === "ACCESSORY") connectData.accessory = { connect: { id: productId } };
 
-    // Créer un nouvel article de commande
-    const newOrderItem = await prisma.orderItem.create({
+    const newOrderItem = await prisma.orderitem.create({
       data: {
         quantity,
         price: product.price,
@@ -167,10 +178,10 @@ export async function POST(req) {
       },
     });
 
-    console.log("Nouvel article ajouté au panier :", newOrderItem);
+    console.log("✅ Nouvel article ajouté :", newOrderItem);
     return NextResponse.json(newOrderItem, { status: 200 });
   } catch (error) {
-    console.error("Erreur lors de l'ajout de l'article au panier :", error);
-    return NextResponse.json({ message: 'Erreur lors de l\'ajout de l\'article au panier.' }, { status: 500 });
+    console.error("❌ Erreur POST ajout panier :", error);
+    return NextResponse.json({ message: "Erreur serveur lors de l'ajout au panier." }, { status: 500 });
   }
 }

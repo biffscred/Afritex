@@ -5,7 +5,6 @@ import prisma from "../../../../lib/prisma";
 import { compare } from "bcryptjs";
 import GoogleProvider from "next-auth/providers/google";
 
-// Définition de la configuration NextAuth
 export const authOptions = {
   providers: [
     GoogleProvider({
@@ -19,16 +18,27 @@ export const authOptions = {
         password: { label: "Mot de passe", type: "password" },
       },
       authorize: async (credentials) => {
-        const user = await prisma.user.findUnique({
-          where: { email: credentials.email },
-          select: { id: true, email: true, password: true, role: true },
-        });
-        console.log("User in authorize:", user);
-        if (user) {
-          const isValidPassword = await compare(credentials.password, user.password);
-          return isValidPassword ? user : null;
+        console.log("Authorize - Credentials:", credentials);
+
+        try {
+          const user = await prisma.user.findUnique({
+            where: { email: credentials.email },
+            select: { id: true, email: true, password: true, role: true },
+          });
+          console.log("Authorize - User from DB:", user);
+
+          if (user) {
+            const isValidPassword = await compare(credentials.password, user.password);
+            console.log("Authorize - Password valid:", isValidPassword);
+
+            return isValidPassword ? user : null;
+          }
+          console.log("Authorize - User not found");
+          return null;
+        } catch (error) {
+          console.error("Authorize - Error:", error);
+          return null;
         }
-        return null;
       },
     }),
   ],
@@ -44,51 +54,76 @@ export const authOptions = {
   },
   callbacks: {
     async signIn({ user, account }) {
-      if (account.provider === 'google') {
-        const existingUser = await prisma.user.findUnique({
-          where: { email: user.email },
-        });
-        if (!existingUser) {
-          await prisma.user.create({
-            data: {
-              name: user.name,
-              email: user.email,
-              role: 'USER',
-            },
+      console.log("SignIn Callback - User:", user);
+      console.log("SignIn Callback - Account:", account);
+
+      if (account.provider === "google") {
+        try {
+          const existingUser = await prisma.user.findUnique({
+            where: { email: user.email },
           });
+          console.log("SignIn - Existing User:", existingUser);
+
+          if (!existingUser) {
+            const newUser = await prisma.user.create({
+              data: {
+                name: user.name,
+                email: user.email,
+                role: "USER",
+              },
+            });
+            console.log("SignIn - New User Created:", newUser);
+          }
+        } catch (error) {
+          console.error("SignIn - Error creating user:", error);
+          return false;
         }
       }
       return true;
     },
     async jwt({ token, user }) {
+      console.log("JWT Callback - Token before:", token);
+      console.log("JWT Callback - User:", user);
+
       if (user) {
-        console.log('JWT Callback - User:', user); 
         token.id = user.id;
         token.email = user.email;
         token.name = user.name;
-        token.role = user.role || 'USER';
+        token.role = user.role || "USER";
       } else if (token && !token.role) {
-        const dbUser = await prisma.user.findUnique({
-          where: { email: token.email },
-          select: { role: true },
-        });
-        token.role = dbUser?.role || "USER";
+        try {
+          const dbUser = await prisma.user.findUnique({
+            where: { email: token.email },
+            select: { role: true },
+          });
+          console.log("JWT Callback - DB User:", dbUser);
+          token.role = dbUser?.role || "USER";
+        } catch (error) {
+          console.error("JWT Callback - Error fetching role:", error);
+        }
       }
+
+      console.log("JWT Callback - Token after:", token);
       return token;
     },
     async session({ session, token }) {
+      console.log("Session Callback - Token:", token);
+      console.log("Session Callback - Session before:", session);
+
       if (token) {
         session.user = {
           id: token.id,
           email: token.email,
           name: token.name,
-          role: token.role || 'USER',
+          role: token.role || "USER",
         };
       }
+
+      console.log("Session Callback - Session after:", session);
       return session;
     },
   },
-  debug: true,
+  debug: true, // Active les logs de NextAuth
 };
 
 // Exports nommés pour les méthodes GET et POST

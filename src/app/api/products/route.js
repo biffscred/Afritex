@@ -107,36 +107,44 @@ export async function POST(req) {
 // Gestion de la requête GET
 export async function GET(req) {
   try {
-    console.log("Récupération de la liste des produits avec tous les filtres...");
+    console.log("🔄 Début de la récupération des produits...");
+    console.log("URL de la requête :", req.url);
 
     // Extraction des paramètres de la requête
     const { searchParams } = new URL(req.url);
-    const categoryFilter = searchParams.get('category');
-    const countryFilter = searchParams.get('country');
-    const priceMin = parseFloat(searchParams.get('priceMin')) || 0;
-    const priceMax = parseFloat(searchParams.get('priceMax')) || 500;
-    const colorFilter = searchParams.get('color');
-    const materialFilter = searchParams.get('material');
-    const artisanFilter = searchParams.get('artisan');
+    const categoryFilter = searchParams.get("category");
+    const countryFilter = searchParams.get("country");
+    const priceMin = parseFloat(searchParams.get("priceMin")) || 0;
+    const priceMax = parseFloat(searchParams.get("priceMax")) || 500;
+    const colorFilter = searchParams.get("color");
+    const materialFilter = searchParams.get("material");
+    const artisanFilter = searchParams.get("artisan");
+
+    console.log("🔍 Paramètres reçus :");
+    console.log("Category :", categoryFilter);
+    console.log("Country :", countryFilter);
+    console.log("PriceMin :", priceMin, "| PriceMax :", priceMax);
+    console.log("Color :", colorFilter);
+    console.log("Material :", materialFilter);
+    console.log("Artisan :", artisanFilter);
 
     // Configuration des filtres pour Prisma
     const filters = {};
 
-    // Application du filtre de catégorie
     if (categoryFilter) {
       filters.category = categoryFilter;
+      console.log("✅ Filtre catégorie appliqué :", filters.category);
     }
 
-    // Application du filtre de pays
     if (countryFilter) {
       filters.countries = {
         some: {
           name: countryFilter,
         },
       };
+      console.log("✅ Filtre pays appliqué :", filters.countries);
     }
 
-    // Application des filtres de prix
     if (!isNaN(priceMin) || !isNaN(priceMax)) {
       filters.price = {};
       if (!isNaN(priceMin)) {
@@ -145,41 +153,53 @@ export async function GET(req) {
       if (!isNaN(priceMax)) {
         filters.price.lte = priceMax;
       }
+      console.log("✅ Filtre prix appliqué :", filters.price);
     }
 
-    // Application du filtre d'artisan
     if (artisanFilter) {
       filters.artisan = {
-        contains: artisanFilter, // Utilisation de contains pour permettre une recherche partielle
+        contains: artisanFilter,
       };
+      console.log("✅ Filtre artisan appliqué :", filters.artisan);
     }
 
-    // Filtrage basé sur les champs 'material' et 'color' dans la table 'fabric'
     if (materialFilter || colorFilter) {
       filters.fabric = {
-        material: materialFilter ? { equals: materialFilter } : undefined,
-        color: colorFilter ? { equals: colorFilter } : undefined,
+        some: {
+          AND: [
+            materialFilter ? { material: { equals: materialFilter } } : {},
+            colorFilter ? { color: { equals: colorFilter } } : {},
+          ],
+        },
       };
+      console.log("✅ Filtre material/color appliqué :", filters.fabric);
     }
 
-    console.log("Filtres appliqués :", filters);
+    console.log("🔧 Filtres finaux appliqués :", filters);
 
-    // Exécution de la requête Prisma avec tous les filtres
+    // Requête Prisma
     const products = await prisma.product.findMany({
       where: filters,
       include: {
         fabric: true,
         model: true,
         accessory: true,
-        countries: true,
+        country: true,
       },
     });
 
-    console.log("Produits récupérés avec filtres:", products);
+    console.log("✅ Produits récupérés :", products);
+
     return NextResponse.json(products, { status: 200 });
 
   } catch (error) {
-    console.error("Erreur lors de la récupération des produits avec filtres:", error);
-    return NextResponse.json({ message: "Erreur lors de la récupération des produits" }, { status: 500 });
+    console.error("❌ Erreur lors de la récupération des produits :", error.message);
+    return NextResponse.json(
+      { message: "Erreur lors de la récupération des produits", error: error.message },
+      { status: 500 }
+    );
+  } finally {
+    await prisma.$disconnect();
+    console.log("🔌 Prisma déconnecté.");
   }
 }

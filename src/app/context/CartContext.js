@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useState, useEffect } from "react";
+import { createContext, useContext, useState, useEffect, useMemo } from "react";
 
 // Création du contexte du panier
 const CartContext = createContext();
@@ -9,16 +9,24 @@ export function CartProvider({ children }) {
   const [itemCount, setItemCount] = useState(0); // Nombre total d'articles
   const [totalPrice, setTotalPrice] = useState(0); // Prix total
 
-  // Met à jour `itemCount` et `totalPrice` à chaque changement de `cartItems`
+  // Calcul dynamique des totaux avec useMemo
+  const calculatedItemCount = useMemo(
+    () => cartItems.reduce((count, item) => count + item.quantity, 0),
+    [cartItems]
+  );
+
+  const calculatedTotalPrice = useMemo(
+    () => cartItems.reduce((total, item) => total + item.price * item.quantity, 0),
+    [cartItems]
+  );
+
+  // Met à jour `itemCount` et `totalPrice` chaque fois que `cartItems` change
   useEffect(() => {
-    const totalQuantity = cartItems.reduce((count, item) => count + item.quantity, 0);
-    const totalCost = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+    setItemCount(calculatedItemCount);
+    setTotalPrice(calculatedTotalPrice);
+  }, [calculatedItemCount, calculatedTotalPrice]);
 
-    setItemCount(totalQuantity);
-    setTotalPrice(totalCost);
-  }, [cartItems]);
-
-  // Charge les articles du panier depuis le backend
+  // Charge les articles du panier depuis le backend au montage
   const loadCartFromServer = async () => {
     try {
       const response = await fetch("/api/cart");
@@ -27,44 +35,95 @@ export function CartProvider({ children }) {
         return;
       }
       const data = await response.json();
-      setCartItems(data); // Synchronise le contexte avec les données du backend
-      console.log("Panier récupéré depuis le serveur :", data);
+      const formattedData = data.map((item) => ({
+        id: item.id,
+        name: item.name,
+        price: item.price,
+        quantity: item.quantity,
+        category: item.category,
+      }));
+      setCartItems(formattedData); // Synchronise le contexte avec les données du backend
+      console.log("✅ Panier récupéré depuis le serveur :", formattedData);
     } catch (error) {
-      console.error("Erreur lors de la récupération du panier :", error);
+      console.error("❌ Erreur lors de la récupération du panier :", error);
     }
   };
 
+  // Appel au chargement initial du panier depuis le serveur
+  useEffect(() => {
+    console.log("🚀 Chargement initial du panier depuis le serveur");
+    loadCartFromServer();
+  }, []);
+
   // Ajoute un article au panier ou met à jour sa quantité
-  const addToCart = (newItem) => {
-    setCartItems((prevItems) => {
-      const existingItem = prevItems.find((item) => item.id === newItem.id);
-      if (existingItem) {
-        return prevItems.map((item) =>
-          item.id === newItem.id ? { ...item, quantity: item.quantity + 1 } : item
-        );
-      } else {
-        return [...prevItems, { ...newItem, quantity: 1 }];
+  const addToCart = async (newItem) => {
+    try {
+      const response = await fetch("/api/cart", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          productId: newItem.id,
+          quantity: 1,
+          category: newItem.category,
+        }),
+      });
+
+      if (!response.ok) {
+        console.error("Erreur lors de l'ajout au panier :", response.statusText);
+        return;
       }
-    });
+
+      const updatedItem = await response.json();
+
+      setCartItems((prevItems) => {
+        const existingItem = prevItems.find((item) => item.id === updatedItem.id);
+        if (existingItem) {
+          return prevItems.map((item) =>
+            item.id === updatedItem.id ? { ...item, quantity: updatedItem.quantity } : item
+          );
+        } else {
+          return [...prevItems, updatedItem];
+        }
+      });
+    } catch (error) {
+      console.error("Erreur lors de l'ajout au panier :", error);
+    }
   };
 
   // Supprime un article ou diminue sa quantité
-  const removeFromCart = (itemId) => {
-    setCartItems((prevItems) => {
-      const existingItem = prevItems.find((item) => item.id === itemId);
-      if (existingItem && existingItem.quantity > 1) {
-        return prevItems.map((item) =>
-          item.id === itemId ? { ...item, quantity: item.quantity - 1 } : item
-        );
-      } else {
-        return prevItems.filter((item) => item.id !== itemId);
+  const removeFromCart = async (itemId) => {
+    try {
+      const response = await fetch(`/api/cart/${itemId}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        console.error("Erreur lors de la suppression de l'article :", response.statusText);
+        return;
       }
-    });
+
+      setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
+    } catch (error) {
+      console.error("Erreur lors de la suppression de l'article :", error);
+    }
   };
 
   // Vide complètement le panier
-  const clearCart = () => {
-    setCartItems([]);
+  const clearCart = async () => {
+    try {
+      const response = await fetch("/api/cart", {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        console.error("Erreur lors du vidage du panier :", response.statusText);
+        return;
+      }
+
+      setCartItems([]); // Vide localement après confirmation du backend
+    } catch (error) {
+      console.error("Erreur lors du vidage du panier :", error);
+    }
   };
 
   // Retourne le contexte avec les valeurs nécessaires
@@ -77,7 +136,7 @@ export function CartProvider({ children }) {
         clearCart,
         itemCount,
         totalPrice,
-        loadCartFromServer, // Expose la fonction pour charger les données depuis le serveur
+        loadCartFromServer, // Expose la fonction pour un appel manuel si nécessaire
       }}
     >
       {children}

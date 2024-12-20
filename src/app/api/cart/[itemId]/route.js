@@ -31,7 +31,7 @@ export async function PUT(req) {
 
   try {
     // Vérifiez que l'item appartient à l'utilisateur
-    const orderItem = await prisma.orderItem.findUnique({
+    const orderItem = await prisma.orderitem.findUnique({
       where: { id: itemId },
       include: { order: true },
     });
@@ -42,7 +42,7 @@ export async function PUT(req) {
     }
 
     // Mettre à jour la quantité de l'article
-    const updatedItem = await prisma.orderItem.update({
+    const updatedItem = await prisma.orderitem.update({
       where: { id: itemId },
       data: { quantity },
     });
@@ -79,7 +79,7 @@ export async function DELETE(req) {
 
   try {
     // Vérifier si l'item appartient à la commande de l'utilisateur
-    const orderItem = await prisma.orderItem.findUnique({
+    const orderItem = await prisma.orderitem.findUnique({
       where: { id: itemId },
       include: { order: true },
     });
@@ -90,7 +90,7 @@ export async function DELETE(req) {
     }
 
     // Supprimer l'article du panier
-    const deletedItem = await prisma.orderItem.delete({
+    const deletedItem = await prisma.orderitem.delete({
       where: { id: itemId },
     });
 
