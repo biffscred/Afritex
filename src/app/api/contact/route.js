@@ -50,8 +50,8 @@ export async function POST(request) {
         port: 587,
         secure: false,
         auth: {
-           user: 'justus.luettgen@ethereal.email',
-        pass: 'M9k3c6CJzTYqwUPKNH'
+           user: 'cedrick.gleichner@ethereal.email',
+        pass: '8Q2zPACQZhTXhZXp9C'
         },
         tls: {
             rejectUnauthorized: false, // Ignorer les erreurs de certificat auto-signé en développement

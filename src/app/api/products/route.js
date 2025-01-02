@@ -9,7 +9,7 @@ export async function POST(req) {
     const requestBody = await req.json();
     console.log("Contenu de la requête:", requestBody);
 
-    const { name, description, price, category, image, artisanId } = requestBody;
+    const { name, description, price, category, image, artisanId ,fabricId} = requestBody;
 
     // Vérification des champs obligatoires
     if (!name || !description || !price || !category || !image) {
@@ -20,6 +20,14 @@ export async function POST(req) {
     // Conversion des valeurs
     const parsedPrice = parseFloat(price);
     const parsedArtisanId = artisanId ? parseInt(artisanId) : null;
+    const parsedFabricId = fabricId ? parseInt(fabricId, 10) : null;
+
+    if ((category === "MODEL" || category === "ACCESSORY") && !parsedFabricId) {
+      return new Response(
+        JSON.stringify({ message: "fabricId est obligatoire pour cette catégorie." }),
+        { status: 400 }
+      );
+    }
     let categoryId;
 
     console.log("Catégorie sélectionnée:", category);
@@ -50,7 +58,7 @@ export async function POST(req) {
           name,
           description,
           price: parsedPrice,
-          fabricId: requestBody.fabricId || null,
+          fabricId: parsedFabricId,
           color: requestBody.color || null,
           // artisanId: parsedArtisanId,
           createdAt: new Date(),

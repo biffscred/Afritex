@@ -70,6 +70,8 @@ export const authOptions = {
                 name: user.name,
                 email: user.email,
                 role: "USER",
+                createdAt: new Date(),
+    
               },
             });
             console.log("SignIn - New User Created:", newUser);

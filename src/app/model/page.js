@@ -15,7 +15,7 @@ const ModelPage = () => {
   // Fonction pour récupérer les modèles depuis l'API
   const fetchModels = async () => {
     try {
-      const response = await fetch("/api/models");
+      const response = await fetch("/api/model");
       if (!response.ok) throw new Error("Erreur lors de la récupération des modèles.");
       const data = await response.json();
       setModels(data);

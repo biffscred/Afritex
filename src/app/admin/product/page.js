@@ -32,6 +32,8 @@ export default function AdminDashboardProduct() {
   const [selectedCategory, setSelectedCategory] = useState("");
   const [showDeleteConfirm, setShowDeleteConfirm] = useState(false);
   const [deleteId, setDeleteId] = useState(null);
+  const [fabrics, setFabrics] = useState([]); // État pour les tissus disponibles
+
 
   useEffect(() => {
     if (status === "loading") return;
@@ -44,6 +46,7 @@ export default function AdminDashboardProduct() {
     if (session?.user.role === "ADMIN") {
       fetchProducts();
       fetchImages();
+      fetchFabrics();
     }
   }, [session]);
 
@@ -71,6 +74,18 @@ export default function AdminDashboardProduct() {
       setTimeout(() => setError(null), 3000);
     }
   }
+  async function fetchFabrics() {
+    try {
+      const res = await fetch("/api/fabric");
+      if (!res.ok) throw new Error(`Erreur HTTP : ${res.status}`);
+      const data = await res.json();
+      setFabrics(data);; // Stocke les tissus disponibles dans l'état
+    } catch (error) {
+      setError("Erreur lors de la récupération des tissus.");
+      setTimeout(() => setError(null), 3000);
+    }
+  }
+
 
   useEffect(() => {
     let filtered = products;
@@ -133,6 +148,7 @@ export default function AdminDashboardProduct() {
       color: "",
       size: "",
       artisanId: "",
+      fabricId: "",
     });
     setEditId(null);
   }
@@ -262,6 +278,19 @@ export default function AdminDashboardProduct() {
 
           {form.category === "MODEL" && (
             <>
+            <select
+                value={form.fabricId}
+                onChange={(e) => setForm({ ...form,  fabricId: parseInt(e.target.value, 10)})}
+                className="w-full p-3 border rounded-md focus:outline-none focus:ring focus:ring-orange-300"
+                required
+              >
+                <option value="">Sélectionnez un tissu</option>
+                {fabrics.map((fabric) => (
+                  <option key={fabric.id} value={fabric.id}>
+                    {fabric.name} - {fabric.color}
+                  </option>
+                ))}
+              </select>
               <input
                 type="text"
                 placeholder="Artisan ID"
@@ -330,6 +359,14 @@ export default function AdminDashboardProduct() {
               className="bg-white p-6 rounded-lg shadow-md border border-yellow-300 flex flex-col justify-between"
             >
               <div>
+                {/* Ajout de l'image */}
+    {product.image && (
+      <img
+        src={product.image} // Utilisez le chemin de l'image
+        alt={product.name}  // Ajoutez un texte alternatif
+        className="w-full h-40 object-cover rounded-md mb-4"
+      />
+    )}
                 <h3 className="text-xl font-semibold text-orange-800">{product.name}</h3>
                 <p className="text-gray-600 mt-2">{product.description}</p>
                 <p className="text-green-700 font-bold mt-4">{product.price} €</p>
