@@ -38,6 +38,7 @@ export async function POST(req) {
       const fabric = await prisma.fabric.create({
         data: {
           name,
+          image,
           price: parsedPrice,
           material: requestBody.material || null,
           pattern: requestBody.pattern || null,
@@ -60,6 +61,7 @@ export async function POST(req) {
           price: parsedPrice,
           fabricId: parsedFabricId,
           color: requestBody.color || null,
+          image,
           // artisanId: parsedArtisanId,
           createdAt: new Date(),
           updatedAt: new Date(),
@@ -77,6 +79,7 @@ export async function POST(req) {
           price: parsedPrice,
           fabricId: requestBody.fabricId || null,
           color: requestBody.color || null,
+          image,
           // artisanId: parsedArtisanId,
           createdAt: new Date(),
           updatedAt: new Date(),

@@ -55,41 +55,53 @@ const ModelPage = () => {
         {error && <div className="text-center text-red-500 mb-4">{error}</div>}
 
         {/* Liste des modèles */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
-          {models.map((model) => (
-            <div key={model.id} className="p-6 bg-white rounded-2xl shadow-lg">
-              {model.image && (
-                <div className="relative w-full h-56 mb-6 rounded overflow-hidden shadow-lg">
-                  <Image
-                    src={model.image}
-                    alt={model.name}
-                    layout="fill"
-                    objectFit="cover"
-                    className="rounded-lg border-4 border-gray-300"
-                  />
-                </div>
-              )}
-              <h3 className="text-2xl font-semibold text-gray-900 mb-2">{model.name}</h3>
-              <p className="text-gray-800 mb-2">{model.description || "Non spécifié"}</p>
-              <p className="text-lg font-bold text-green-800 mb-4">Prix: {model.price}€</p>
+<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 px-4">
+  {models.map((model) => {
+    // Log des informations du modèle
+    console.log("Modèle actuel :", model);
+    console.log("Image du modèle :", model.image);
 
-              <div className="flex justify-between mt-4">
-                <button
-                  className="bg-yellow-500 text-white font-semibold py-2 px-4 rounded-full shadow-lg hover:bg-yellow-600 transition-all"
-                  onClick={() => handleShowModal(model)}
-                >
-                  Voir plus
-                </button>
-                <button
-                  className="bg-green-600 text-white font-semibold py-2 px-4 rounded-full shadow-lg hover:bg-green-700 transition-all"
-                  onClick={() => addToCart(model)}
-                >
-                  Ajouter au panier
-                </button>
-              </div>
-            </div>
-          ))}
+    return (
+      <div key={model.id} className="p-6 bg-white rounded-2xl shadow-lg">
+        {model.image && (
+          <div className="relative w-full h-56 mb-6 rounded overflow-hidden shadow-lg">
+            <Image
+              src={model.image}
+              alt={model.name}
+              layout="fill"
+              objectFit="cover"
+              className="rounded-lg border-4 border-gray-300"
+            />
+          </div>
+        )}
+        <h3 className="text-2xl font-semibold text-gray-900 mb-2">{model.name}</h3>
+        <p className="text-gray-800 mb-2">{model.description || "Non spécifié"}</p>
+        <p className="text-lg font-bold text-green-800 mb-4">Prix: {model.price}€</p>
+
+        <div className="flex justify-between mt-4">
+          <button
+            className="bg-yellow-500 text-white font-semibold py-2 px-4 rounded-full shadow-lg hover:bg-yellow-600 transition-all"
+            onClick={() => {
+              console.log("Voir plus : ", model);
+              handleShowModal(model);
+            }}
+          >
+            Voir plus
+          </button>
+          <button
+            className="bg-green-600 text-white font-semibold py-2 px-4 rounded-full shadow-lg hover:bg-green-700 transition-all"
+            onClick={() => {
+              console.log("Ajouter au panier : ", model);
+              addToCart(model);
+            }}
+          >
+            Ajouter au panier
+          </button>
         </div>
+      </div>
+    );
+  })}
+</div>
 
         {/* Modal pour afficher les détails d'un modèle */}
         {showModal && selectedModel && (
