@@ -1,63 +1,40 @@
 "use client";
-import { createContext, useContext, useState, useEffect, useMemo } from "react";
+
+import { createContext, useContext } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-toastify";
+import PropTypes from "prop-types";
 
 // Création du contexte du panier
 const CartContext = createContext();
 
+// Fournisseur du panier
 export function CartProvider({ children }) {
-  const [cartItems, setCartItems] = useState([]); // Liste des articles du panier
-  const [itemCount, setItemCount] = useState(0); // Nombre total d'articles
-  const [totalPrice, setTotalPrice] = useState(0); // Prix total
+  const queryClient = useQueryClient();
 
-  // Calcul dynamique des totaux avec useMemo
-  const calculatedItemCount = useMemo(
-    () => cartItems.reduce((count, item) => count + item.quantity, 0),
-    [cartItems]
-  );
-
-  const calculatedTotalPrice = useMemo(
-    () => cartItems.reduce((total, item) => total + item.price * item.quantity, 0),
-    [cartItems]
-  );
-
-  // Met à jour `itemCount` et `totalPrice` chaque fois que `cartItems` change
-  useEffect(() => {
-    setItemCount(calculatedItemCount);
-    setTotalPrice(calculatedTotalPrice);
-  }, [calculatedItemCount, calculatedTotalPrice]);
-
-  // Charge les articles du panier depuis le backend au montage
-  const loadCartFromServer = async () => {
-    try {
+  // Récupère les articles du panier depuis le serveur
+  const { data: cartItems = [], isLoading, isError } = useQuery({
+    queryKey: ["cart"],
+    queryFn: async () => {
       const response = await fetch("/api/cart");
       if (!response.ok) {
-        console.error("Erreur lors de la récupération du panier");
-        return;
+        throw new Error("Erreur lors de la récupération du panier.");
       }
-      const data = await response.json();
-      const formattedData = data.map((item) => ({
-        id: item.id,
-        name: item.name,
-        price: item.price,
-        quantity: item.quantity,
-        category: item.category,
-      }));
-      setCartItems(formattedData); // Synchronise le contexte avec les données du backend
-      console.log("✅ Panier récupéré depuis le serveur :", formattedData);
-    } catch (error) {
-      console.error("❌ Erreur lors de la récupération du panier :", error);
-    }
-  };
+      return response.json();
+    },
+    staleTime: 1000 * 60 * 5, // 5 minutes de cache
+  });
 
-  // Appel au chargement initial du panier depuis le serveur
-  useEffect(() => {
-    console.log("🚀 Chargement initial du panier depuis le serveur");
-    loadCartFromServer();
-  }, []);
+  // Calcul des totaux
+  const itemCount = cartItems.reduce((count, item) => count + item.quantity, 0);
+  const totalPrice = cartItems.reduce(
+    (total, item) => total + item.price * item.quantity,
+    0
+  );
 
-  // Ajoute un article au panier ou met à jour sa quantité
-  const addToCart = async (newItem) => {
-    try {
+  // Mutation pour ajouter un article au panier
+  const addToCartMutation = useMutation({
+    mutationFn: async (newItem) => {
       const response = await fetch("/api/cart", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -69,74 +46,73 @@ export function CartProvider({ children }) {
       });
 
       if (!response.ok) {
-        console.error("Erreur lors de l'ajout au panier :", response.statusText);
-        return;
+        const error = await response.json();
+        throw new Error(error.message || "Erreur lors de l'ajout au panier.");
       }
+      return response.json();
+    },
+    onSuccess: () => {
+      toast.success("Article ajouté au panier !");
+      queryClient.invalidateQueries(["cart"]);
+    },
+    onError: (error) => {
+      toast.error(`Erreur : ${error.message}`);
+    },
+  });
 
-      const updatedItem = await response.json();
-
-      setCartItems((prevItems) => {
-        const existingItem = prevItems.find((item) => item.id === updatedItem.id);
-        if (existingItem) {
-          return prevItems.map((item) =>
-            item.id === updatedItem.id ? { ...item, quantity: updatedItem.quantity } : item
-          );
-        } else {
-          return [...prevItems, updatedItem];
-        }
-      });
-    } catch (error) {
-      console.error("Erreur lors de l'ajout au panier :", error);
-    }
-  };
-
-  // Supprime un article ou diminue sa quantité
-  const removeFromCart = async (itemId) => {
-    try {
+  // Mutation pour supprimer un article
+  const removeFromCartMutation = useMutation({
+    mutationFn: async (itemId) => {
       const response = await fetch(`/api/cart/${itemId}`, {
         method: "DELETE",
       });
 
       if (!response.ok) {
-        console.error("Erreur lors de la suppression de l'article :", response.statusText);
-        return;
+        throw new Error("Erreur lors de la suppression de l'article.");
       }
+      return response.json();
+    },
+    onSuccess: () => {
+      toast.success("Article supprimé !");
+      queryClient.invalidateQueries(["cart"]);
+    },
+    onError: (error) => {
+      toast.error(`Erreur : ${error.message}`);
+    },
+  });
 
-      setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
-    } catch (error) {
-      console.error("Erreur lors de la suppression de l'article :", error);
-    }
-  };
-
-  // Vide complètement le panier
-  const clearCart = async () => {
-    try {
+  // Mutation pour vider le panier
+  const clearCartMutation = useMutation({
+    mutationFn: async () => {
       const response = await fetch("/api/cart", {
         method: "DELETE",
       });
 
       if (!response.ok) {
-        console.error("Erreur lors du vidage du panier :", response.statusText);
-        return;
+        throw new Error("Erreur lors du vidage du panier.");
       }
+      return response.json();
+    },
+    onSuccess: () => {
+      toast.success("Panier vidé !");
+      queryClient.invalidateQueries(["cart"]);
+    },
+    onError: (error) => {
+      toast.error(`Erreur : ${error.message}`);
+    },
+  });
 
-      setCartItems([]); // Vide localement après confirmation du backend
-    } catch (error) {
-      console.error("Erreur lors du vidage du panier :", error);
-    }
-  };
-
-  // Retourne le contexte avec les valeurs nécessaires
   return (
     <CartContext.Provider
       value={{
         cartItems,
-        addToCart,
-        removeFromCart,
-        clearCart,
+        isLoading,
+        isError,
         itemCount,
         totalPrice,
-        loadCartFromServer, // Expose la fonction pour un appel manuel si nécessaire
+        addToCart: addToCartMutation.mutate,
+        removeFromCart: removeFromCartMutation.mutate,
+        clearCart: clearCartMutation.mutate,
       }}
     >
       {children}
@@ -153,4 +129,9 @@ export const useCart = () => {
     );
   }
   return context;
+};
+
+// Validation des props avec PropTypes
+CartProvider.propTypes = {
+  children: PropTypes.node.isRequired,
 };

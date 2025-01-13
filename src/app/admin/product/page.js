@@ -309,7 +309,19 @@ export default function AdminDashboardProduct() {
           )}
 
           {form.category === "ACCESSORY" && (
-            <>
+            <><select
+            value={form.fabricId}
+            onChange={(e) => setForm({ ...form, fabricId: parseInt(e.target.value, 10) })}
+            className="w-full p-3 border rounded-md focus:outline-none focus:ring focus:ring-orange-300"
+            required
+          >
+            <option value="">Sélectionnez un tissu</option>
+            {fabrics.map((fabric) => (
+              <option key={fabric.id} value={fabric.id}>
+                {fabric.name} - {fabric.color}
+              </option>
+            ))}
+          </select>
               <input
                 type="text"
                 placeholder="Artisan ID"

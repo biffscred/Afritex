@@ -84,7 +84,7 @@ export default function ProductsSection({ price = 0, color = "", material = "", 
   // Fonction pour ajouter un produit au panier serveur
 
   
-    const addProductToServerCart = async (product) => {
+  const addProductToServerCart = async (product) => {
     console.log("Adding product to server cart:", product);
 
     try {
@@ -96,21 +96,22 @@ export default function ProductsSection({ price = 0, color = "", material = "", 
         body: JSON.stringify({
           productId: product.id,
           quantity: 1,
-          price: product.price,
-          category: product.category,
+          category: product.category // Assurez-vous que c'est en majuscules (MODEL, FABRIC, ACCESSORY)
         }),
       });
 
-      console.log("Server response for add to cart:", res);
-
-      if (res.ok) {
-        setCartMessage(`Le produit ${product.name} a été ajouté au panier.`);
-        setTimeout(() => setCartMessage(''), 3000);
-      } else {
+      if (!res.ok) {
         const errorData = await res.json();
         console.error("Erreur lors de l'ajout au panier:", errorData);
         setError(`Erreur lors de l'ajout au panier : ${errorData.message}`);
+        return;
       }
+
+      const data = await res.json();
+      console.log("Produit ajouté avec succès:", data);
+      setCartMessage(`Le produit ${product.name} a été ajouté au panier.`);
+      setTimeout(() => setCartMessage(''), 3000);
+      
     } catch (error) {
       console.error("Erreur lors de l'ajout au panier :", error);
       setError("Erreur lors de l'ajout au panier.");

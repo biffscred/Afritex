@@ -12,31 +12,29 @@ model accessory {
   name           String
   description    String
   price          Float
-  fabricId       Int
+  fabricId       Int?
   image          String?
   createdAt      DateTime         @default(now())
   updatedAt      DateTime
   color          String?
   artisanId      Int?
-  artisan        artisan?         @relation(fields: [artisanId], references: [id], onDelete: Cascade, map: "Accessory_artisanId_fkey")
-  fabric         fabric           @relation(fields: [fabricId], references: [id], onDelete: Cascade, map: "Accessory_fabricId_fkey")
+  artisan        artisan?         @relation(fields: [artisanId], references: [id], onDelete: Cascade)
+  fabric         fabric?          @relation(fields: [fabricId], references: [id], onDelete: Cascade)
   accessoryimage accessoryimage[]
-  orderitem      orderitem[]
-  product        product?
   country        country[]        @relation("accessorycountries")
 
-  @@index([artisanId], map: "Accessory_artisanId_fkey")
-  @@index([fabricId], map: "Accessory_fabricId_idx")
+  @@index([artisanId])
+  @@index([fabricId])
 }
 
 model accessoryimage {
   id          Int       @id @default(autoincrement())
   url         String
   altText     String?
-  accessoryId Int 
-  accessory   accessory @relation(fields: [accessoryId], references: [id], onDelete: Cascade, map: "AccessoryImage_accessoryId_fkey")
+  accessoryId Int
+  accessory   accessory @relation(fields: [accessoryId], references: [id], onDelete: Cascade)
 
-  @@index([accessoryId], map: "AccessoryImage_accessoryId_idx")
+  @@index([accessoryId])
 }
 
 model artisan {
@@ -44,17 +42,17 @@ model artisan {
   name      String
   countryId Int
   accessory accessory[]
-  country   country     @relation(fields: [countryId], references: [id], onDelete: Cascade, map: "Artisan_countryId_fkey")
+  country   country      @relation(fields: [countryId], references: [id], onDelete: Cascade) // Relation définie ici
   model     model[]
   product   product[]
 
-  @@index([countryId], map: "Artisan_countryId_fkey")
+  @@index([countryId])
 }
 
 model country {
   id          Int         @id @default(autoincrement())
-  name        String      @unique(map: "Country_name_key")
-  artisan     artisan[]
+  name        String      @unique
+  artisans    artisan[]   @relation(fields: [], references: []) // Relation inversée définie ici
   accessories accessory[] @relation("accessorycountries")
   fabrics     fabric[]    @relation("fabriccountries")
   models      model[]     @relation("modelcountries")
@@ -76,8 +74,6 @@ model fabric {
   accessory   accessory[]
   fabricimage fabricimage[]
   model       model[]
-  orderitem   orderitem[]
-  product     product?
   country     country[]     @relation("fabriccountries")
 }
 
@@ -86,9 +82,9 @@ model fabricimage {
   url      String
   altText  String?
   fabricId Int
-  fabric   fabric  @relation(fields: [fabricId], references: [id], onDelete: Cascade, map: "FabricImage_fabricId_fkey")
+  fabric   fabric  @relation(fields: [fabricId], references: [id], onDelete: Cascade)
 
-  @@index([fabricId], map: "FabricImage_fabricId_idx")
+  @@index([fabricId])
 }
 
 model model {
@@ -96,21 +92,19 @@ model model {
   name        String
   description String
   price       Float
-  fabricId    Int
+  fabricId    Int?
   createdAt   DateTime     @default(now())
   updatedAt   DateTime
   color       String?
   artisanId   Int?
   image       String?
-  artisan     artisan?     @relation(fields: [artisanId], references: [id], onDelete: Cascade, map: "Model_artisanId_fkey")
-  fabric      fabric       @relation(fields: [fabricId], references: [id], onDelete: Cascade, map: "Model_fabricId_fkey")
+  artisan     artisan?     @relation(fields: [artisanId], references: [id], onDelete: Cascade)
+  fabric      fabric?      @relation(fields: [fabricId], references: [id], onDelete: Cascade)
   modelimage  modelimage[]
-  orderitem   orderitem[]
-  product     product?
   country     country[]    @relation("modelcountries")
 
-  @@index([artisanId], map: "Model_artisanId_fkey")
-  @@index([fabricId], map: "Model_fabricId_idx")
+  @@index([artisanId])
+  @@index([fabricId])
 }
 
 model modelimage {
@@ -118,9 +112,9 @@ model modelimage {
   url     String
   altText String?
   modelId Int
-  model   model   @relation(fields: [modelId], references: [id], onDelete: Cascade, map: "ModelImage_modelId_fkey")
+  model   model   @relation(fields: [modelId], references: [id], onDelete: Cascade)
 
-  @@index([modelId], map: "ModelImage_modelId_idx")
+  @@index([modelId])
 }
 
 model order {
@@ -128,32 +122,23 @@ model order {
   userId    Int
   total     Float
   createdAt DateTime    @default(now())
-  user      user        @relation(fields: [userId], references: [id], onDelete: Cascade, map: "Order_userId_fkey")
+  user      user        @relation(fields: [userId], references: [id], onDelete: Cascade)
   orderitem orderitem[]
 
-  @@index([userId], map: "Order_userId_idx")
+  @@index([userId])
 }
 
 model orderitem {
-  id          Int        @id @default(autoincrement())
-  orderId     Int?
-  modelId     Int?
-  accessoryId Int?
-  quantity    Int
-  price       Float
-  fabricId    Int?
-  userId      Int?
-  accessory   accessory? @relation(fields: [accessoryId], references: [id], onDelete: Cascade, map: "OrderItem_accessoryId_fkey")
-  fabric      fabric?    @relation(fields: [fabricId], references: [id], onDelete: Cascade, map: "OrderItem_fabricId_fkey")
-  model       model?     @relation(fields: [modelId], references: [id], onDelete: Cascade, map: "OrderItem_modelId_fkey")
-  order       order?     @relation(fields: [orderId], references: [id], onDelete: Cascade, map: "OrderItem_orderId_fkey")
-  user        user?      @relation(fields: [userId], references: [id], map: "OrderItem_userId_fkey")
+  id        Int       @id @default(autoincrement())
+  orderId   Int
+  productId Int
+  quantity  Int
+  price     Float
+  product   product   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  order     order     @relation(fields: [orderId], references: [id], onDelete: Cascade)
 
-  @@index([accessoryId], map: "OrderItem_accessoryId_idx")
-  @@index([fabricId], map: "OrderItem_fabricId_idx")
-  @@index([modelId], map: "OrderItem_modelId_idx")
-  @@index([orderId], map: "OrderItem_orderId_idx")
-  @@index([userId], map: "OrderItem_userId_idx")
+  @@index([productId])
+  @@index([orderId])
 }
 
 model product {
@@ -165,38 +150,32 @@ model product {
   image       String
   createdAt   DateTime         @default(now())
   updatedAt   DateTime
-  fabricId    Int?             @unique
-  modelId     Int?             @unique
-  accessoryId Int?             @unique
   available   Boolean          @default(true)
   artisanId   Int?
   color       String?
   material    String?
-  accessory   accessory?       @relation(fields: [accessoryId], references: [id], map: "Product_accessoryId_fkey")
-  artisan     artisan?         @relation(fields: [artisanId], references: [id], map: "Product_artisanId_fkey")
-  fabric      fabric?          @relation(fields: [fabricId], references: [id], map: "Product_fabricId_fkey")
-  model       model?           @relation(fields: [modelId], references: [id], map: "Product_modelId_fkey")
+  artisan     artisan?         @relation(fields: [artisanId], references: [id])
   country     country[]        @relation("productcountries")
+  orderitem   orderitem[]
 
-  @@index([artisanId], map: "Product_artisanId_fkey")
+  @@index([artisanId])
 }
 
 model user {
   id            Int         @id @default(autoincrement())
-  email         String      @unique(map: "User_email_key")
+  email         String      @unique
   password      String
   role          user_role   @default(USER)
   createdAt     DateTime    @default(now())
   updatedAt     DateTime    @updatedAt
   emailVerified DateTime?
   order         order[]
-  orderitem     orderitem[]
 }
 
 model verificationtoken {
   id      Int      @id @default(autoincrement())
   email   String
-  token   String   @unique(map: "VerificationToken_token_key")
+  token   String   @unique
   expires DateTime
 }
 
