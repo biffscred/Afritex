@@ -26,12 +26,16 @@ export function CartProvider({ children }) {
   });
 
   // Calcul des totaux
-  const itemCount = cartItems.reduce((count, item) => count + item.quantity, 0);
-  const totalPrice = cartItems.reduce(
-    (total, item) => total + item.price * item.quantity,
-    0
-  );
+  const itemCount = Array.isArray(cartItems)
+  ? cartItems.reduce((count, item) => count + item.quantity, 0)
+  : 0;
 
+const totalPrice = Array.isArray(cartItems)
+  ? cartItems.reduce((total, item) => total + item.price * item.quantity, 0)
+  : 0;
+
+console.log("Nombre d'articles dans le panier :", itemCount);
+console.log("Prix total des articles :", totalPrice);
   // Mutation pour ajouter un article au panier
   const addToCartMutation = useMutation({
     mutationFn: async (newItem) => {

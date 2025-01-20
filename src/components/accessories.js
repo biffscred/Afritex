@@ -1,45 +1,51 @@
-// components/AccessoriesSection.js
+"use client";
 import Link from 'next/link';
-const accessories = [
-  { id: 1, name: "Kente Bag", price: 40, imgSrc: "/images/accessoireskanga-accueil.webp" },
-  { id: 2, name: "Wax Scarf", price: 15, imgSrc: "/images/accessoiresbogolan-accueil.webp" },
-  { id: 3, name: "Bogolan Hat", price: 20, imgSrc: "/images/accessoiressheswhe-accueil.webp" },
-  // Ajoute plus d'accessoires ici si nécessaire
-];
 
-export default function AccessoriesSection() {
+const AccessoriesSection = () => {
+  const accessories = [
+    {
+      img: "/images/accessoireskanga-accueil.webp",
+      title: "Sac Kente",
+      desc: "Sac élégant fait main avec du tissu Kente authentique."
+    },
+    {
+      img: "/images/accessoiresbogolan-accueil.webp",
+      title: "Écharpe Wax",
+      desc: "Écharpe légère et colorée en tissu wax premium."
+    },
+    {
+      img: "/images/accessoiressheswhe-accueil.webp",
+      title: "Chapeau Bogolan",
+      desc: "Chapeau moderne orné de motifs Bogolan traditionnels."
+    }
+  ];
+
   return (
-    <section className="py-12 bg-gradient-to-b from-yellow-100 via-orange-200 to-green-200
-">
+    <section className="py-16 bg-gradient-to-b from-yellow-50 via-orange-100 to-green-100">
       <div className="container mx-auto text-center">
-        <h2 className="text-4xl font-extrabold text-yellow-800 mb-8">Nos Accessoires</h2>
-        
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {accessories.map((accessory) => (
-            <div key={accessory.id} className="bg-white border rounded-lg p-6 shadow-lg hover:shadow-2xl transition-shadow">
-              <img 
-                src={accessory.imgSrc} 
-                alt={accessory.name} 
-                className="w-full h-64 object-cover mb-4 rounded-lg" 
+        <h2 className="text-5xl font-extrabold text-yellow-900 mb-8">Nos Accessoires</h2>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {accessories.map((accessory, index) => (
+            <div
+              key={index}
+              className="p-6 bg-white bg-opacity-80 shadow-xl rounded-lg hover:shadow-2xl transition-transform transform hover:scale-105 backdrop-blur-md"
+            >
+              <img
+                src={accessory.img}
+                alt={accessory.title}
+                className="w-full h-64 object-cover mb-4 rounded-lg"
               />
-              <h3 className="text-xl font-semibold text-indigo-900 text-center">{accessory.name}</h3>
-              <p className="text-yellow-600 text-lg text-center font-bold">${accessory.price}</p>
+              <h3 className="text-2xl font-bold text-indigo-900 mb-2">{accessory.title}</h3>
+              <p className="text-gray-700 mb-4">{accessory.desc}</p>
+              <Link href="/accessory" className="text-yellow-800 font-semibold hover:underline">
+                Voir plus d'accessoires
+              </Link>
             </div>
           ))}
-        </div>
-
-        {/* Bouton pour voir plus d'accessoires */}
-        <div className="mt-8">
-        <Link
-  href="accessory"
-  className="inline-block bg-yellow-800 text-white py-3 px-6 rounded-lg font-semibold hover:bg-yellow-700 transition-colors duration-300"
->
-  Voir plus d'accessoires
-</Link>
-
-   
         </div>
       </div>
     </section>
   );
-}
+};
+
+export default AccessoriesSection;

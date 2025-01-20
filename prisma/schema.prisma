@@ -63,6 +63,8 @@ model fabric {
   id          Int           @id @default(autoincrement())
   material    String?
   pattern     String?
+  productId   Int      @unique  // Chaque tissu est lié à un produit unique
+  
   origin      String?
   createdAt   DateTime      @default(now())
   updatedAt   DateTime
@@ -70,6 +72,8 @@ model fabric {
   size        Float?
   name        String
   image       String?
+  product product @relation("FabricToProduct",fields: [productId], references: [id], onDelete: Cascade) // Relation avec product
+
   price       Float
   accessory   accessory[]
   fabricimage fabricimage[]
@@ -92,6 +96,8 @@ model model {
   name        String
   description String
   price       Float
+  product     product   @relation(fields: [productId], references: [id], onDelete: Cascade) // Relation avec product
+  productId   Int  
   fabricId    Int?
   createdAt   DateTime     @default(now())
   updatedAt   DateTime
@@ -145,6 +151,7 @@ model product {
   id          Int              @id @default(autoincrement())
   name        String
   description String           @db.Text
+  models      model[]  
   price       Float
   category    product_category
   image       String
@@ -153,9 +160,11 @@ model product {
   available   Boolean          @default(true)
   artisanId   Int?
   color       String?
+  fabric      fabric?   @relation("FabricToProduct") // Ajout de la relation inverse
   material    String?
   artisan     artisan?         @relation(fields: [artisanId], references: [id])
   country     country[]        @relation("productcountries")
+  
   orderitem   orderitem[]
 
   @@index([artisanId])

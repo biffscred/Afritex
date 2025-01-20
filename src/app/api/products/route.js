@@ -46,6 +46,7 @@ export async function POST(req) {
         name,
         description,
         price: parsedPrice,
+        
         category,
         image,
         artisanId: parsedArtisanId,

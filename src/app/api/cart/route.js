@@ -11,16 +11,17 @@ export async function GET(req) {
   const token = await getToken({ req, secret });
   if (!token || !token.id) {
     console.log("❌ Utilisateur non connecté.");
-    return NextResponse.json({ message: "Vous devez être connecté pour accéder au panier." }, { status: 401 });
+    return NextResponse.json([], { status: 200 }); // Retourne un panier vide pour les non-connectés
   }
 
   const userId = token.id;
 
   try {
-    console.log(`🔍 Recherche de la commande pour l'utilisateur ID : ${userId}`);
+    console.log(`🔍 Recherche de la commande active pour l'utilisateur ID : ${userId}`);
 
+    // Recherche d'une commande active
     const order = await prisma.order.findFirst({
-      where: { userId },
+      where: { userId }, // Ajout d'un statut "ACTIVE" si applicable
       include: {
         orderitem: {
           include: {
@@ -38,33 +39,37 @@ export async function GET(req) {
     });
 
     if (!order) {
-      console.log("⚠️ Aucune commande trouvée pour cet utilisateur.");
+      console.log("⚠️ Aucun panier actif trouvé pour cet utilisateur.");
       return NextResponse.json([], { status: 200 });
     }
 
-    console.log("✅ Commande trouvée:", order);
+    console.log("✅ Panier trouvé :", order);
 
-    const items = order.orderitem.map((item) => {
-      const product = item.product;
-      return {
-        id: item.id,
-        name: product.name,
-        price: product.price,
-        image: product.image,
-        quantity: item.quantity,
-      };
-    });
+    // Formatage des articles du panier
+    const items = order.orderitem.map((item) => ({
+      id: item.id,
+      name: item.product.name,
+      price: item.product.price,
+      image: item.product.image,
+      quantity: item.quantity,
+    }));
 
-    console.log("✅ Articles du panier formatés:", items);
-    return NextResponse.json(items, { status: 200 });
+    console.log("✅ Articles du panier formatés :", items);
+
+    return NextResponse.json({
+      orderId: order.id,
+      total: order.total, // Si le champ total existe
+      items,
+    }, { status: 200 });
   } catch (error) {
-    console.error("❌ Erreur GET panier:", error);
+    console.error("❌ Erreur lors de la récupération du panier :", error);
     return NextResponse.json({ 
       message: "Erreur serveur lors de la récupération du panier.",
       error: error.message,
     }, { status: 500 });
   }
 }
+
 
 // Gestion de la requête POST pour ajouter au panier
 export async function POST(req) {
