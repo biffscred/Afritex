@@ -2,38 +2,64 @@ import prisma from '../../../../lib/prisma';
 
 // Gestion de la méthode PUT pour mettre à jour un produit spécifique
 export async function PUT(req, { params }) {
-  const { id } = params;  // Récupère l'ID à partir de l'URL
+  const { id } = params;  // Récupère l'ID du produit
   console.log('PUT request received with ID:', id);
 
   try {
     const { name, description, price, category, image } = await req.json();
     console.log('Request payload:', { name, description, price, category, image });
 
-    // Mise à jour du produit dans la base de données
+    // Mise à jour du produit
     const product = await prisma.product.update({
-      where: { id: parseInt(id) },  // S'assure que l'ID est bien un entier
+      where: { id: parseInt(id) },
       data: {
         name,
         description,
         price: parseFloat(price),
         category,
         image,
+        updatedAt: new Date(),
       },
     });
 
-    console.log('Product updated successfully:', product);
+    console.log('✅ Produit mis à jour avec succès:', product);
+
+    // 🧵 Vérifie si c'est un tissu et met à jour le Fabric associé
+    if (category === "FABRIC") {
+      const existingFabric = await prisma.fabric.findFirst({
+        where: { productId: product.id }
+      });
+
+      if (existingFabric) {
+        console.log("✅ Tissu associé trouvé, mise à jour en cours...");
+        await prisma.fabric.update({
+          where: { id: existingFabric.id },
+          data: {
+            name,  // Mise à jour avec le nouveau nom
+            image, // Mise à jour de l'image si elle a changé
+            price: parseFloat(price), // Mettre à jour le prix si besoin
+            updatedAt: new Date(),
+          },
+        });
+        console.log("✅ Tissu mis à jour avec succès :", name);
+      } else {
+        console.log("⚠️ Aucun tissu trouvé pour ce produit.");
+      }
+    }
 
     return new Response(JSON.stringify(product), {
       status: 200,
       headers: { 'Content-Type': 'application/json' },
     });
+
   } catch (error) {
-    console.error('Erreur lors de la mise à jour du produit:', error);
+    console.error('❌ Erreur lors de la mise à jour du produit:', error);
     return new Response(JSON.stringify({ message: 'Produit non trouvé ou erreur serveur' }), {
       status: 500,
     });
   }
 }
+
 
 // Gestion de la méthode DELETE pour supprimer un produit spécifique
 export async function DELETE(req, { params }) {

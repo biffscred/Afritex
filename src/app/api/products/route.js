@@ -2,51 +2,42 @@ import { NextResponse } from 'next/server';
 import prisma from '../../../lib/prisma'; // Assurez-vous que prisma est correctement importé
 
 // Gestion de la requête POST
+
 export async function POST(req) {
   try {
     console.log("📩 Réception de la requête POST pour ajouter un produit...");
 
+    // 1️⃣ Récupération et affichage des données reçues
     const requestBody = await req.json();
     console.log("✅ Contenu de la requête reçue :", requestBody);
 
-    const { name, description, price, category, image, artisanId } = requestBody;
+    const { name, description, price, category, image, artisanId, fabricId, color } = requestBody;
 
-    // Vérification des champs obligatoires
+    // 2️⃣ Vérification des champs obligatoires
     if (!name || !description || !price || !category || !image) {
       console.log("❌ Champs obligatoires manquants :", { name, description, price, category, image });
       return NextResponse.json({ message: "Champs obligatoires manquants" }, { status: 400 });
     }
+    console.log("📌 `fabricId` reçu AVANT conversion :", fabricId);
 
-    // Conversion des valeurs
     const parsedPrice = parseFloat(price);
-    const parsedArtisanId = artisanId ? parseInt(artisanId) : null;
-
-    console.log("🔧 Champs après conversion :", {
-      parsedPrice,
-      parsedArtisanId,
-    });
-
-    // Vérification de l'artisan
+    const parsedArtisanId = artisanId ? parseInt(artisanId, 10) : null;
+    const parsedFabricId = fabricId ? parseInt(fabricId, 10) : null; // ✅ Convertit en entier
+    console.log("📌 `fabricId` APRÈS conversion :", parsedFabricId);
+    // 3️⃣ Vérifier si l'artisan existe
     if (artisanId) {
-      console.log("🔍 Vérification de l'existence de l'artisan ID :", parsedArtisanId);
-      const artisanExists = await prisma.artisan.findUnique({
-        where: { id: parsedArtisanId },
-      });
+      const artisanExists = await prisma.artisan.findUnique({ where: { id: parsedArtisanId } });
       if (!artisanExists) {
-        console.log("❌ Artisan introuvable :", parsedArtisanId);
         return NextResponse.json({ message: "Artisan non trouvé." }, { status: 404 });
       }
     }
 
-    console.log("📂 Catégorie sélectionnée :", category);
-
-    // Création du produit générique
+    // 4️⃣ Création du produit
     const product = await prisma.product.create({
       data: {
         name,
         description,
         price: parsedPrice,
-        
         category,
         image,
         artisanId: parsedArtisanId,
@@ -55,54 +46,93 @@ export async function POST(req) {
       },
     });
 
-    console.log("✅ Produit générique créé :", product);
+    console.log("✅ Produit créé avec succès :", product);
 
-    // En fonction de la catégorie, créer dans les tables spécifiques
+    // 5️⃣ Gestion des différentes catégories
     if (category === "FABRIC") {
-      console.log("🧵 Création d'un tissu...");
-      await prisma.fabric.create({
-        data: {
-          name,
-          image,
-          price: parsedPrice,
-          productId: product.id, // Associe le produit au tissu
-          createdAt: new Date(),
-          updatedAt: new Date(),
-        },
-      });
-    } else if (category === "MODEL") {
-      console.log("👗 Création d'un modèle...");
+      console.log("🧵 Vérification du tissu...");
+      let existingFabric = await prisma.fabric.findFirst({ where: { name } });
+
+      if (existingFabric) {
+        console.log("✅ Tissu existant trouvé :", existingFabric);
+        await prisma.product.update({
+          where: { id: product.id },
+          data: {
+            fabric: { connect: { id: existingFabric.id } }, // ✅ Associe le tissu existant au produit
+          },
+        });
+      } else {
+        console.log("🧵 Création d'un nouveau tissu...");
+        await prisma.fabric.create({
+          data: {
+            name,
+            image,
+            price: parsedPrice,
+            productId: product.id,
+            createdAt: new Date(),
+            updatedAt: new Date(),
+          },
+        });
+      }
+    } 
+    
+    else if (category === "MODEL") {
+      console.log("👕 Création d'un modèle...");
       await prisma.model.create({
         data: {
           name,
           description,
           price: parsedPrice,
-          productId: product.id, // Associe le produit au modèle
+          productId: product.id,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
       });
-    } else if (category === "ACCESSORY") {
+    } 
+    
+    else if (category === "ACCESSORY") {
       console.log("👜 Création d'un accessoire...");
+
+      // 6️⃣ Vérifier si le tissu associé à l'accessoire existe
+      let existingFabric = null;
+
+      if (parsedFabricId) {
+        existingFabric = await prisma.fabric.findUnique({
+          where: { id: parsedFabricId },
+        });
+
+        if (!existingFabric) {
+          console.error("❌ Erreur : Le tissu associé à l'accessoire est introuvable.");
+          return NextResponse.json({ message: "Le tissu associé à l'accessoire est introuvable." }, { status: 400 });
+        }
+      }
+
+      // 7️⃣ Création de l'accessoire
       await prisma.accessory.create({
         data: {
           name,
           description,
           price: parsedPrice,
+          fabricId: existingFabric ? existingFabric.id : null,  // Associe au tissu si disponible
           productId: product.id, // Associe le produit à l'accessoire
+          color,
+          artisanId: parsedArtisanId,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
       });
+
+      console.log("✅ Accessoire créé avec succès !");
     }
 
-    console.log("✅ Produit ajouté avec succès :", product);
     return NextResponse.json(product, { status: 201 });
+
   } catch (error) {
     console.error("❌ Erreur lors de l'ajout du produit :", error);
     return NextResponse.json({ message: "Erreur lors de l'ajout du produit" }, { status: 500 });
   }
 }
+
 
 // Gestion de la requête GET
 export async function GET(req) {

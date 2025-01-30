@@ -57,6 +57,7 @@ export default function AdminDashboardProduct() {
       const data = await res.json();
       setProducts(data);
       setFilteredProducts(data);
+      
     } catch (error) {
       setError("Erreur lors de la récupération des produits.");
       setTimeout(() => setError(null), 3000);
@@ -79,7 +80,9 @@ export default function AdminDashboardProduct() {
       const res = await fetch("/api/fabric");
       if (!res.ok) throw new Error(`Erreur HTTP : ${res.status}`);
       const data = await res.json();
+      
       setFabrics(data);; // Stocke les tissus disponibles dans l'état
+      console.log("📌 Tissus disponibles côté front :", data);
     } catch (error) {
       setError("Erreur lors de la récupération des tissus.");
       setTimeout(() => setError(null), 3000);
@@ -107,9 +110,11 @@ export default function AdminDashboardProduct() {
       ...form,
       price: parseFloat(form.price),
     };
+    console.log("📤 Données envoyées au serveur :", formData); 
     setLoading(true);
     const method = editId ? "PUT" : "POST";
     const url = editId ? `/api/products/${editId}` : "/api/products";
+    
 
     try {
       const res = await fetch(url, {
@@ -117,6 +122,7 @@ export default function AdminDashboardProduct() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
       });
+    
       if (res.ok) {
         fetchProducts();
         resetForm();
@@ -124,6 +130,7 @@ export default function AdminDashboardProduct() {
         setTimeout(() => setSuccess(null), 3000);
       } else {
         const responseMessage = await res.json();
+        console.log("📩 Réponse reçue du serveur :", responseMessage); // 
         setError(responseMessage.message || "Une erreur est survenue.");
         setTimeout(() => setError(null), 3000);
       }
@@ -276,68 +283,102 @@ export default function AdminDashboardProduct() {
             </>
           )}
 
-          {form.category === "MODEL" && (
-            <>
-            <select
-                value={form.fabricId}
-                onChange={(e) => setForm({ ...form,  fabricId: parseInt(e.target.value, 10)})}
-                className="w-full p-3 border rounded-md focus:outline-none focus:ring focus:ring-orange-300"
-                required
-              >
-                <option value="">Sélectionnez un tissu</option>
-                {fabrics.map((fabric) => (
-                  <option key={fabric.id} value={fabric.id}>
-                    {fabric.name} - {fabric.color}
-                  </option>
-                ))}
-              </select>
-              <input
-                type="text"
-                placeholder="Artisan ID"
-                value={form.artisanId}
-                onChange={(e) => setForm({ ...form, artisanId: e.target.value })}
-                className="w-full p-3 border rounded-md focus:outline-none focus:ring focus:ring-orange-300"
-              />
-              <input
-                type="text"
-                placeholder="Couleur"
-                value={form.color}
-                onChange={(e) => setForm({ ...form, color: e.target.value })}
-                className="w-full p-3 border rounded-md focus:outline-none focus:ring focus:ring-orange-300"
-              />
-            </>
-          )}
+{form.category === "MODEL" && (() => {
+  // Filtrer les tissus uniques par nom (insensible à la casse)
+  const uniqueFabrics = fabrics.filter(
+    (fabric, index, self) =>
+      index ===
+      self.findIndex(
+        (f) =>
+          f.name.trim().toLowerCase() === fabric.name.trim().toLowerCase() 
+        
+      )
+  );
 
-          {form.category === "ACCESSORY" && (
-            <><select
-            value={form.fabricId}
-            onChange={(e) => setForm({ ...form, fabricId: parseInt(e.target.value, 10) })}
-            className="w-full p-3 border rounded-md focus:outline-none focus:ring focus:ring-orange-300"
-            required
-          >
-            <option value="">Sélectionnez un tissu</option>
-            {fabrics.map((fabric) => (
-              <option key={fabric.id} value={fabric.id}>
-                {fabric.name} - {fabric.color}
-              </option>
-            ))}
-          </select>
-              <input
-                type="text"
-                placeholder="Artisan ID"
-                value={form.artisanId}
-                onChange={(e) => setForm({ ...form, artisanId: e.target.value })}
-                className="w-full p-3 border rounded-md focus:outline-none focus:ring focus:ring-orange-300"
-              />
-              <input
-                type="text"
-                placeholder="Couleur"
-                value={form.color}
-                onChange={(e) => setForm({ ...form, color: e.target.value })}
-                className="w-full p-3 border rounded-md focus:outline-none focus:ring focus:ring-orange-300"
-              />
-            </>
-          )}
+  return (
+    <>
+      <select
+        value={form.fabricId}
+        onChange={(e) =>
+          setForm({ ...form, fabricId: parseInt(e.target.value, 10) })
+        }
+        className="w-full p-3 border rounded-md focus:outline-none focus:ring focus:ring-orange-300"
+        required
+      >
+        <option value="">Sélectionnez un tissu</option>
+        {uniqueFabrics.map((fabric) => (
+          <option key={fabric.id} value={fabric.id}>
+            {fabric.name} - {fabric.color}
+          </option>
+        ))}
+      </select>
+      <input
+        type="text"
+        placeholder="Artisan ID"
+        value={form.artisanId}
+        onChange={(e) =>
+          setForm({ ...form, artisanId: e.target.value })
+        }
+        className="w-full p-3 border rounded-md focus:outline-none focus:ring focus:ring-orange-300"
+      />
+      <input
+        type="text"
+        placeholder="Couleur"
+        value={form.color}
+        onChange={(e) =>
+          setForm({ ...form, color: e.target.value })
+        }
+        className="w-full p-3 border rounded-md focus:outline-none focus:ring focus:ring-orange-300"
+      />
+    </>
+  );
+})()}
+
+{form.category === "ACCESSORY" && (() => {
+  // Filtrer les tissus uniques par nom (insensible à la casse)
+  const uniqueFabrics = fabrics.filter(
+    (fabric, index, self) =>
+      index ===
+      self.findIndex(
+        (f) =>
+          f.name.trim().toLowerCase() === fabric.name.trim().toLowerCase()
+      )
+  );
+
+  return (
+    <>
+      <select
+        value={form.fabricId}
+        onChange={(e) => setForm({ ...form, fabricId: parseInt(e.target.value, 10) })}
+        className="w-full p-3 border rounded-md focus:outline-none focus:ring focus:ring-orange-300"
+      >
+        <option value="">Sélectionnez un tissu</option>
+        {uniqueFabrics.map((fabric) => (
+          <option key={fabric.id} value={fabric.id}>
+            {fabric.name} - {fabric.color}
+          </option>
+        ))}
+      </select>
+
+      <input
+        type="text"
+        placeholder="Artisan ID"
+        value={form.artisanId}
+        onChange={(e) => setForm({ ...form, artisanId: e.target.value })}
+        className="w-full p-3 border rounded-md focus:outline-none focus:ring focus:ring-orange-300"
+      />
+
+      <input
+        type="text"
+        placeholder="Couleur"
+        value={form.color}
+        onChange={(e) => setForm({ ...form, color: e.target.value })}
+        className="w-full p-3 border rounded-md focus:outline-none focus:ring focus:ring-orange-300"
+      />
+    </>
+  );
+})()}
+
 
           <select
             value={form.image}

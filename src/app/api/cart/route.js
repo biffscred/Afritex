@@ -71,46 +71,85 @@ export async function GET(req) {
 }
 
 
-// Gestion de la requête POST pour ajouter au panier
 export async function POST(req) {
   console.log("🚀 Début de la requête POST pour ajouter un article au panier.");
 
-  const token = await getToken({ req, secret });
-  if (!token || !token.id) {
-    console.log("❌ Utilisateur non connecté.");
-    return NextResponse.json({ message: "Vous devez être connecté pour ajouter des articles." }, { status: 401 });
-  }
-
-  const userId = token.id;
-
   try {
+    const token = await getToken({ req, secret });
+
+    if (!token || !token.id) {
+      console.log("❌ Utilisateur non connecté.");
+      return NextResponse.json(
+        { message: "Vous devez être connecté pour ajouter des articles." },
+        { status: 401 }
+      );
+    }
+
+    const userId = token.id;
+    console.log("👤 Utilisateur identifié :", userId);
+
+    // Vérifier si l'utilisateur existe en base
+    const userExists = await prisma.user.findUnique({ where: { id: userId } });
+
+    if (!userExists) {
+      console.log("❌ Erreur : L'utilisateur n'existe pas.");
+      return NextResponse.json(
+        { message: "Utilisateur introuvable." },
+        { status: 404 }
+      );
+    }
+
     const { productId, quantity } = await req.json();
     console.log("📦 Données reçues:", { productId, quantity });
 
+    // Vérifications des données entrantes
     if (!productId || !quantity || quantity <= 0) {
       console.log("❌ Données invalides ou incomplètes.");
-      return NextResponse.json({ message: "Données invalides ou incomplètes." }, { status: 400 });
+      return NextResponse.json(
+        { message: "Données invalides ou incomplètes." },
+        { status: 400 }
+      );
     }
 
-    let userOrder = await prisma.order.findFirst({ where: { userId } });
-    if (!userOrder) {
-      userOrder = await prisma.order.create({ data: { userId, total: 0 } });
-      console.log("🛒 Nouvelle commande créée pour l'utilisateur.", userOrder);
-    }
-
+    // Vérifier si le produit existe
+    
+    console.log("🔍 Recherche du produit avec ID :", productId);
     const product = await prisma.product.findUnique({ where: { id: productId } });
-
+    console.log("🛒 Produit trouvé :", product);
     if (!product) {
       console.log("❌ Produit introuvable pour l'ID:", productId);
-      return NextResponse.json({ message: `Produit introuvable pour l'ID ${productId}` }, { status: 404 });
+      return NextResponse.json(
+        { message: `Produit introuvable pour l'ID ${productId}` },
+        { status: 404 }
+      );
     }
 
-    const existingOrderItem = await prisma.orderitem.findFirst({
+    // Vérifier si une commande en cours existe pour cet utilisateur
+    let userOrder = await prisma.order.findFirst({
+      where: { userId, status: "PENDING" },
+    });
+
+    if (!userOrder) {
+      console.log("🛒 Aucune commande en cours, création d'une nouvelle...");
+      userOrder = await prisma.order.create({
+        data: {
+          userId,
+          status: "PENDING",
+          total: 0, // Initialisation du total à 0
+          createdAt: new Date(),
+          updatedAt: new Date(),
+        },
+      });
+      console.log("🛒 Nouvelle commande créée :", userOrder.id);
+    }
+
+    // Vérifier si le produit est déjà dans la commande
+    const existingOrderItem = await prisma.orderItem.findFirst({
       where: { orderId: userOrder.id, productId },
     });
 
     if (existingOrderItem) {
-      const updatedOrderItem = await prisma.orderitem.update({
+      const updatedOrderItem = await prisma.orderItem.update({
         where: { id: existingOrderItem.id },
         data: { quantity: existingOrderItem.quantity + quantity },
       });
@@ -118,7 +157,8 @@ export async function POST(req) {
       return NextResponse.json(updatedOrderItem, { status: 200 });
     }
 
-    const newOrderItem = await prisma.orderitem.create({
+    // Si le produit n'est pas encore dans la commande, l'ajouter
+    const newOrderItem = await prisma.orderItem.create({
       data: {
         quantity,
         price: product.price,
@@ -129,11 +169,16 @@ export async function POST(req) {
 
     console.log("✅ Nouvel article ajouté au panier:", newOrderItem);
     return NextResponse.json(newOrderItem, { status: 200 });
+
   } catch (error) {
     console.error("❌ Erreur POST ajout panier:", error);
-    return NextResponse.json({ 
-      message: "Erreur serveur lors de l'ajout au panier.",
-      error: error.message,
-    }, { status: 500 });
+    return NextResponse.json(
+      {
+        message: "Erreur serveur lors de l'ajout au panier.",
+        error: error.message,
+      },
+      { status: 500 }
+    );
   }
 }
+
