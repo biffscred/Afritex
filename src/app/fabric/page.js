@@ -12,27 +12,39 @@ const FabricProductPage = () => {
   const [showModal, setShowModal] = useState(false); // État pour le modal
   const [selectedFabric, setSelectedFabric] = useState(null); // Produit sélectionné
   const { itemCount } = useCart(); // Contexte pour le panier
+  const [successMessage, setSuccessMessage] = useState("");
 
-  // Fonction pour récupérer les articles du panier
   const fetchCartItems = async () => {
     try {
+      console.log("🔄 Début de la récupération du panier...");
       const response = await fetch("/api/cart");
-      if (!response.ok) throw new Error("Erreur lors de la récupération du panier.");
+  
+      if (!response.ok) {
+        console.error("❌ Erreur HTTP lors de la récupération du panier :", response.status);
+        throw new Error("Erreur lors de la récupération du panier.");
+      }
+  
       const data = await response.json();
-      console.log("✅ Articles du panier :", data);
+      console.log("✅ Articles du panier récupérés :", data);
       setCartItems(data);
     } catch (error) {
       console.error("❌ Erreur panier :", error.message);
       setError("Impossible de charger les articles du panier.");
     }
   };
-
+  
   // Récupération des produits et des articles du panier au montage
   useEffect(() => {
     const fetchFabricProducts = async () => {
       try {
+        console.log("🔄 Début de la récupération des produits tissus...");
         const response = await fetch("/api/fabric");
-        if (!response.ok) throw new Error("Erreur lors de la récupération des produits.");
+  
+        if (!response.ok) {
+          console.error("❌ Erreur HTTP lors de la récupération des produits tissus :", response.status);
+          throw new Error("Erreur lors de la récupération des produits.");
+        }
+  
         const data = await response.json();
         console.log("✅ Produits tissus récupérés :", data);
         setFabrics(data);
@@ -41,58 +53,82 @@ const FabricProductPage = () => {
         setError("Impossible de charger les produits.");
       }
     };
-
+  
     fetchFabricProducts();
     fetchCartItems();
   }, []);
-
+  
   // Fonction pour ouvrir le modal
   const handleShowModal = (fabric) => {
     console.log("🛠️ Ouverture du modal pour :", fabric);
     setSelectedFabric(fabric);
     setShowModal(true);
   };
-
+  
   // Fonction pour fermer le modal
   const handleCloseModal = () => {
     console.log("🛠️ Fermeture du modal");
     setShowModal(false);
     setSelectedFabric(null);
   };
-
+  
   // Fonction pour ajouter un produit au panier
-  const addProductToServerCart = async (product) => {
+  const addProductToServerCart = async (Fabric) => {
+    console.log("🛒 Clic sur le bouton Acheter !");
+    if (!Fabric) {
+      console.error("❌ Aucun tissu sélectionné !");
+      return;
+    }
+  
+    const data = {
+      fabricId: Fabric.id, // 🛠️ Utiliser `fabricId` au lieu de `productId`
+      quantity: 1,
+    };
+  
+    console.log("📤 Envoi des données au serveur :", data);
+  
     try {
       const res = await fetch("/api/cart", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          productId: product.id,
-          quantity: 1,
-          category: "FABRIC", // Catégorie de produit
-        }),
+        body: JSON.stringify(data),
       });
-
+  
       if (!res.ok) {
         const errorResponse = await res.json();
+        console.error("❌ Erreur serveur :", errorResponse);
         throw new Error(errorResponse.message || "Erreur serveur.");
       }
+  
+      const responseData = await res.json();
+      console.log("✅ Produit ajouté au panier :", responseData);
 
-      console.log(`✅ Produit ajouté : ${product.name}`);
+       setSuccessMessage("🎉 Produit ajouté au panier !");
+    
+    setTimeout(() => {
+      setSuccessMessage(""); // Efface le message après 3 secondes
+    }, 3000);
+  
       fetchCartItems(); // Mise à jour du panier
     } catch (error) {
       console.error("❌ Erreur ajout panier :", error.message);
       setError("Erreur lors de l'ajout au panier.");
     }
   };
-
+  
   // Fonction pour supprimer un produit spécifique du panier
   const removeProductFromServerCart = async (itemId) => {
+    console.log(`🗑️ Tentative de suppression du produit ID : ${itemId}`);
+  
     try {
       const res = await fetch(`/api/cart/${itemId}`, { method: "DELETE" });
-      if (!res.ok) throw new Error("Erreur serveur lors de la suppression.");
-
-      console.log(`✅ Produit supprimé ID : ${itemId}`);
+  
+      if (!res.ok) {
+        console.error("❌ Erreur HTTP lors de la suppression :", res.status);
+        throw new Error("Erreur serveur lors de la suppression.");
+      }
+  
+      console.log(`✅ Produit supprimé du panier, ID : ${itemId}`);
       setCartItems(cartItems.filter((item) => item.id !== itemId));
     } catch (error) {
       console.error("❌ Erreur suppression panier :", error.message);
@@ -108,7 +144,11 @@ const FabricProductPage = () => {
         <h2 className="text-4xl font-extrabold text-center text-yellow-900 mb-12">
           Produits de Tissus Africains
         </h2>
-
+        {successMessage && (
+  <div className="bg-green-500 text-white p-3 rounded-md text-center mb-4">
+    {successMessage}
+  </div>
+)}
         {/* Gestion des erreurs */}
         {error && <div className="text-center text-red-500 mb-4">{error}</div>}
 

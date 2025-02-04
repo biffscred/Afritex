@@ -47,6 +47,47 @@ export default function ProductsSection({ price = 0, color = "", material = "", 
 
     fetchProducts();
   }, [price, color, material, country, category, artisan]);
+  const handleAddToCart = async (product) => {
+    if (!product) {
+      console.error("❌ Aucun produit sélectionné !");
+      return;
+    }
+  
+    const data = {
+      productId: product.id,
+      quantity: 1, // Par défaut, on ajoute 1
+    };
+  
+    console.log("📤 Envoi des données au serveur :", data);
+  
+    try {
+      const res = await fetch("/api/cart", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+  
+      if (!res.ok) {
+        const errorResponse = await res.json();
+        console.error("❌ Erreur serveur :", errorResponse);
+        throw new Error(errorResponse.message || "Erreur serveur.");
+      }
+  
+      console.log("✅ Produit ajouté au panier :", await res.json());
+  
+      // Affichage du message de succès
+      setCartMessage(`🎉 ${product.name} ajouté au panier !`);
+  
+      // Efface le message après 3 secondes
+      setTimeout(() => {
+        setCartMessage("");
+      }, 3000);
+    } catch (error) {
+      console.error("❌ Erreur ajout panier :", error.message);
+      setError("Erreur lors de l'ajout au panier.");
+    }
+  };
+  
 
   // Pagination logic
   const totalPages = Math.ceil(products.length / itemsPerPage);

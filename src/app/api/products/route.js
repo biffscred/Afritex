@@ -163,7 +163,7 @@ export async function GET(req) {
       },
       include: {
         artisan: true, // Inclure les relations nécessaires
-        country: true, // Par exemple
+        
       },
     });
 

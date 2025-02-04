@@ -36,7 +36,7 @@ export async function POST(req) {
     console.log("lineItems préparés pour la session Stripe :", lineItems);
 
     // Vérifier l'origine de la requête
-    const origin = req.headers.origin || 'http://localhost:3000';
+    const origin = req.headers.get("origin") || 'http://localhost:3000';
     console.log("URL d'origine utilisée pour la session de paiement :", origin);
 
     // Créer la session de paiement Stripe
@@ -48,10 +48,13 @@ export async function POST(req) {
       cancel_url: `${origin}/cancel`,
     });
 
-    console.log("Session de paiement créée avec succès. Session ID :", session.id);
-    return NextResponse.json({ id: session.id }, { status: 200 });
+    console.log("✅ Session de paiement créée avec succès. Session ID :", session.id);
+
+    // ✅ Renvoyer `sessionId` au lieu de `id`
+    return NextResponse.json({ sessionId: session.id }, { status: 200 });
+
   } catch (error) {
-    console.error("Erreur lors de la création de la session de paiement :", error);
+    console.error("❌ Erreur lors de la création de la session de paiement :", error);
     return NextResponse.json({ message: 'Erreur lors de la création de la session de paiement.' }, { status: 500 });
   }
-}
+};

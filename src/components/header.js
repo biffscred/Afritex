@@ -27,9 +27,9 @@ function CartBadge({ itemCount }) {
       <span className="relative text-white text-lg font-bold hover:text-yellow-400 transition-colors duration-300 cursor-pointer">
         Panier
         {itemCount > 0 && (
-          <span className="absolute top-[-4px] right-[-4px] bg-red-600 text-white rounded-full h-6 w-6 flex items-center justify-center text-xs font-bold">
-            {itemCount}
-          </span>
+         <span className="ml-2 px-2 py-1 bg-red-600 text-white rounded-full text-xs font-bold">
+         {itemCount || 0}
+       </span>
         )}
       </span>
     </Link>
