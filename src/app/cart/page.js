@@ -172,39 +172,51 @@ function CartPage() {
 
   // Fonction pour initier le paiement avec Stripe
   const handleCheckout = async () => {
+    console.log("📢 Bouton Payer cliqué !");
     setLoading(true);
   
     try {
-      const stripe = await stripePromise;
-      const res = await fetch("/api/checkout", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ cartItems }),
-      });
+        const stripe = await stripePromise;
+        console.log("🔍 Initialisation de Stripe réussie.");
   
-      const data = await res.json();
+        console.log("📤 Envoi des articles du panier à /api/checkout :", cartItems);
+        const res = await fetch("/api/checkout", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ cartItems }),
+        });
   
-      // ✅ Vérifier que `data.id` existe bien
-      console.log("🔍 Session Stripe ID reçue :", data.id);
+        console.log("🔄 Statut de la réponse :", res.status);
+        const data = await res.json();
+        console.log("🔍 Réponse complète de /api/checkout :", data);
   
-      if (!data.id) {
-        console.error("❌ Erreur : Session Stripe ID manquante !");
-        setLoading(false);
-        return;
-      }
+        if (!data.sessionId) {
+            console.error("❌ Erreur : Session Stripe ID manquante !");
+            setLoading(false);
+            return;
+        }
   
-      // ✅ Redirection vers Stripe
-      const result = await stripe.redirectToCheckout({ sessionId: data.id });
+        console.log("✅ Session Stripe ID reçue :", data.sessionId);
   
-      if (result.error) {
-        console.error("❌ Erreur Stripe :", result.error);
-      }
+        if (!stripe) {
+            console.error("❌ Erreur : Stripe n'est pas initialisé !");
+            return;
+        }
+  
+        console.log("🔗 Redirection vers Stripe...");
+        const result = await stripe.redirectToCheckout({ sessionId: data.sessionId });
+  
+        if (result.error) {
+            console.error("❌ Erreur Stripe :", result.error);
+        }
+  
     } catch (error) {
-      console.error("❌ Erreur lors du paiement :", error);
+        console.error("❌ Erreur lors du paiement :", error);
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
   };
+  
   
   return (
     <div className="cart-page bg-yellow-50 min-h-screen">
