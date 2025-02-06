@@ -5,19 +5,19 @@ const ModelsSection = () => {
   const models = [
    
     {
-      img: "/images/modèle-mauricien.webp",
-      title: "Tenue Mauricienne",
-      desc: "Ensemble sophistiqué confectionné dans un authentique tissu mauricien."
+      img: "/images/vintage-accueil.webp",
+      title: "Tenue Vintage",
+      desc: " tenues luxueuses fabriquées à partir d'un tissu en coton tissé teint en indigo de style vintage"
     },
     {
-      img: "/images/modèle-bogolan.png",
+      img: "/images/modèle-bogolan.webp",
       title: "Création Bogolan",
       desc: "Tenue contemporaine mettant en valeur les motifs ancestraux du bogolan."
     },
     {
-      img: "/images/modèle-kente.webp",
-      title: "Ensemble Kente",
-      desc: "Création moderne inspirée des tissages royaux kente du Ghana."
+      img: "/images/accueil-fasodanfani.webp",
+      title: "Ensemble Fasodanfani",
+      desc: "Création moderne inspirée du tissu traditionnel du burkinafaso."
     }
   ];
 
