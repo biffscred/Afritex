@@ -4,19 +4,19 @@ import Link from 'next/link';
 const AccessoriesSection = () => {
   const accessories = [
     {
-      img: "/images/accessoireskanga-accueil.webp",
-      title: "Sac Kente",
-      desc: "Sac élégant fait main avec du tissu Kente authentique."
+      img: "/images/foulardbaoulé.webp",
+      title: "Foulard en baoulé",
+      desc: "Foulard fait en avec tissu Baoulé."
     },
     {
-      img: "/images/accessoiresbogolan-accueil.webp",
-      title: "Écharpe Wax",
-      desc: "Écharpe légère et colorée en tissu wax premium."
+      img: "/images/accesoiresbogolan-accueil.webp",
+      title: "Écharpe en bogolan ",
+      desc: "Écharpe légère et colorée en bogolan ."
     },
     {
-      img: "/images/accessoiressheswhe-accueil.webp",
-      title: "Chapeau Bogolan",
-      desc: "Chapeau moderne orné de motifs Bogolan traditionnels."
+      img: "/images/accessoiresniaga.webp",
+      title: "Sac en niaga",
+      desc: "Sac fabrique avec le tissu niaga."
     }
   ];
 
