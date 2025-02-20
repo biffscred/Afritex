@@ -12,43 +12,44 @@ function CartPage() {
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
 
-  // Fonction pour récupérer les articles du panier
-  useEffect(() => {
-    async function fetchCartItems() {
-      console.log("📢 Début de la récupération des articles du panier.");
-      try {
-        const res = await fetch('/api/cart');
-        const data = await res.json();
+  // ✅ Fonction pour récupérer les articles du panier
+  const fetchCartItems = async () => {
+    console.log("📢 Début de la récupération des articles du panier.");
+    try {
+      const res = await fetch("/api/cart");
+      const data = await res.json();
 
-        console.log("✅ Réponse brute de l'API :", data);
+      console.log("✅ Réponse brute de l'API :", data);
 
-        if (res.ok) {
-          if (!Array.isArray(data.items)) {
-            console.error("❌ Erreur: le format retourné par l'API n'est pas valide", data);
-            return;
-          }
-
-          console.log("✅ Données du panier récupérées avec succès :", data.items);
-          setCartItems(data.items); // Mettre à jour l'état avec les articles
-          calculateTotal(data.items);
-        } else {
-          console.error("❌ Erreur lors du chargement du panier :", data.message);
+      if (res.ok) {
+        if (!Array.isArray(data.items)) {
+          console.error("❌ Erreur: le format retourné par l'API n'est pas valide", data);
+          return;
         }
-      } catch (error) {
-        console.error("❌ Erreur lors de la récupération des articles du panier :", error);
-      }
-    }
 
+        console.log("✅ Données du panier récupérées avec succès :", data.items);
+        setCartItems(data.items); // Mettre à jour l'état avec les articles
+        calculateTotal(data.items);
+      } else {
+        console.error("❌ Erreur lors du chargement du panier :", data.message);
+      }
+    } catch (error) {
+      console.error("❌ Erreur lors de la récupération des articles du panier :", error);
+    }
+  };
+
+  useEffect(() => {
     fetchCartItems();
   }, []);
 
-  // Fonction pour calculer le total
+  // ✅ Fonction pour calculer le total
   const calculateTotal = (items) => {
     const totalPrice = items.reduce((acc, item) => acc + item.price * item.quantity, 0);
     console.log("💰 Total calculé pour le panier:", totalPrice);
     setTotal(totalPrice);
   };
 
+  // ✅ Fonction pour modifier la quantité d'un article
   const updateCartItem = async (itemId, action) => {
     try {
       const res = await fetch(`/api/cart/${itemId}`, {
@@ -56,30 +57,11 @@ function CartPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action }),
       });
-  
+
       const data = await res.json();
       if (res.ok) {
         console.log("✅ Mise à jour réussie :", data);
-  
-        // 🔹 Mettre à jour immédiatement l'état du panier
-        setCartItems((prevItems) => {
-          const updatedItems = prevItems
-            .map((item) =>
-              item.id === itemId
-                ? { ...item, quantity: action === "increment" ? item.quantity + 1 : item.quantity - 1 }
-                : item
-            )
-            .filter((item) => item.quantity > 0); // Supprimer si quantité = 0
-  
-          // 🔹 Recalculer le total immédiatement
-          const newTotal = updatedItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-          setTotal(newTotal);
-  
-          return updatedItems;
-        });
-  
-        // 🔹 Puis recharger le panier pour garantir la synchro avec l'API
-        setTimeout(fetchCartItems, 200);
+        fetchCartItems(); // 🔄 Recharger le panier après mise à jour
       } else {
         console.error("❌ Erreur lors de la mise à jour :", data.message);
       }
@@ -87,10 +69,8 @@ function CartPage() {
       console.error("❌ Erreur :", error);
     }
   };
-  
 
-
-  // Fonction pour ajouter un article au panier
+  // ✅ Fonction pour ajouter un article au panier
   const addToCart = async (item) => {
     try {
       const res = await fetch("/api/cart", {
@@ -105,38 +85,9 @@ function CartPage() {
         }),
       });
 
-      const updateCartItem = async (itemId, action) => {
-        try {
-          const res = await fetch(`/api/cart/${itemId}`, {
-            method: "PATCH",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ action }), // "increment" ou "decrement"
-          });
-      
-          const data = await res.json();
-          if (res.ok) {
-            console.log("✅ Mise à jour réussie :", data);
-      
-            // 🔹 Mettre à jour la quantité en local
-            setCartItems((prevItems) =>
-              prevItems
-                .map((item) =>
-                  item.id === itemId
-                    ? { ...item, quantity: action === "increment" ? item.quantity + 1 : item.quantity - 1 }
-                    : item
-                )
-                .filter((item) => item.quantity > 0) // Supprimer si la quantité atteint 0
-            );
-          } else {
-            console.error("❌ Erreur lors de la mise à jour :", data.message);
-          }
-        } catch (error) {
-          console.error("❌ Erreur :", error);
-        }
-      };
       const data = await res.json();
       if (res.ok) {
-        fetchCartItems(); // Recharge le panier après ajout
+        fetchCartItems(); // 🔄 Recharger le panier après ajout
       } else {
         console.error("❌ Erreur lors de l'ajout :", data.message);
       }
@@ -145,22 +96,17 @@ function CartPage() {
     }
   };
 
-  // Fonction pour supprimer un article du panier
+  // ✅ Fonction pour supprimer un article du panier
   const removeFromCart = async (itemId) => {
     try {
       const res = await fetch(`/api/cart/${itemId}`, {
         method: "DELETE",
       });
-  
+
       const data = await res.json();
       if (res.ok) {
         console.log("✅ Article supprimé :", data);
-  
-        // 🔹 Supprimer l'article en local pour éviter un affichage erroné
-        setCartItems((prevItems) => prevItems.filter(item => item.id !== itemId));
-  
-        // 🔹 Optionnel : Vérifier avec la console
-        console.log("📦 Nouveau panier après suppression :", cartItems);
+        fetchCartItems(); // 🔄 Recharger le panier après suppression
       } else {
         console.error("❌ Erreur lors de la suppression :", data.message);
       }
@@ -168,54 +114,78 @@ function CartPage() {
       console.error("❌ Erreur :", error);
     }
   };
-  
 
-  // Fonction pour initier le paiement avec Stripe
+  const clearCart = async () => {
+    try {
+      const res = await fetch('/api/cart/clear', { method: "DELETE" });
+      if (res.ok) {
+        setCartItems([]);
+        setTotal(0);
+      }
+    } catch (error) {
+      console.error("❌ Erreur :", error);
+    }
+  };
+
+
+  // ✅ Fonction pour initier le paiement avec Stripe
   const handleCheckout = async () => {
     console.log("📢 Bouton Payer cliqué !");
     setLoading(true);
-  
+
     try {
-        const stripe = await stripePromise;
-        console.log("🔍 Initialisation de Stripe réussie.");
-  
-        console.log("📤 Envoi des articles du panier à /api/checkout :", cartItems);
-        const res = await fetch("/api/checkout", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ cartItems }),
-        });
-  
-        console.log("🔄 Statut de la réponse :", res.status);
-        const data = await res.json();
-        console.log("🔍 Réponse complète de /api/checkout :", data);
-  
-        if (!data.sessionId) {
-            console.error("❌ Erreur : Session Stripe ID manquante !");
-            setLoading(false);
-            return;
-        }
-  
-        console.log("✅ Session Stripe ID reçue :", data.sessionId);
-  
-        if (!stripe) {
-            console.error("❌ Erreur : Stripe n'est pas initialisé !");
-            return;
-        }
-  
-        console.log("🔗 Redirection vers Stripe...");
-        const result = await stripe.redirectToCheckout({ sessionId: data.sessionId });
-  
-        if (result.error) {
-            console.error("❌ Erreur Stripe :", result.error);
-        }
-  
-    } catch (error) {
-        console.error("❌ Erreur lors du paiement :", error);
-    } finally {
+      // 🔍 Vérifier si l'utilisateur est connecté avant de continuer
+      const session = await fetch("/api/auth/session");
+      const userSession = await session.json();
+
+      if (!userSession || !userSession.user) {
+        console.error("❌ Utilisateur non authentifié.");
+        setMessage("Vous devez être connecté pour payer.");
         setLoading(false);
+        return;
+      }
+
+      const stripe = await stripePromise;
+      console.log("🔍 Initialisation de Stripe réussie.");
+
+      console.log("📤 Envoi des articles du panier à /api/checkout :", cartItems);
+      const res = await fetch("/api/checkout", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ cartItems }),
+      });
+
+      console.log("🔄 Statut de la réponse :", res.status);
+      const data = await res.json();
+      console.log("🔍 Réponse complète de /api/checkout :", data);
+
+      if (!data.sessionId) {
+        console.error("❌ Erreur : Session Stripe ID manquante !");
+        setLoading(false);
+        return;
+      }
+
+      console.log("✅ Session Stripe ID reçue :", data.sessionId);
+
+      if (!stripe) {
+        console.error("❌ Erreur : Stripe n'est pas initialisé !");
+        return;
+      }
+
+      console.log("🔗 Redirection vers Stripe...");
+      const result = await stripe.redirectToCheckout({ sessionId: data.sessionId });
+
+      if (result.error) {
+        console.error("❌ Erreur Stripe :", result.error);
+      }
+    } catch (error) {
+      console.error("❌ Erreur lors du paiement :", error);
+      setMessage("Une erreur est survenue lors du paiement. Veuillez réessayer.");
+    } finally {
+      setLoading(false);
     }
   };
+
   
   
   return (
@@ -263,6 +233,7 @@ function CartPage() {
       >
         +
       </button>
+      <button onClick={() => removeFromCart(item.id)} className="bg-gray-500 text-white px-3 py-1 rounded">🗑️</button>
     </div>
               </div>
             ))}
@@ -273,12 +244,15 @@ function CartPage() {
         {/* Résumé du panier */}
         <div className="cart-summary mt-8 p-4 bg-green-100 rounded-lg shadow-md">
           <h3 className="text-xl font-bold text-green-700">Total : {total.toFixed(2)} €</h3>
+          <button onClick={clearCart} className="bg-red-600 text-white px-4 py-2 rounded hover:bg-red-800">Vider le panier</button>
           <button 
             onClick={handleCheckout} 
             className="bg-blue-500 text-white px-4 py-2 rounded mt-4 hover:bg-blue-700 transition"
             disabled={loading}
           >
             {loading ? "Redirection en cours..." : "Payer"}
+            {loading && <p className="text-blue-500 mt-2">Redirection vers Stripe...</p>}
+
           </button>
         </div>
       </main>

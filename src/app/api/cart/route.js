@@ -143,11 +143,11 @@ export async function POST(req) {
       );
     }
 
-    const { productId, fabricId, quantity } = await req.json();
-    console.log("📦 Données reçues:", { productId, fabricId, quantity });
+    const { productId, fabricId, quantity ,modelId, accessoryId} = await req.json();
+    console.log("📦 Données reçues:", { productId, fabricId, quantity ,modelId, accessoryId});
 
     // Vérification des données entrantes
-    if ((!productId && !fabricId) || !quantity || quantity <= 0) {
+    if ((!productId && !fabricId&& !modelId &&!accessoryId) || !quantity || quantity <= 0) {
       console.log("❌ Données invalides ou incomplètes.");
       return NextResponse.json(
         { message: "Données invalides ou incomplètes." },
@@ -166,12 +166,21 @@ export async function POST(req) {
       console.log("🔍 Recherche du tissu avec ID :", fabricId);
       item = await prisma.fabric.findUnique({ where: { id: fabricId } });
       itemType = "Fabric";
+    }else if (modelId) {
+      console.log("🔍 Recherche du modèle avec ID :", modelId);
+      item = await prisma.model.findUnique({ where: { id: modelId } });
+      itemType = "Model";
+    } else if (accessoryId) {
+      console.log("🔍 Recherche de l'accessoire avec ID :", accessoryId);
+      item = await prisma.accessory.findUnique({ where: { id: accessoryId } });
+      itemType = "Accessory";
     }
+
 
     console.log("🛒 Élément trouvé :", item);
 
     if (!item) {
-      console.log(`❌ ${itemType} introuvable pour l'ID:`, productId || fabricId);
+      console.log(`❌ ${itemType} introuvable pour l'ID:`, productId || fabricId|| accessoryId||modelId);
       return NextResponse.json(
         { message: `${itemType} introuvable pour l'ID ${productId || fabricId}` },
         { status: 404 }
@@ -208,6 +217,8 @@ export async function POST(req) {
         orderId: userOrder.id,
         productId: productId || null,
         fabricId: fabricId || null,
+        modelId: modelId || null,
+        accessoryId: accessoryId || null,
       },
     });
 
@@ -228,6 +239,8 @@ export async function POST(req) {
         order: { connect: { id: userOrder.id } },
         ...(productId ? { product: { connect: { id: productId } } } : {}),
         ...(fabricId ? { fabric: { connect: { id: fabricId } } } : {}),
+        ...(modelId ? { model: { connect: { id: modelId } } } : {}),
+        ...(accessoryId ? { accessory: { connect: { id: accessoryId } } } : {}),
       },
     });
 

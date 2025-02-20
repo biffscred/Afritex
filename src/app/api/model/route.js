@@ -11,10 +11,16 @@ export async function GET() {
       include: {
         fabric: true, // Inclut le tissu associé
         artisan: true, // Inclut l'artisan associé
-        modelimage: true, // Inclut les images associées
-        country: true, // Inclut les pays associés (si pertinent)
+        modelImages: true,  // Inclut les images associées
+        countries: true, //Inclut les pays associés (si pertinent)
+      
+        product: {
+          select: {
+            image: true, // ✅ Récupère l'image du produit associé
+          },
+        },
       },
-    });
+    })
 
     console.log("✅ Modèles récupérés :", models);
 

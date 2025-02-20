@@ -89,7 +89,7 @@ export async function POST(req) {
       success_url: `${origin}/checkout/success`,
       cancel_url: `${origin}/checkout/cancel`,
       metadata: {
-        orderId: order.id, // ✅ Associe la commande à Stripe
+        orderId: String(order.id), //Associe la commande à Stripe
       },
     });
 

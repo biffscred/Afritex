@@ -18,11 +18,8 @@ export async function POST(req) {
     let event;
     try {
       // Lire la requête brute avec raw-body
-      const rawBody = await getRawBody(req.body, {
-        length: req.headers.get("content-length"),
-        limit: "1mb",
-        encoding: req.headers.get("content-type"),
-      });
+      const rawBody = await req.text();
+
   
       event = stripe.webhooks.constructEvent(rawBody, sig, process.env.STRIPE_WEBHOOK_SECRET);
       console.log("✅ Webhook Stripe validé :", event.type);

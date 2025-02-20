@@ -1,43 +1,39 @@
 import { NextResponse } from "next/server";
 import prisma from "../../../lib/prisma"; // Assurez-vous que prisma est correctement importé
 
-export async function GET(req) {
+export async function GET() {
   try {
-    console.log("API GET /api/accessory appelée");
+    console.log("🔄 Début de la récupération des accessoires...");
 
-    // Récupération des accessoires avec leurs relations associées
+    // Récupération des accessoires avec leurs relations
     const accessories = await prisma.accessory.findMany({
       include: {
-        accessoryimage: { // Inclure les images associées
+        fabric: true, // ✅ Inclut le tissu associé si pertinent
+        artisan: true, // ✅ Inclut l'artisan associé
+        accessoryImages: true,  // ✅ Inclut les images associées
+        countries: true, // ✅ Inclut les pays associés si pertinent
+      
+        product: {
           select: {
-            url: true,
-            altText: true,
-          },
-        },
-        fabric: { // Inclure les informations sur le tissu associé
-          select: {
-            name: true,
-            color: true,
-          },
-        },
-        artisan: { // Inclure l'artisan associé (si disponible)
-          select: {
-            name: true,
-          },
-        },
-        country: { // Inclure les pays associés
-          select: {
-            name: true,
+            image: true, // ✅ Récupère l'image du produit associé
           },
         },
       },
     });
 
-    console.log("Accessoires récupérés avec succès:", accessories);
+    console.log("✅ Accessoires récupérés :", accessories);
+
+    // Vérification des chemins d'images
+    accessories.forEach((accessory) => {
+      console.log(`🔍 Accessoire ID: ${accessory.id}, Image: ${accessory.product?.image || "Aucune image"}`);
+      if (accessory.accessoryImages && accessory.accessoryImages.length > 0) {
+        console.log(`🔍 Images associées pour l'accessoire ${accessory.id}:`, accessory.accessoryImages);
+      }
+    });
 
     return NextResponse.json(accessories, { status: 200 });
   } catch (error) {
-    console.error("Erreur lors de la récupération des accessoires:", error);
+    console.error("❌ Erreur lors de la récupération des accessoires :", error);
     return NextResponse.json(
       { message: "Erreur lors de la récupération des accessoires", error: error.message },
       { status: 500 }
