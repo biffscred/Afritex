@@ -1,149 +1,145 @@
-"use client";
+"use client"; // Next.js 14 App Router nécessite "use client" pour les composants interactifs
 
+import { useState, useEffect } from "react";
 import Image from "next/image";
-import { useState, useEffect, useMemo } from "react";
-import { useSession } from "next-auth/react";
-import { useRouter } from "next/navigation";
+import { motion } from "framer-motion";
+import { X } from "lucide-react";
+import Head from "next/head";
 
-export default function ProductsSection({ filters }) {
+const ProductModal = ({ product, isOpen, onClose }) => {
+  if (!isOpen) return null;
+
+  return (
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
+      <motion.div 
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 50 }}
+        className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full relative"
+      >
+        <button onClick={onClose} className="absolute top-3 right-3 text-gray-700 hover:text-black">
+          <X size={24} />
+        </button>
+        <motion.div 
+          className="w-full aspect-[4/3] overflow-hidden rounded-lg relative"
+          whileHover={{ scale: 1.05 }}
+        >
+          {product.image ? (
+            <Image
+              src={product.image}
+              alt={product.name}
+              fill
+              className="object-cover rounded-lg"
+              loading="lazy"
+            />
+          ) : (
+            <div className="w-full h-full flex items-center justify-center bg-gray-300 text-gray-500">
+              Image non disponible
+            </div>
+          )}
+        </motion.div>
+        <div className="mt-4 text-center">
+          <h2 className="text-xl font-semibold">{product.name}</h2>
+          <p className="text-gray-600 mt-2">{product.description}</p>
+          <p className="text-lg font-bold text-gray-900 mt-2">{product.price}€</p>
+          <button 
+            className="mt-4 px-4 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-700 transition"
+          >
+            Ajouter au panier 🛒
+          </button>
+        </div>
+      </motion.div>
+    </div>
+  );
+};
+
+export default function ProductsSection() {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [cartMessage, setCartMessage] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const itemsPerPage = 12;
+  const [selectedProduct, setSelectedProduct] = useState(null);
 
-  const { data: session } = useSession();
-  const router = useRouter();
-
-  // Fonction pour récupérer les produits avec gestion des erreurs
   useEffect(() => {
-    const delayFetch = setTimeout(async () => {
-      if (!filters) return;
-      setLoading(true);
-      setError(null);
-
+    const fetchProducts = async () => {
       try {
-        const queryParams = new URLSearchParams();
-        if (filters.price) queryParams.append("priceMax", filters.price.toString());
-        if (filters.color) queryParams.append("color", filters.color);
-        if (filters.material) queryParams.append("material", filters.material);
-        if (filters.country) queryParams.append("country", filters.country);
-        if (filters.category) queryParams.append("category", filters.category);
-        if (filters.artisan) queryParams.append("artisan", filters.artisan);
-
-        const res = await fetch(`/api/products?${queryParams.toString()}`);
+        const res = await fetch("/api/products");
         if (!res.ok) throw new Error("Erreur lors de la récupération des produits");
 
         const data = await res.json();
-        if (!Array.isArray(data)) throw new Error("Les données reçues ne sont pas valides");
+        console.log("📦 Produits récupérés sur le front :", data);
 
-        setProducts(data);
+        setProducts(Array.isArray(data) ? data : []);
       } catch (error) {
+        console.error("❌ Erreur de récupération des produits :", error);
         setError("Impossible de charger les produits.");
+        setProducts([]); // Empêche l'erreur .map()
       } finally {
         setLoading(false);
       }
-    }, 500); // Délais pour éviter trop de requêtes successives
+    };
 
-    return () => clearTimeout(delayFetch);
-  }, [filters]);
-
-  // Fonction d'ajout au panier avec gestion de la session utilisateur
-  const handleAddToCart = async (product) => {
-    if (!session) {
-      setError("Vous devez être connecté pour ajouter au panier !");
-      return;
-    }
-
-    try {
-      const res = await fetch("/api/cart", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ productId: product.id, quantity: 1 }),
-      });
-
-      if (!res.ok) throw new Error("Erreur lors de l'ajout au panier.");
-
-      setCartMessage(`🎉 ${product.name} ajouté au panier !`);
-      setTimeout(() => setCartMessage(""), 3000);
-    } catch (error) {
-      setError("Erreur lors de l'ajout au panier.");
-    }
-  };
-
-  // Calcul du nombre total de pages (optimisé avec useMemo)
-  const totalPages = useMemo(() => Math.ceil(products.length / itemsPerPage), [products]);
-
-  // Gestion de la pagination
-  const paginatedProducts = products.slice(
-    (currentPage - 1) * itemsPerPage,
-    currentPage * itemsPerPage
-  );
-
-  const handlePageChange = (page) => {
-    setCurrentPage(page);
-  };
+    fetchProducts();
+  }, []);
 
   return (
-    <section className="bg-gradient-to-b from-yellow-100 via-orange-200 to-green-200">
-      <div className="container mx-auto px-4">
-        <h2 className="text-4xl font-extrabold text-center text-green-900 mb-8">Nos Produits</h2>
+    <>
+      {/* SEO */}
+      <Head>
+        <title>Nos Produits</title>
+        <meta name="description" content="Découvrez nos magnifiques tissus africains." />
+      </Head>
 
-        {cartMessage && <p className="text-center text-green-800 font-semibold py-4">{cartMessage}</p>}
-        {error && <p className="text-center text-red-500 font-semibold py-4">{error}</p>}
-        {loading ? (
-          <p className="text-center text-yellow-800 font-semibold py-4">Chargement des produits...</p>
-        ) : (
-          <>
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-              {paginatedProducts.map((product) => (
-                <div
-                  key={product.id}
-                  className="bg-gradient-to-b from-yellow-200 to-orange-300 rounded-3xl shadow-xl overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-2xl"
-                >
-                  <div className="relative w-full h-64 overflow-hidden rounded-t-3xl">
-                    <Image
-                      src={product.image ? product.image : "/images/placeholder.jpg"}
-                      alt={product.name || "Image indisponible"}
-                      layout="fill"
-                      objectFit="cover"
-                      className="rounded-t-3xl"
-                    />
-                  </div>
-                  <div className="p-6">
-                    <h3 className="text-xl font-semibold text-green-900 text-center">{product.name}</h3>
-                    <p className="text-green-800 text-lg font-bold text-center mt-2">{product.price} €</p>
-                    <button
-                      className="mt-4 w-full bg-yellow-700 text-white py-3 rounded-lg font-semibold hover:bg-yellow-800 transition-colors duration-300 transform hover:scale-105 shadow-md"
-                      onClick={() => handleAddToCart(product)}
+      <section className="bg-gray-100 py-12">
+        <div className="container mx-auto px-4">
+          <h2 className="text-4xl font-extrabold text-center text-gray-900 mb-8">
+            Nos Produits
+          </h2>
+
+          {error && <p className="text-center text-red-500 font-semibold py-4">{error}</p>}
+          {loading ? (
+            <p className="text-center text-gray-700 font-semibold py-4">Chargement des produits...</p>
+          ) : (
+            <>
+              <article className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {Array.isArray(products) && products.length > 0 ? (
+                  products.map((product) => (
+                    <motion.div 
+                      key={product.id} 
+                      className="bg-white rounded-xl shadow-md overflow-hidden transform transition-transform duration-300 hover:scale-105 hover:shadow-lg cursor-pointer"
+                      onClick={() => setSelectedProduct(product)}
                     >
-                      Ajouter au Panier
-                    </button>
-                  </div>
-                </div>
-              ))}
-            </div>
+                      <div className="w-full aspect-[4/5] overflow-hidden rounded-t-lg relative">
+                        {product.image ? (
+                          <Image
+                            src={product.image}
+                            alt={product.name}
+                            fill
+                            className="object-cover rounded-t-lg transition-transform duration-500 hover:scale-110"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <div className="w-full h-full flex items-center justify-center bg-gray-300 text-gray-500">
+                            Image non disponible
+                          </div>
+                        )}
+                      </div>
+                      <div className="p-4 text-center">
+                        <h3 className="text-lg font-semibold text-gray-900 truncate">{product.name}</h3>
+                        <p className="text-md font-bold text-gray-700 mt-2">{product.price} €</p>
+                      </div>
+                    </motion.div>
+                  ))
+                ) : (
+                  <p className="text-center text-gray-500">Aucun produit trouvé.</p>
+                )}
+              </article>
+            </>
+          )}
+        </div>
 
-            {/* Pagination */}
-            {totalPages > 1 && (
-              <div className="flex justify-center space-x-4 mt-6">
-                {Array.from({ length: totalPages }, (_, index) => (
-                  <button
-                    key={index}
-                    className={`px-4 py-2 rounded-lg ${
-                      currentPage === index + 1 ? "bg-green-600 text-white" : "bg-gray-200 text-gray-700"
-                    }`}
-                    onClick={() => handlePageChange(index + 1)}
-                  >
-                    {index + 1}
-                  </button>
-                ))}
-              </div>
-            )}
-          </>
-        )}
-      </div>
-    </section>
+        {/* Modal Produit */}
+        {selectedProduct && <ProductModal product={selectedProduct} isOpen={true} onClose={() => setSelectedProduct(null)} />}
+      </section>
+    </>
   );
 }

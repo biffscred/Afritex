@@ -42,15 +42,15 @@ export default function MapChart() {
                   geography={geo}
                   onClick={() => setSelectedCountry(countryProps)}
                   onMouseEnter={(event) => {
-                    if (!countryProps.flag) return; // Vérifie si le pays a un drapeau
+                    if (!countryProps.name) return; // Vérifie si le pays a un nom
 
                     const rect = event.target.getBoundingClientRect();
                     let posX = rect.left + window.scrollX + rect.width / 2; // Centre horizontalement
                     let posY = rect.top + window.scrollY - 50; // Décale légèrement vers le haut
 
-                    // Empêche le drapeau de dépasser à droite ou en bas
-                    if (posX + 100 > windowSize.width) {
-                      posX = windowSize.width - 120;
+                    // Empêche le texte de dépasser à droite ou en bas
+                    if (posX + 120 > windowSize.width) {
+                      posX = windowSize.width - 140;
                     }
                     if (posY < 0) {
                       posY = 10;
@@ -72,23 +72,29 @@ export default function MapChart() {
         </Geographies>
       </ComposableMap>
 
-      {/* Affichage du drapeau au survol, bien positionné */}
-      {hoveredCountry && hoveredCountry.flag && (
+      {/* Affichage du drapeau et du nom du pays au survol */}
+      {hoveredCountry && (
         <div
-          className="fixed bg-white p-2 shadow-lg rounded-md border border-gray-200 transition-opacity duration-200 ease-in-out opacity-100"
+          className="fixed bg-white p-2 shadow-lg rounded-md border border-gray-200 transition-opacity duration-200 ease-in-out opacity-100 flex items-center space-x-2"
           style={{
             top: cursorPos.y,
             left: cursorPos.x,
-            transform: "translate(-50%, -100%)", // Centre le drapeau
+            transform: "translate(-50%, -100%)", // Centre le texte et le drapeau
+            whiteSpace: "nowrap", // Empêche le texte de sauter à la ligne
           }}
         >
-          <Image
-            src={hoveredCountry.flag}
-            alt={`Drapeau de ${hoveredCountry.name}`}
-            width={80}
-            height={50}
-            className="rounded-md"
-          />
+          {hoveredCountry.flag && (
+            <Image
+              src={hoveredCountry.flag}
+              alt={`Drapeau de ${hoveredCountry.name}`}
+              width={40}
+              height={25}
+              className="rounded-md"
+            />
+          )}
+          <span className="text-sm font-semibold text-gray-800">
+            {hoveredCountry.name}
+          </span>
         </div>
       )}
 
@@ -96,18 +102,25 @@ export default function MapChart() {
       {selectedCountry && (
         <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 p-4 z-50">
           <div className="bg-white p-6 rounded-lg shadow-xl max-w-lg w-full text-center relative animate-fadeIn">
-            <h2 className="text-3xl font-bold text-green-900">{selectedCountry.country}</h2>
-            <Image src={selectedCountry.flag} alt={selectedCountry.country} width={80} height={50} className="mt-2 mx-auto shadow-md" />
+            <h2 className="text-3xl font-bold text-green-900">{selectedCountry.name}</h2>
+            {selectedCountry.flag && (
+              <Image src={selectedCountry.flag} alt={selectedCountry.name} width={80} height={50} className="mt-2 mx-auto shadow-md" />
+            )}
             <h3 className="text-xl font-semibold text-green-700 mt-4">{selectedCountry.fabric?.name}</h3>
             <p className="text-gray-800 mt-2 leading-relaxed">{selectedCountry.fabric?.description}</p>
-            <Image
-              src={selectedCountry.fabric?.image}
-              alt={selectedCountry.fabric?.name}
-              width={300}
-              height={200}
-              className="mt-4 rounded-lg shadow-lg"
-            />
-            <button onClick={() => setSelectedCountry(null)} className="mt-6 bg-green-700 text-white px-6 py-3 rounded-lg hover:bg-green-800 transition shadow-md hover:shadow-lg">
+            {selectedCountry.fabric?.image && (
+              <Image
+                src={selectedCountry.fabric.image}
+                alt={selectedCountry.fabric.name}
+                width={300}
+                height={200}
+                className="mt-4 rounded-lg shadow-lg"
+              />
+            )}
+            <button
+              onClick={() => setSelectedCountry(null)}
+              className="mt-6 bg-green-700 text-white px-6 py-3 rounded-lg hover:bg-green-800 transition shadow-md hover:shadow-lg"
+            >
               Fermer
             </button>
           </div>
