@@ -36,3 +36,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+public/images/tissus/Archive.zip
+exported_images.zip
+*.zip
