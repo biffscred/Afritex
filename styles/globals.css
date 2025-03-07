@@ -1,0 +1,53 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Palette de couleurs basée sur des tons africains */
+
+
+
+
+
+/* Font-face pour les polices personnalisées */
+
+
+@font-face {
+  font-family: 'cabinbold';
+  src: url('/fonts/cabin-bold-webfont.woff2') format('woff2'),
+       url('/fonts/cabin-bold-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'cabinmedium';
+  src: url('/fonts/cabin-medium-webfont.woff2') format('woff2'),
+       url('/fonts/cabin-medium-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'cabinregular';
+  src: url('/fonts/cabin-regular-webfont.woff2') format('woff2'),
+       url('/fonts/cabin-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'cabinsemibold';
+  src: url('/fonts/cabin-semibold-webfont.woff2') format('woff2'),
+       url('/fonts/cabin-semibold-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'qwigleyregular';
+  src: url('/fonts/qwigley-regular-webfont.woff2') format('woff2'),
+       url('/fonts/qwigley-regular-webfont.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
