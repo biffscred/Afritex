@@ -34,19 +34,36 @@ export async function PATCH(req, context) {
     }
 
     let newQuantity = orderItem.quantity + (action === "increment" ? 1 : -1);
+    let updatedOrder;
 
     if (newQuantity <= 0) {
       await prisma.orderItem.delete({ where: { id: itemId } });
-      return NextResponse.json({ message: "Article supprimé du panier." }, { status: 200 });
+      console.log("🗑️ Article supprimé du panier.");
     } else {
       await prisma.orderItem.update({
         where: { id: itemId },
         data: { quantity: newQuantity },
       });
-
-      return NextResponse.json({ message: "Quantité mise à jour.", quantity: newQuantity }, { status: 200 });
+      console.log("✅ Quantité mise à jour :", newQuantity);
     }
+
+    // ✅ Mise à jour du total de la commande
+    const updatedTotal = await prisma.orderItem.aggregate({
+      where: { orderId: orderItem.orderId },
+      _sum: { price: true },
+    }).then(res => res._sum.price || 0);
+
+    updatedOrder = await prisma.order.update({
+      where: { id: orderItem.orderId },
+      data: { total: updatedTotal },
+    });
+
+    console.log("📊 Nouveau total de la commande mis à jour :", updatedTotal);
+
+    return NextResponse.json({ message: "Quantité mise à jour.", quantity: newQuantity, total: updatedTotal }, { status: 200 });
+
   } catch (error) {
+    console.error("❌ Erreur serveur :", error);
     return NextResponse.json({ message: "Erreur serveur.", error: error.message }, { status: 500 });
   }
 }
@@ -87,6 +104,20 @@ export async function DELETE(req, context) {
     await prisma.orderItem.delete({
       where: { id: itemId },
     });
+
+    // ✅ Recalcul du total après suppression
+const updatedTotal = await prisma.orderItem.aggregate({
+  where: { orderId: orderItem.orderId },
+  _sum: { price: true },
+}).then(res => res._sum.price || 0);
+
+// ✅ Mise à jour de `total` dans la commande
+await prisma.order.update({
+  where: { id: orderItem.orderId },
+  data: { total: updatedTotal },
+});
+
+console.log("📊 Nouveau total de la commande après suppression :", updatedTotal);
 
     console.log("✅ Article supprimé avec succès.");
     return NextResponse.json({ message: "Article supprimé du panier." }, { status: 200 });

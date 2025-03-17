@@ -3,9 +3,24 @@ import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { X } from "lucide-react";
+import { useCart } from "../app/context/CartContext"; // Utilisation correcte du contexte du panier
 
 const ProductModal = ({ product, isOpen, onClose }) => {
+  const { addToCart } = useCart(); // Utilisation correcte du contexte
+
   if (!isOpen) return null;
+
+  const handleAddToCart = () => {
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+      category: product.category, // Ajout de la catégorie pour l'API
+      quantity: 1, // Par défaut, on ajoute une quantité de 1
+    });
+    onClose(); // Fermer la modale après l'ajout au panier
+  };
 
   return (
     <div
@@ -53,6 +68,7 @@ const ProductModal = ({ product, isOpen, onClose }) => {
           <p className="text-lg font-bold text-gray-900 mt-2">{product.price}€</p>
           <button 
             className="mt-4 px-4 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-700 transition"
+            onClick={handleAddToCart}
           >
             Ajouter au panier 🛒
           </button>

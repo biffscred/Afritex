@@ -1,4 +1,4 @@
-const { i18n } = require("./next-i18next.config"); // Importer la config i18n
+import { i18n } from "./next-i18next.config.js"; // Importer la config i18n
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
@@ -10,4 +10,4 @@ const nextConfig = {
  
 };
 
-module.exports = nextConfig; // Export unique et correct
+export default nextConfig;  // Export unique et correct

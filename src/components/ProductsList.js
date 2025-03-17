@@ -37,12 +37,35 @@ const ProductsList = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {products.map((product) => (
-            <ProductCard key={product.id} product={product} onClick={setSelectedProduct} />
+           <ProductCard 
+           key={product.id} 
+           product={product} 
+           onClick={() => {
+             console.log("🟢 Produit cliqué :", product);
+             setSelectedProduct(product);
+           }} 
+         />
+         
           ))}
         </div>
       )}
 
-      {selectedProduct && <ProductModal product={selectedProduct} isOpen={true} onClose={() => setSelectedProduct(null)} />}
+{selectedProduct ? (
+  <>
+    <p className="text-center text-green-600">✅ Modale active pour {selectedProduct.name}</p>
+    <ProductModal 
+      product={selectedProduct} 
+      isOpen={!!selectedProduct} 
+      onClose={() => {
+        console.log("🔴 Fermeture de la modale !");
+        setSelectedProduct(null);
+      }} 
+    />
+  </>
+) : (
+  <p className="text-center text-red-500">❌ Pas de produit sélectionné</p>
+)}
+
     </div>
   );
 };

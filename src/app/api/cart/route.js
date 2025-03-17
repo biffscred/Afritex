@@ -19,95 +19,54 @@ export async function GET(req) {
   try {
     console.log(`🔍 Recherche de la commande active pour l'utilisateur ID : ${userId}`);
 
+    // Pause pour attendre que Prisma mette bien à jour les données (TEST)
+    await new Promise(resolve => setTimeout(resolve, 300)); // 300ms de pause
+
     // Recherche d'une commande active
     const order = await prisma.order.findFirst({
-      where: { userId, status: { equals: "PENDING" }},
+      where: { userId, status: "PENDING" },
       include: {
-       orderItems: {
+        orderItems: {
           include: {
-            product: { // Récupère les infos globales du produit
-              select: {
-                id: true,
-                name: true,
-                price: true,
-                image: true,
-                description: true,
-              },
-            },
-            fabric: { // Récupère l'ID du tissu et son produit lié
-              select: {
-                id: true,
-                product: {
-                  select: {
-                    id: true,
-                    name: true,
-                    price: true,
-                    image: true,
-                    description: true,
-                  },
-                },
-              },
-            },
-            accessory: { // Récupère l'ID de l'accessoire et son produit lié
-              select: {
-                id: true,
-                product: {
-                  select: {
-                    id: true,
-                    name: true,
-                    price: true,
-                    image: true,
-                    description: true,
-                  },
-                },
-              },
-            },
-            model: { // Récupère l'ID du modèle et son produit lié
-              select: {
-                id: true,
-                product: {
-                  select: {
-                    id: true,
-                    name: true,
-                    price: true,
-                    image: true,
-                    description: true,
-                  },
-                },
-              },
-            },
+            product: { select: { id: true, name: true, price: true, image: true, description: true } },
+            fabric: { select: { id: true, product: { select: { id: true, name: true, price: true, image: true, description: true } } } },
+            accessory: { select: { id: true, product: { select: { id: true, name: true, price: true, image: true, description: true } } } },
+            model: { select: { id: true, product: { select: { id: true, name: true, price: true, image: true, description: true } } } },
           },
         },
       },
     });
+
     if (!order) {
       console.log("⚠️ Aucun panier actif trouvé pour cet utilisateur.");
       return NextResponse.json([], { status: 200 });
     }
 
     console.log("✅ Panier trouvé :", order);
+    console.log("🔍 Contenu réel de `orderItems` :", JSON.stringify(order.orderItems, null, 2));
 
     // Formatage des articles du panier
-    const items = order?.orderItems?.map((item) => ({
+    const items = order.orderItems.map((item) => ({
       id: item.id,
       name: item.product?.name || item.fabric?.product?.name || item.accessory?.product?.name || item.model?.product?.name,
       price: item.product?.price || item.fabric?.product?.price || item.accessory?.product?.price || item.model?.product?.price,
       image: item.product?.image || item.fabric?.product?.image || item.accessory?.product?.image || item.model?.product?.image,
       description: item.product?.description || item.fabric?.product?.description || item.accessory?.product?.description || item.model?.product?.description,
       quantity: item.quantity,
-     
     }));
 
     console.log("✅ Articles du panier formatés :", items);
+    const recalculatedTotal = items.reduce((sum, item) => sum + (item.price * item.quantity), 0);
 
     return NextResponse.json({
       orderId: order.id,
-      total: order.total, // Si le champ total existe
-      items,
+      total: recalculatedTotal, // Vérifie si `total` est défini
+      items,  // 🔴 Ici, on utilise bien `items` et non `formattedItems`
     }, { status: 200 });
+
   } catch (error) {
     console.error("❌ Erreur lors de la récupération du panier :", error);
-    return NextResponse.json({ 
+    return NextResponse.json({
       message: "Erreur serveur lors de la récupération du panier.",
       error: error.message,
     }, { status: 500 });
@@ -119,6 +78,7 @@ export async function POST(req) {
   console.log("🚀 Début de la requête POST pour ajouter un article au panier.");
 
   try {
+    // 📌 Vérifier l'utilisateur connecté
     const token = await getToken({ req, secret });
 
     if (!token || !token.id) {
@@ -132,7 +92,7 @@ export async function POST(req) {
     const userId = token.id;
     console.log("👤 Utilisateur identifié :", userId);
 
-    // Vérifier si l'utilisateur existe en base
+    // 📌 Vérifier si l'utilisateur existe en base
     const userExists = await prisma.user.findUnique({ where: { id: userId } });
 
     if (!userExists) {
@@ -143,11 +103,12 @@ export async function POST(req) {
       );
     }
 
-    const { productId, fabricId, quantity ,modelId, accessoryId} = await req.json();
-    console.log("📦 Données reçues:", { productId, fabricId, quantity ,modelId, accessoryId});
+    // 📌 Récupérer les données envoyées
+    const { productId, fabricId, modelId, accessoryId, quantity } = await req.json();
+    console.log("📦 Données reçues:", { productId, fabricId, modelId, accessoryId, quantity });
 
-    // Vérification des données entrantes
-    if ((!productId && !fabricId&& !modelId &&!accessoryId) || !quantity || quantity <= 0) {
+    // 📌 Vérification des entrées
+    if ((!productId && !fabricId && !modelId && !accessoryId) || !quantity || quantity <= 0) {
       console.log("❌ Données invalides ou incomplètes.");
       return NextResponse.json(
         { message: "Données invalides ou incomplètes." },
@@ -158,6 +119,7 @@ export async function POST(req) {
     let item = null;
     let itemType = "";
 
+    // 📌 Vérifier quel type d'élément est ajouté
     if (productId) {
       console.log("🔍 Recherche du produit avec ID :", productId);
       item = await prisma.product.findUnique({ where: { id: productId } });
@@ -166,7 +128,7 @@ export async function POST(req) {
       console.log("🔍 Recherche du tissu avec ID :", fabricId);
       item = await prisma.fabric.findUnique({ where: { id: fabricId } });
       itemType = "Fabric";
-    }else if (modelId) {
+    } else if (modelId) {
       console.log("🔍 Recherche du modèle avec ID :", modelId);
       item = await prisma.model.findUnique({ where: { id: modelId } });
       itemType = "Model";
@@ -176,25 +138,22 @@ export async function POST(req) {
       itemType = "Accessory";
     }
 
-
     console.log("🛒 Élément trouvé :", item);
 
     if (!item) {
-      console.log(`❌ ${itemType} introuvable pour l'ID:`, productId || fabricId|| accessoryId||modelId);
+      console.log(`❌ ${itemType} introuvable pour l'ID:`, productId || fabricId || modelId || accessoryId);
       return NextResponse.json(
-        { message: `${itemType} introuvable pour l'ID ${productId || fabricId}` },
+        { message: `${itemType} introuvable pour l'ID ${productId || fabricId || modelId || accessoryId}` },
         { status: 404 }
       );
     }
 
-    // Vérifier si une commande en cours existe pour cet utilisateur
+    // 📌 Vérifier si une commande en cours existe pour cet utilisateur
     let userOrder = await prisma.order.findFirst({
       where: {
         userId: userId,
-        status: {
-          equals: "PENDING"
-        }
-      }
+        status: "PENDING",
+      },
     });
 
     if (!userOrder) {
@@ -203,15 +162,14 @@ export async function POST(req) {
         data: {
           userId,
           status: "PENDING",
-          total: 0, // Initialisation du total à 0
+          total: 0, // Initialisation du total
           createdAt: new Date(),
-         
         },
       });
       console.log("🛒 Nouvelle commande créée :", userOrder.id);
     }
 
-    // Vérifier si l'élément (produit ou tissu) est déjà dans la commande
+    // 📌 Vérifier si l'élément est déjà dans la commande
     const existingOrderItem = await prisma.orderItem.findFirst({
       where: {
         orderId: userOrder.id,
@@ -222,38 +180,47 @@ export async function POST(req) {
       },
     });
 
+    let updatedOrderItem;
     if (existingOrderItem) {
-      const updatedOrderItem = await prisma.orderItem.update({
+      updatedOrderItem = await prisma.orderItem.update({
         where: { id: existingOrderItem.id },
         data: { quantity: existingOrderItem.quantity + quantity },
       });
       console.log("✅ Quantité mise à jour pour l'article existant:", updatedOrderItem);
-      return NextResponse.json(updatedOrderItem, { status: 200 });
+    } else {
+      updatedOrderItem = await prisma.orderItem.create({
+        data: {
+          quantity,
+          price: item.price, // Prix du produit ou tissu
+          order: { connect: { id: userOrder.id } },
+          ...(productId ? { product: { connect: { id: productId } } } : {}),
+          ...(fabricId ? { fabric: { connect: { id: fabricId } } } : {}),
+          ...(modelId ? { model: { connect: { id: modelId } } } : {}),
+          ...(accessoryId ? { accessory: { connect: { id: accessoryId } } } : {}),
+        },
+      });
+      console.log("✅ Nouvel article ajouté au panier:", updatedOrderItem);
     }
+// 🟢 Recalculer le total de la commande
+const updatedTotal = await prisma.orderItem.aggregate({
+  where: { orderId: userOrder.id },
+  _sum: { price: true },
+}).then(res => res._sum.price || 0);
 
-    // Si l'élément n'est pas encore dans la commande, l'ajouter
-    const newOrderItem = await prisma.orderItem.create({
-      data: {
-        quantity,
-        price: item.price, // Prix du produit ou tissu
-        order: { connect: { id: userOrder.id } },
-        ...(productId ? { product: { connect: { id: productId } } } : {}),
-        ...(fabricId ? { fabric: { connect: { id: fabricId } } } : {}),
-        ...(modelId ? { model: { connect: { id: modelId } } } : {}),
-        ...(accessoryId ? { accessory: { connect: { id: accessoryId } } } : {}),
-      },
-    });
+// 🔵 Mettre à jour le total dans la table `Order`
+await prisma.order.update({
+  where: { id: userOrder.id },
+  data: { total: updatedTotal },
+});
 
-    console.log("✅ Nouvel article ajouté au panier:", newOrderItem);
-    return NextResponse.json(newOrderItem, { status: 200 });
+console.log("📊 Total mis à jour :", updatedTotal);
+
+    return NextResponse.json(updatedOrderItem, { status: 200 });
 
   } catch (error) {
     console.error("❌ Erreur POST ajout panier:", error);
     return NextResponse.json(
-      {
-        message: "Erreur serveur lors de l'ajout au panier.",
-        error: error.message,
-      },
+      { message: "Erreur serveur lors de l'ajout au panier.", error: error.message },
       { status: 500 }
     );
   }

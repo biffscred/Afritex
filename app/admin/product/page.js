@@ -35,7 +35,7 @@ export default function AdminDashboardProduct() {
       const res = await fetch("/api/products");
       if (!res.ok) throw new Error(`Erreur HTTP : ${res.status}`);
       const data = await res.json();
-      setProducts(data);
+      setProducts(Array.isArray(data.products) ? data.products : []);
     } catch (error) {
       toast.error("Erreur lors de la récupération des produits.");
     }
