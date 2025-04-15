@@ -67,6 +67,8 @@ model Product {
   artisanId   Int?
   color       String?
   material    String?
+  mockupImage String?
+
 
   fabric      Fabric?     @relation("FabricToProduct")
   accessories Accessory[] @relation("ProductToAccessory")

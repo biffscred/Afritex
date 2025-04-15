@@ -1,38 +1,35 @@
-
-
-// 🔹 Met à jour un produit spécifique
-import prisma from "../../../../lib/prisma";
-
 export async function PUT(req, { params }) {
   try {
-    const productId = parseInt(params.id); // ✅ Assurez-vous que productId est défini
+    const productId = parseInt(params.id);
     console.log("🔄 PUT request received for Product ID:", productId);
 
     if (!productId || isNaN(productId)) {
       return new Response(JSON.stringify({ message: "ID invalide ou manquant" }), { status: 400 });
     }
 
-    const data = await req.json();
+    let data = await req.json();
     console.log("📩 Request payload:", data);
 
-    // 🔥 Suppression des valeurs undefined
+    // Nettoyer les valeurs invalides
     Object.keys(data).forEach((key) => {
       if (data[key] === undefined || data[key] === "") {
         delete data[key];
       }
     });
 
-    // ✅ Vérifie que les pays sont bien un tableau d'IDs
-    const countryIds = Array.isArray(data.countries) ? data.countries.map(c => ({ id: parseInt(c.id) })) : [];
+    // Gérer les pays à part
+    let countryIds = [];
+    if (Array.isArray(data.countries)) {
+      countryIds = data.countries.map((c) => ({ id: parseInt(c.id) }));
+      delete data.countries; // Supprime les pays de data pour éviter le conflit
+    }
 
-    console.log("🌍 Pays sélectionnés :", countryIds);
-
-    // ✅ Mise à jour du produit avec les nouveaux pays (ajoute sans supprimer les anciens)
     const updatedProduct = await prisma.product.update({
       where: { id: productId },
       data: {
+        ...data, // ✅ Applique tous les champs envoyés (ex: name, price, available, etc.)
         countries: {
-          connect: countryIds, // ✅ Ajoute les pays sélectionnés sans supprimer les anciens
+          connect: countryIds,
         },
         updatedAt: new Date(),
       },
@@ -40,7 +37,6 @@ export async function PUT(req, { params }) {
 
     console.log("✅ Produit mis à jour :", updatedProduct);
     return new Response(JSON.stringify(updatedProduct), { status: 200 });
-
   } catch (error) {
     console.error("❌ Erreur serveur :", error);
     return new Response(JSON.stringify({ message: "Erreur serveur" }), { status: 500 });

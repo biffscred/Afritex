@@ -139,15 +139,15 @@ export async function GET(req) {
     console.log("📥 Réception de la requête GET pour récupérer les produits...");
     const { searchParams } = new URL(req.url);
 
-    // Récupération des filtres depuis l'URL
-    const categoryFilter = searchParams.get("category") || undefined;
-    const countryFilter = searchParams.get("country") || undefined;
+    // 🔍 Récupération des filtres
+    const categoryFilter = searchParams.get("category");
+    const countryFilter = searchParams.get("country");
     const priceMin = parseFloat(searchParams.get("priceMin")) || 0;
     const priceMax = parseFloat(searchParams.get("priceMax")) || 500;
 
-    // Paramètres de pagination et tri
+    // 🔧 Paramètres de pagination et tri
     const page = parseInt(searchParams.get("page")) || 1;
-    const pageSize = parseInt(searchParams.get("pageSize")) || 10;
+    const pageSize = parseInt(searchParams.get("pageSize")) || 300;
     const sortBy = searchParams.get("sortBy") || "price";
     const sortOrder = searchParams.get("sortOrder") === "desc" ? "desc" : "asc";
 
@@ -162,34 +162,34 @@ export async function GET(req) {
       sortOrder,
     });
 
-    // Construction de la clause de filtrage
+    // ✅ Construction dynamique de whereClause
     const whereClause = {
-      category: categoryFilter,
       price: {
         gte: priceMin,
         lte: priceMax,
       },
+      ...(categoryFilter && { category: categoryFilter }),
+      ...(countryFilter && {
+        countries: {
+          some: {
+            name: countryFilter,
+          },
+        },
+      }),
     };
 
-    // Ajout du filtre sur le pays si défini
-    if (countryFilter) {
-      whereClause.countries = {
-        some: {
-          name: countryFilter,
-        },
-      };
-    }
-
-    // Calcul du nombre d'éléments à sauter pour la pagination
     const skip = (page - 1) * pageSize;
 
-    // Exécution en parallèle de la récupération des produits et du comptage total
+    // ✅ Ajout des relations supplémentaires
     const [products, totalCount] = await Promise.all([
       prisma.product.findMany({
         where: whereClause,
         include: {
           artisan: true,
           countries: true,
+          fabric: true,
+          accessories: true,
+          models: true,
         },
         orderBy: {
           [sortBy]: sortOrder,

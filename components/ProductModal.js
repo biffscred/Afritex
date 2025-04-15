@@ -24,7 +24,7 @@ const ProductModal = ({ product, isOpen, onClose }) => {
 
   return (
     <div
-      className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50"
+      className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center z-50"
       role="dialog"
       aria-modal="true"
       aria-labelledby="modal-title"
@@ -34,7 +34,8 @@ const ProductModal = ({ product, isOpen, onClose }) => {
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 50 }}
-        className="bg-white p-6 rounded-lg shadow-lg max-w-lg w-full relative"
+        className="bg-white p-6 rounded-2xl shadow-2xl border border-gray-200 max-w-lg w-full relative"
+
       >
         <button
           onClick={onClose}
@@ -67,11 +68,11 @@ const ProductModal = ({ product, isOpen, onClose }) => {
           </p>
           <p className="text-lg font-bold text-gray-900 mt-2">{product.price}€</p>
           <button 
-            className="mt-4 px-4 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-700 transition"
-            onClick={handleAddToCart}
-          >
-            Ajouter au panier 🛒
-          </button>
+  className="mt-4 px-4 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-700 transition transform hover:scale-105"
+  onClick={handleAddToCart}
+>
+  Ajouter au panier 🛒
+</button>
         </div>
       </motion.div>
     </div>

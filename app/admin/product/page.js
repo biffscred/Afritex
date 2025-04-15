@@ -14,25 +14,40 @@ export default function AdminDashboardProduct() {
   const [countries, setCountries] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("");
 
-  useEffect(() => {
-    if (status === "loading") return;
-    if (!session || session.user.role !== "ADMIN") {
-      router.push("/auth/login");
-    }
-  }, [session, status, router]);
+ // Redirection si pas admin
+useEffect(() => {
+  if (status === "loading") return;
+  if (!session || session.user.role !== "ADMIN") {
+    router.push("/auth/login");
+  }
+}, [session, status, router]);
 
-  useEffect(() => {
-    if (session?.user.role === "ADMIN") {
-      fetchProducts();
-     // fetchArtisans();//
-      fetchCountries();
-    }
-  }, [session]);
+// Récupération initiale des données
+useEffect(() => {
+  if (session?.user.role === "ADMIN") {
+    fetchProducts(selectedCategory); // ← prend bien en compte la valeur actuelle
+    fetchCountries();
+  }
+}, [session]);
 
-  async function fetchProducts() {
+// Mise à jour si on change le select
+useEffect(() => {
+  if (session?.user.role === "ADMIN") {
+    fetchProducts(selectedCategory);
+  }
+}, [selectedCategory]);
+
+
+  async function fetchProducts(category = "") {
     try {
-      const res = await fetch("/api/products");
+      let url = "/api/products";
+      if (category) {
+        url += `?category=${category}`;
+      }
+  
+      const res = await fetch(url);
       if (!res.ok) throw new Error(`Erreur HTTP : ${res.status}`);
       const data = await res.json();
       setProducts(Array.isArray(data.products) ? data.products : []);
@@ -40,6 +55,7 @@ export default function AdminDashboardProduct() {
       toast.error("Erreur lors de la récupération des produits.");
     }
   }
+  
 
   async function fetchArtisans() {
     try {
@@ -65,48 +81,38 @@ export default function AdminDashboardProduct() {
 
   async function handleUpdateProduct(productId, field, value) {
     try {
-        setLoading(true);
-
-        // 🔍 Trouver le produit à modifier
-        const productToUpdate = products.find((p) => p.id === productId);
-        if (!productToUpdate) {
-            console.error("❌ Produit introuvable :", productId);
-            toast.error("Produit introuvable !");
-            return;
-        }
-
-        // ✅ Vérifie si la mise à jour concerne les pays
-        const updatedValue = Array.isArray(value) ? value.map(id => ({ id: parseInt(id) })) : [];
-
-        // 🔄 Envoi de la mise à jour au backend
-        const response = await fetch(`/api/products/${productId}`, {
-            method: "PUT",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ [field]: updatedValue }),// ✅ Envoi sous forme de tableau pour les pays
-        });
-
-        if (!response.ok) {
-            throw new Error("Erreur lors de la mise à jour");
-        }
-
-        console.log("✅ Produit mis à jour avec succès !");
-        toast.success("✅ Produit mis à jour !");
-
-        // ✅ Met à jour l'état local après la requête (évite un rechargement)
-        setProducts((prevProducts) =>
-          prevProducts.map((p) =>
-              p.id === productId ? { ...p, [field]: updatedValue } : p
-          )
+      setLoading(true);
+  
+      // 🔧 Si c’est le champ countries, on prépare le tableau d'objets { id: number }
+      const updatedValue =
+        field === "countries"
+          ? Array.isArray(value)
+            ? value.map((id) => ({ id: parseInt(id) }))
+            : []
+          : value; // ✅ Sinon, garde la valeur normale (string, number, boolean)
+  
+      const response = await fetch(`/api/products/${productId}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ [field]: updatedValue }),
+      });
+  
+      if (!response.ok) throw new Error("Erreur lors de la mise à jour");
+  
+      toast.success("✅ Produit mis à jour !");
+      const updated = await response.json();
+  
+      setProducts((prev) =>
+        prev.map((p) => (p.id === productId ? { ...p, [field]: updatedValue } : p))
       );
-
     } catch (error) {
-        console.error("❌ Erreur lors de la mise à jour :", error);
-        toast.error("❌ Erreur lors de la mise à jour !");
+      console.error("❌ Erreur lors de la mise à jour :", error);
+      toast.error("❌ Erreur lors de la mise à jour !");
     } finally {
-        setLoading(false);
+      setLoading(false);
     }
-}
-
+  }
+  
 
   async function deleteProduct(id) {
     if (!confirm("Es-tu sûr de vouloir supprimer ce produit ?")) return;
@@ -152,6 +158,21 @@ export default function AdminDashboardProduct() {
         Gestion des Produits
       </h1>
       <ToastContainer />
+      <div className="mb-6 flex items-center gap-4">
+  <label className="text-lg font-semibold text-gray-700">Filtrer par catégorie :</label>
+  <select
+  defaultValue=""
+  onChange={(e) => setSelectedCategory(e.target.value)}
+  className="p-2 border rounded-md bg-white shadow"
+>
+  <option value="">Toutes</option>
+  <option value="FABRIC">Tissu</option>
+  <option value="MODEL">Modèle</option>
+  <option value="ACCESSORY">Accessoire</option>
+</select>
+
+</div>
+
 
       {/* Tableau d'administration */}
       <div className="overflow-x-auto max-w-full">
@@ -301,12 +322,7 @@ export default function AdminDashboardProduct() {
       {/* ✅ Correction : Boutons Modifier & Supprimer dans la colonne Actions */}
       <td className="p-3 border">
   <div className="flex items-center space-x-2">
-    <button
-      onClick={() => handleUpdateProduct(product.id)}
-      className="bg-blue-500 text-white px-3 py-1 rounded-md hover:bg-blue-600 transition-all"
-    >
-      Modifier
-    </button>
+   
     <button
       onClick={() => deleteProduct(product.id)}
       className="bg-red-500 text-white px-3 py-1 rounded-md hover:bg-red-600 transition-all"
