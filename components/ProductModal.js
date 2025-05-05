@@ -3,10 +3,10 @@ import React from "react";
 import { motion } from "framer-motion";
 import Image from "next/image";
 import { X } from "lucide-react";
-import { useCart } from "../app/context/CartContext"; // Utilisation correcte du contexte du panier
+import { useCart } from "../app/context/CartContext";
 
 const ProductModal = ({ product, isOpen, onClose }) => {
-  const { addToCart } = useCart(); // Utilisation correcte du contexte
+  const { addToCart } = useCart();
 
   if (!isOpen) return null;
 
@@ -16,26 +16,19 @@ const ProductModal = ({ product, isOpen, onClose }) => {
       name: product.name,
       price: product.price,
       image: product.image,
-      category: product.category, // Ajout de la catégorie pour l'API
-      quantity: 1, // Par défaut, on ajoute une quantité de 1
+      category: product.category,
+      quantity: 1,
     });
-    onClose(); // Fermer la modale après l'ajout au panier
+    onClose();
   };
 
   return (
-    <div
-      className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center z-50"
-      role="dialog"
-      aria-modal="true"
-      aria-labelledby="modal-title"
-      aria-describedby="modal-description"
-    >
+    <div className="fixed inset-0 bg-black bg-opacity-30 backdrop-blur-sm flex justify-center items-center z-50">
       <motion.div 
         initial={{ opacity: 0, y: 50 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 50 }}
         className="bg-white p-6 rounded-2xl shadow-2xl border border-gray-200 max-w-lg w-full relative"
-
       >
         <button
           onClick={onClose}
@@ -44,35 +37,41 @@ const ProductModal = ({ product, isOpen, onClose }) => {
         >
           <X size={24} />
         </button>
-        <div className="w-full aspect-[4/3] overflow-hidden rounded-lg relative">
-          {product.image ? (
+
+        {/* 📷 Image principale du produit */}
+        <div className="w-full aspect-[4/3] overflow-hidden rounded-lg relative mb-3">
+          <Image
+            src={product.image}
+            alt={product.name}
+            fill
+            className="object-cover rounded-lg"
+            loading="lazy"
+          />
+        </div>
+
+        {/* 🎨 Mockup affichée seulement si dispo */}
+        {product.mockupImage && (
+          <div className="w-full aspect-[4/3] overflow-hidden rounded-lg relative mb-3">
             <Image
-              src={product.image}
-              alt={product.name}
+              src={product.mockupImage}
+              alt={`Mockup de ${product.name}`}
               fill
-              className="object-cover rounded-lg"
+              className="object-cover rounded-lg border border-gray-300"
               loading="lazy"
             />
-          ) : (
-            <div className="w-full h-full flex items-center justify-center bg-gray-300 text-gray-500">
-              Image non disponible
-            </div>
-          )}
-        </div>
-        <div className="mt-4 text-center">
-          <h2 id="modal-title" className="text-xl font-semibold">
-            {product.name}
-          </h2>
-          <p id="modal-description" className="text-gray-600 mt-2">
-            {product.description}
-          </p>
-          <p className="text-lg font-bold text-gray-900 mt-2">{product.price}€</p>
+          </div>
+        )}
+
+        <div className="mt-2 text-center">
+          <h2 className="text-xl font-semibold">{product.name}</h2>
+          <p className="text-gray-600 mt-2">{product.description}</p>
+          <p className="text-lg font-bold text-gray-900 mt-2">{product.price} €</p>
           <button 
-  className="mt-4 px-4 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-700 transition transform hover:scale-105"
-  onClick={handleAddToCart}
->
-  Ajouter au panier 🛒
-</button>
+            className="mt-4 px-4 py-2 bg-gray-900 text-white rounded-md hover:bg-gray-700 transition transform hover:scale-105"
+            onClick={handleAddToCart}
+          >
+            Ajouter au panier 🛒
+          </button>
         </div>
       </motion.div>
     </div>
