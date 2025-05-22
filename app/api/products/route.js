@@ -136,22 +136,21 @@ export async function POST(req) {
 
 export async function GET(req) {
   try {
-    console.log("📥 Réception de la requête GET pour récupérer les produits...");
+    console.log("📥 [API] GET /api/products reçu");
+
     const { searchParams } = new URL(req.url);
 
-    // 🔍 Récupération des filtres
     const categoryFilter = searchParams.get("category");
     const countryFilter = searchParams.get("country");
     const priceMin = parseFloat(searchParams.get("priceMin")) || 0;
     const priceMax = parseFloat(searchParams.get("priceMax")) || 500;
 
-    // 🔧 Paramètres de pagination et tri
     const page = parseInt(searchParams.get("page")) || 1;
     const pageSize = parseInt(searchParams.get("pageSize")) || 300;
     const sortBy = searchParams.get("sortBy") || "price";
     const sortOrder = searchParams.get("sortOrder") === "desc" ? "desc" : "asc";
 
-    console.log("🔍 Filtres de la requête :", {
+    console.log("🔎 Filtres appliqués :", {
       categoryFilter,
       countryFilter,
       priceMin,
@@ -162,7 +161,6 @@ export async function GET(req) {
       sortOrder,
     });
 
-    // ✅ Construction dynamique de whereClause
     const whereClause = {
       price: {
         gte: priceMin,
@@ -171,42 +169,57 @@ export async function GET(req) {
       ...(categoryFilter && { category: categoryFilter }),
       ...(countryFilter && {
         countries: {
-          some: {
-            name: countryFilter,
-          },
+          some: { name: countryFilter },
         },
       }),
     };
 
     const skip = (page - 1) * pageSize;
 
-    // ✅ Ajout des relations supplémentaires
     const [products, totalCount] = await Promise.all([
       prisma.product.findMany({
         where: whereClause,
         include: {
+          productImages: true, // ✅ Changement principal ici
           artisan: true,
           countries: true,
-          fabric: true,
-          accessories: true,
-          models: true,
+          fabric: {
+            include: { fabricImages: true },
+          },
+          models: {
+            include: { modelImages: true },
+          },
+          accessories: {
+            include: { accessoryImages: true },
+          },
         },
-        orderBy: {
-          [sortBy]: sortOrder,
-        },
+        orderBy: { [sortBy]: sortOrder },
         skip,
         take: pageSize,
       }),
       prisma.product.count({ where: whereClause }),
     ]);
 
-    console.log("✅ Produits récupérés :", products);
+    console.log(`✅ ${products.length} produits récupérés sur ${totalCount} au total.`);
+
+    if (products.length > 0) {
+      console.log("🧾 Aperçu produit :", {
+        id: products[0].id,
+        name: products[0].name,
+        category: products[0].category,
+        nbProductImages: products[0].productImages?.length || 0,
+        nbFabricImages: products[0].fabric?.fabricImages?.length || 0,
+        nbModelImages: products[0].models?.[0]?.modelImages?.length || 0,
+        nbAccessoryImages: products[0].accessories?.[0]?.accessoryImages?.length || 0,
+      });
+    }
+
     return NextResponse.json(
       { products, totalCount, page, pageSize },
       { status: 200 }
     );
   } catch (error) {
-    console.error("❌ Erreur lors de la récupération des produits :", error);
+    console.error("❌ Erreur API produits :", error);
     return NextResponse.json({ message: "Erreur serveur" }, { status: 500 });
   }
 }

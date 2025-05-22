@@ -40,7 +40,10 @@ const ProductsList = () => {
   const [selectedProduct, setSelectedProduct] = React.useState(null);
 
   // Aplatir les pages récupérées pour obtenir un tableau de produits
-  const products = data ? data.flatMap((page) => page.products) : [];
+  const products = Array.isArray(data)
+  ? data.flatMap((page) => page?.products || [])
+  : [];
+
 
   // Logs pour voir ce qui se passe
   console.log("🟡 Données brutes reçues de l'API :", data);
@@ -50,9 +53,22 @@ const ProductsList = () => {
   // Callback mémorisé pour éviter des re-rendus inutiles
   const handleProductClick = useCallback((product) => {
     console.log("🟠 Produit cliqué :", product);
-    setSelectedProduct(product);
-  }, []);
+  
+    const images =
+      product.images?.length > 0
+        ? product.images
+        : product.fabric?.fabricImages ||
+          product.models?.[0]?.modelImages ||
+          product.accessories?.[0]?.accessoryImages ||
+          [];
+  
+    setSelectedProduct({
+      ...product,
+      images, 
+      // 👈 toutes les images passées à la modale
+    });console.log("🧩 Images envoyées à la modale :", images);
 
+  }, []);
   // Affichage de skeleton loaders pendant le chargement
   const renderSkeletons = () => {
     return Array.from({ length: PAGE_SIZE }).map((_, index) => (

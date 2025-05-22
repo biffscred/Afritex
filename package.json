@@ -41,6 +41,7 @@
     "replicate": "^1.0.1",
     "rimraf": "^6.0.1",
     "sharp": "^0.33.5",
+    "string-similarity": "^4.0.4",
     "stripe": "^17.2.1",
     "swiper": "^11.2.4",
     "swr": "^2.3.2"
