@@ -1,0 +1,914 @@
+{
+    "Algérie": {
+        "fabric": [
+            {
+                "name": "Burnous",
+                "origin": "Berbères et Arabes du Maghreb (Algérie, Tunisie)",
+                "usage": "Long manteau masculin à capuchon, pour se protéger du froid et lors d'occasions spéciales",
+                "description": "Grand manteau en laine épaisse, de couleur blanche ou beige, traditionnellement porté par les hommes en Afrique du Nord:contentReference[oaicite:0]{index=0}. Symbole de virilité et d'identité culturelle, le burnous était porté par les notables lors des évènements importants. Il devint un emblème de la résistance pendant la colonisation française, et reste aujourd'hui un habit d'honneur pour les mariages, fêtes religieuses et cérémonies nationales:contentReference[oaicite:1]{index=1}."
+            },
+            {
+                "name": "Karakou",
+                "origin": "Ville d'Alger (Algérie, influence ottomane et andalouse)",
+                "usage": "Costume traditionnel féminin de cérémonie (tenue nuptiale et fêtes)",
+                "description": "Ensemble d'une veste en velours brodée de fils d'or et d'argent et d'un pantalon bouffant assorti, apparu au XIXe siècle à Alger:contentReference[oaicite:2]{index=2}. Le karakou, descendant de l'ancienne *ghlila* ottomane, est cintré à la taille et orné de broderies somptueuses. Autrefois tenu de prestige réservé aux mariages et aux grandes occasions, il demeure un costume de cérémonie. Sa réputation dépasse l'Algérie, séduisant désormais de grands créateurs mondiaux:contentReference[oaicite:3]{index=3}:contentReference[oaicite:4]{index=4}."
+            }
+        ]
+    },
+    "Égypte": {
+        "fabric": [
+            {
+                "name": "Galabeya (Djellabiya)",
+                "origin": "Vallée du Nil (Égypte et Soudan)",
+                "usage": "Robe longue traditionnelle unisexe, portée au quotidien surtout en milieu rural",
+                "description": "Tunique ample à manches longues, en coton léger pour l'été ou en laine pour l'hiver, elle constitue le vêtement populaire des fellahs le long du Nil depuis des siècles:contentReference[oaicite:5]{index=5}. La galabeya se porte par-dessus une chemise et un pantalon et s’accompagne souvent d’un turban (*'imma*) protégeant du soleil:contentReference[oaicite:6]{index=6}. Appréciée pour son confort et sa modestie, elle reste un emblème de la vie rurale égyptienne et de l'identité nationale."
+            },
+            {
+                "name": "Khayamiya",
+                "origin": "Le Caire, Égypte (quartier des tenturiers)",
+                "usage": "Textile d'art décoratif utilisé pour les tentures cérémonielles, les tapisseries et les objets d'art",
+                "description": "Appliqué de tissu égyptien aux motifs colorés et élaborés, né de la tradition des tentiers du Caire:contentReference[oaicite:7]{index=7}. Historiquement, les artisans confectionnaient de grandes toiles de khayamiya pour orner l'intérieur des tentes lors des mariages, funérailles et fêtes, combinant fonction de protection et richesse ornementale:contentReference[oaicite:8]{index=8}. De nos jours, cet art du **khayyām** perdure à travers des pièces murales, coussins et accessoires, perpétuant un savoir-faire ancestral tout en incarnant le patrimoine culturel égyptien."
+            }
+        ]
+    },
+    "Libye": {
+        "fabric": [
+            {
+                "name": "Farrashia",
+                "origin": "Tripolitaine (Libye urbaine, influence andalouse)",
+                "usage": "Voile traditionnel féminin porté à l'extérieur du foyer",
+                "description": "Grand vêtement d'une seule pièce, souvent en soie, qui enveloppe complètement la femme libyenne lorsqu'elle sort. Traditionnellement blanc pour le quotidien et en soie jaunâtre pour les mariées, la farrashia se noue en formant une \"fleur\" distinctive pour que chaque femme identifie son étoffe:contentReference[oaicite:9]{index=9}. Portée en couvrant tout le corps et ne laissant qu'un œil visible:contentReference[oaicite:10]{index=10}, elle incarnait la modestie et l'élégance. Remplacée de nos jours par le jilbab ou l'abaya, elle n'apparaît plus qu'aux occasions nationales ou dans les zones rurales en hommage au passé, son origine remontant aux Maures andalous ayant émigré en Afrique du Nord:contentReference[oaicite:11]{index=11}."
+            },
+            {
+                "name": "Jard (Houli)",
+                "origin": "Libye (peuples arabes et berbères, usage antique)",
+                "usage": "Pièce d'étoffe masculine polyvalente (habit, couverture, tente) utilisée par les sédentaires et les nomades",
+                "description": "Long drap de laine blanc (4 à 6 m sur 1,5 m) qui a traversé toutes les couches de la société libyenne:contentReference[oaicite:12]{index=12}. Autrefois, le *jard* servait à tout : vêtement, literie et même abri de fortune lors des voyages. De nos jours, il apparaît lors des mariages – le père tenant son *jard* en voûte pour faire passer la mariée en symbole de protection – ou recouvre le cercueil d'un défunt pendant les funérailles:contentReference[oaicite:13]{index=13}. On le drape en faisant un nœud (*tukumia*) autour du bras gauche, laissant le bras droit libre et le reste couvrant la tête:contentReference[oaicite:14]{index=14}. Symbole d'une élégance sobre, rendu iconique par le résistant Omar al-Mukhtar capturé en *jard*, ce tissu incarne l'héritage et la dignité libyennes."
+            }
+        ]
+    },
+    "Maroc": {
+        "fabric": [
+            {
+                "name": "Haïk",
+                "origin": "Maghreb (Algérie et Maroc)",
+                "usage": "Voile traditionnel féminin couvrant tout le corps",
+                "description": "Grande étoffe rectangulaire (jusqu'à 6 m x 2,2 m) en coton, soie ou laine, drapée autour du corps et fixée par des fibules aux épaules:contentReference[oaicite:15]{index=15}. Porté blanc immaculé dans l'ouest et le nord (Alger, Tlemcen, Oran) ou noir à l'est (Constantine) en signe de deuil:contentReference[oaicite:16]{index=16}, le haïk symbolise la pudeur et l'élégance. Au XXe siècle, il devint un symbole identitaire et politique pendant la lutte anticoloniale, les femmes l'adoptant pour affirmer leur rôle dans la société et dissimuler leur engagement militant:contentReference[oaicite:17]{index=17}. De nos jours raréfié, il demeure un héritage vestimentaire cher à la mémoire collective marocaine et algérienne."
+            },
+            {
+                "name": "Djellaba",
+                "origin": "Maroc (pays du Maghreb)",
+                "usage": "Longue robe à capuche unisexe portée au quotidien et pour les occasions",
+                "description": "Tenue emblématique marocaine, la djellaba est une robe ample en laine ou en coton dotée d'une grande capuche pointue (*qob*). Portée par les hommes comme par les femmes, elle protège du soleil du désert tout autant que du froid nocturne. Selon les régions, ses couleurs et motifs varient, du sobre marron des montagnes de l'Atlas aux teintes vives des plaines. Jadis symbole de statut (la qualité du drap de laine indiquait le rang social), la djellaba est aujourd'hui portée lors des fêtes religieuses, des cérémonies ou simplement comme vêtement quotidien confortable. Elle incarne l'alliance de la modestie et de l'identité marocaine traditionnelle."
+            },
+            {
+                "name": "Caftan marocain",
+                "origin": "Maroc (influence andalouse et ottomane)",
+                "usage": "Robe de cérémonie féminine, notamment lors des mariages",
+                "description": "Version marocaine du caftan, c'est une longue robe en brocart, soie ou velours, souvent à manches longues, richement brodée de motifs en fil d'or (*sfifa*) et ornée de perles. Introduit par les Andalous au Maroc, le caftan a été adopté par la noblesse locale dès le XVIe siècle et sans cesse réinventé depuis:contentReference[oaicite:18]{index=18}. Il se porte ample ou ajusté, parfois surmonté d'une seconde couche ouverte (appelée *takchita* lorsqu'elle est en deux pièces). Symbole de raffinement, chaque région du Maroc a développé son style de caftan aux broderies et couleurs spécifiques. Ce vêtement d'apparat reste indissociable des grandes célébrations, où il exprime la richesse du patrimoine artisanal marocain."
+            }
+        ]
+    },
+    "Mauritanie": {
+        "fabric": [
+            {
+                "name": "Boubou en bazin (Daraa)",
+                "origin": "Mauritanie et Sahel (peuple Maure)",
+                "usage": "Ample tunique longue masculine, portée avec un pantalon large lors des cérémonies et au quotidien",
+                "description": "Vêtement iconique mauritanien, le boubou (*daraa* en hassaniya) se caractérise par sa coupe très large sans manches, de couleur généralement bleu ciel ou blanche. Confectionné dans un bazin riche (cotonnade damassée teintée et bien amidonnée), il brille d'un éclat particulier lors des fêtes:contentReference[oaicite:19]{index=19}. Les hommes maures le portent par-dessus une chemise et un sarouel, le tout complété d'un turban. Au-delà de son aspect pratique (protection contre la chaleur et respect de la pudeur), le boubou est un marqueur social : la finesse du bazin et la richesse des broderies (sur le plastron et les poches) témoignent du statut de son porteur. Blanc pour la prière du vendredi, bleu indigo aux reflets brillants pour les mariages, il reste le symbole vestimentaire de l'élégance mauritanienne."
+            },
+            {
+                "name": "Melehfa (Mélafa)",
+                "origin": "Mauritanie (peuple Maure, zones sahariennes)",
+                "usage": "Long voile féminin drapé, couvrant la tête et le corps, porté quotidiennement",
+                "description": "Large pièce d'étoffe légère d'environ 3 mètres de long, la mélafa sert de vêtement principal aux femmes mauritaniennes. En coton ou polyester aux couleurs vives et aux motifs variés, elle s'enroule autour du corps et se fixe sur l'épaule, couvrant également les cheveux. Héritière des voiles portés par les femmes arabo-berbères du désert, la mélafa allie modestie et expression identitaire : le choix des couleurs peut refléter l'occasion (teintes sobres pour le deuil, chatoyantes pour les fêtes). Véritable symbole national en Mauritanie, ce voile que les femmes ajustent avec grâce témoigne d'une tradition vestimentaire adaptée au climat saharien tout en incarnant la féminité et la dignité dans la culture maure."
+            },
+            {
+                "name": "Bazin riche",
+                "origin": "Importé d'Europe, adopté en Mauritanie et en Afrique de l'Ouest",
+                "usage": "Tissu de coton damassé teinté, utilisé pour les boubous et tenues d'apparat",
+                "description": "Étoffe de coton à motifs damassés, rendue rigide et brillante par teinture et apprêt, le bazin riche est devenu indissociable de la mode mauritanienne et ouest-africaine:contentReference[oaicite:20]{index=20}:contentReference[oaicite:21]{index=21}. Apprécié pour son aspect luxueux, il est souvent teint artisanalement dans des couleurs vives puis cousu en grands boubous masculins ou en robes deux-pièces féminines. En Mauritanie, les teintes classiques sont le blanc et le bleu clair, prisés pour les grands événements et symbolisant pureté et prestige:contentReference[oaicite:22]{index=22}. Le bazin riche, importé à l'origine, a été intégré au patrimoine local au point que sa qualité (bazin **gharass** premium vs. bazin ordinaire) est l'objet d'une véritable culture. Des broderies ton sur ton ornent fréquemment les vêtements en bazin, faisant de ce tissu un vecteur de tradition et de fierté vestimentaire mauritanienne."
+            }
+        ]
+    },
+    "Soudan": {
+        "fabric": [
+            {
+                "name": "Toub (Thobe soudanais)",
+                "origin": "Soudan (influences nilotiques et moyen-orientales)",
+                "usage": "Robe drapée traditionnelle des femmes, portée lors des cérémonies et au quotidien",
+                "description": "Large pièce d'étoffe colorée d'environ 4 à 5 m de long, le *toub* est élégamment drapé autour du corps et par-dessus la tête des Soudanaises. Généralement en chiffon, soie ou voile de coton aux motifs vifs, il est transmis de mère en fille comme élément de patrimoine. Porter le toub confère grâce et respectabilité : il couvre le corps selon la modestie locale tout en affichant des couleurs et imprimés reflétant la personnalité de la femme:contentReference[oaicite:23]{index=23}:contentReference[oaicite:24]{index=24}. Indissociable des fêtes (Eid, mariages) où les femmes rivalisent de tobbs aux broderies dorées ou argentées, il reste aussi prisé dans la vie quotidienne. Véritable symbole de l'identité féminine soudanaise, le toub allie tradition et fierté nationale dans un pays aux multiples cultures."
+            },
+            {
+                "name": "Jibba Mahdiyya",
+                "origin": "Soudan (révolte Mahdyste, fin XIXe siècle)",
+                "usage": "Tunique de combat et de foi portée par les partisans du Mahdi",
+                "description": "Tunique blanche en coton, à manches longues, caractérisée par des pièces de tissu colorées cousues sur la poitrine, les manches et les flancs. Ces patchs de différentes formes et teintes, disposés avec soin, symbolisaient l'idéal d'humilité et de pauvreté prôné par le Mahdi:contentReference[oaicite:25]{index=25}. Portée par les officiers de l'armée mahdiste pendant la guerre contre la domination anglo-égyptienne (1881-1898), la *jibba* permettait d'identifier les chefs sur le champ de bataille:contentReference[oaicite:26]{index=26}. Au-delà de son rôle militaire, ce vêtement devint un emblème spirituel du mouvement mahdyste, incarnant le renouveau islamique et le sacrifice. Aujourd'hui exposée dans les musées, la jibba rappelle ce chapitre révolutionnaire de l'histoire soudanaise et l'engagement religieux de ses combattants."
+            }
+        ]
+    },
+    "Tunisie": {
+        "fabric": [
+            {
+                "name": "Sefsari",
+                "origin": "Tunisie (villes, depuis l'époque ottomane)",
+                "usage": "Voile féminin couvrant le corps de la tête aux pieds, porté par pudeur",
+                "description": "Grand voile de soie, satin ou coton crème, enveloppant l'ensemble du corps et ne laissant apparaître que le visage:contentReference[oaicite:27]{index=27}. Introduit dès le XVIe siècle, le sefsari était le vêtement urbain par excellence pour les Tunisiennes souhaitant sortir en préservant leur modestie:contentReference[oaicite:28]{index=28}. Après l'indépendance, le président Bourguiba tenta d'en décourager le port au nom de la modernité, allant jusqu'à dévoiler publiquement des femmes voilées en 1957:contentReference[oaicite:29]{index=29}. Tombé en désuétude chez les jeunes, le sefsari est encore porté par des femmes âgées, gardiennes d'une tradition qui symbolise élégance et réserve. Il équivaut au haïk maghrébin et fait partie du patrimoine national."
+            },
+            {
+                "name": "Jebba",
+                "origin": "Tunisie (influences arabo-andalouses)",
+                "usage": "Habit traditionnel masculin, porté lors des fêtes religieuses et cérémonies officielles",
+                "description": "Longue tunique sans col ni manches couvrant le buste jusqu'aux mollets, la jebba constitue la pièce maîtresse du costume masculin tunisien:contentReference[oaicite:30]{index=30}. Taillée dans la laine, le lin ou la soie, elle s'enfile sur une chemise et s'accompagne d'un gilet brodé (farmla) et d'un pantalon bouffant (sarouel) tenu par une ceinture de soie:contentReference[oaicite:31]{index=31}. Jadis portée au quotidien par les citadins, la jebba est aujourd'hui réservée aux occasions solennelles : prières de l'Aïd, mariages, circoncisions, et demeure la tenue des imams et prédicateurs du pays:contentReference[oaicite:32]{index=32}. Symbole d'un héritage andalou apporté par les Morisques, elle se distingue par des broderies raffinées et des variantes régionales (couleurs, motifs) perpétuées par les maîtres artisans malgré le déclin de ce savoir-faire."
+            },
+            {
+                "name": "Burnous tunisien",
+                "origin": "Tunisie (Maghreb)",
+                "usage": "Cape en laine à capuche pour les hommes, portée en hiver et lors des cérémonies",
+                "description": "Identique dans sa forme au burnous algérien, le burnous tunisien est souvent tissé en laine blanche de mouton, avec une texture épaisse pour couper le froid des nuits désertiques. Vêtement traditionnel des cavaliers et notables tunisiens sous la Régence ottomane, il fut aussi adopté par les confréries religieuses pour les processions. Arboré par les patriotes et les soldats de l'armée française (spahis) au XIXe siècle, il symbolisait courage et appartenance. Aujourd'hui, le burnous est porté par les mariés dans certaines régions lors de la cérémonie du henné ou de la *bsilla*. Cette cape immaculée, flottant sur les épaules, incarne la pureté et la noblesse de la tradition vestimentaire tunisienne."
+            }
+        ]
+    },
+    "Angola": {
+        "fabric": [
+            {
+                "name": "Samakaka",
+                "origin": "Angola (peuples Ovimbundu et Ngangela, sud du pays)",
+                "usage": "Tissu imprimé à motifs géométriques, utilisé pour les pagnes, robes et tenues folkloriques",
+                "description": "Étoffe de coton aux motifs dynamiques (losanges, flèches) teintés de rouge, noir, jaune et blanc, le *samakaka* puise ses racines dans la culture du peuple Mwila en Angola:contentReference[oaicite:33]{index=33}. À l'origine tissu tribal appelé *pano de samakaka*, il portait des symboles ancestraux et servait de lien social et spirituel. Ses couleurs vives et ses dessins uniques le rendent immédiatement reconnaissable parmi les textiles africains:contentReference[oaicite:34]{index=34}. Jadis tissé et teint manuellement, il est aujourd'hui souvent imprimé industriellement, sans perdre sa valeur culturelle : on le retrouve dans les costumes des danseurs de kizomba et de semba, dans les fêtes nationales et les créations de stylistes angolais:contentReference[oaicite:35]{index=35}. Véritable fierté nationale, le samakaka symbolise l'identité angolaise et connaît un succès mondial comme motif afro-contemporain:contentReference[oaicite:36]{index=36}."
+            }
+        ]
+    },
+    "Cameroun": {
+        "fabric": [
+            {
+                "name": "Ndop",
+                "origin": "Cameroun (peuples Bamiléké et Bamoun des Grassfields)",
+                "usage": "Étoffe rituelle en coton indigo, jadis réservée aux rois et sociétés secrètes",
+                "description": "Tissu traditionnel composé de bandes de coton cousues, teintes par réserve pour obtenir des motifs géométriques blancs sur fond bleu indigo:contentReference[oaicite:37]{index=37}. Apparue au XIXe siècle dans l'Ouest camerounais, la technique du ndop, importée en partie du Nigéria voisin, s'est perfectionnée localement pour produire des motifs abstraits hautement symboliques:contentReference[oaicite:38]{index=38}:contentReference[oaicite:39]{index=39}. Le ndop était un bien précieux : utilisé comme monnaie d'échange entre chefferies, transmis comme héritage et surtout porté en costume d'apparat par les rois, reines mères et notables lors des cérémonies d'initiation ou de funérailles. Chaque motif (étoiles, labyrinthes, cauris stylisés) possède un sens lié au pouvoir, à la prospérité ou à la fertilité. Aujourd'hui menacée par les textiles industriels, la tradition du ndop fait l'objet d'efforts de sauvegarde tant son importance culturelle est grande au Cameroun:contentReference[oaicite:40]{index=40}."
+            },
+            {
+                "name": "Toghu (Atoghu)",
+                "origin": "Cameroun (région du Nord-Ouest, peuples Grassfields)",
+                "usage": "Tissu d'apparat royal orné de broderies multicolores, pour tenues traditionnelles masculines et féminines",
+                "description": "Étoffe en velours noir rehaussée de motifs brodés à la main avec des fils de coton aux teintes vives (orange, jaune, blanc, rouge). À l'origine, le toghu était confectionné exclusivement pour les familles royales de la région de Bamenda : les chefs de village et notables le portaient lors des grands conseils et festivals:contentReference[oaicite:41]{index=41}. Cette tunique ou robe richement décorée arbore des symboles géométriques et zoomorphes propres à la cosmologie des Grassfields. De nos jours, le toghu est devenu un symbole identitaire du Cameroun anglophone : il est mis à l'honneur pendant la fête nationale et les manifestations culturelles, et même l'équipe olympique du Cameroun l'a exhibé en tenue officielle. Sa popularité a transformé le toghu en inspiration pour la mode contemporaine, tout en préservant son prestige originel de \"tissu des rois\"."
+            }
+        ]
+    },
+    "Centrafrique": {
+        "fabric": [
+            {
+                "name": "Tissu en raphia",
+                "origin": "République centrafricaine (ethnies du sud et ouest, bassin de l'Oubangui)",
+                "usage": "Étoffe tissée à partir de fibres de palmier, utilisée pour les pagnes, tentures et masques cérémoniels",
+                "description": "Comme chez beaucoup de peuples du bassin du Congo, les artisans centrafricains tirent les fibres du palmier à raphia pour en faire des tissus traditionnels:contentReference[oaicite:42]{index=42}. Ces fibres végétales, une fois séchées et teintes, sont tissées ou tressées afin de réaliser des pagnes robustes, des tapis et des ornements rituels. Par exemple, les riverains de la rivière Oubangui confectionnaient des pagnes en raphia teints à l'indigo, servant à la fois de vêtement quotidien et de monnaie d'échange locale. D'autres, comme les Pygmées Aka, intégraient des éléments de raphia dans leurs tenues de danse et parures de chasse. Chaque pièce en raphia, souvent décorée de motifs géométriques bruns ou noirs, porte une signification sociale (statut du porteur, événement célébré) et demeure un témoin de l'ingéniosité textile précoloniale centrafricaine."
+            },
+            {
+                "name": "Écorce battue (Tapa)",
+                "origin": "République centrafricaine (forêts tropicales, peuples pygmées et Zandé)",
+                "usage": "Tissu végétal traditionnel, utilisé autrefois comme vêtement et support artistique",
+                "description": "Avant l'introduction du coton tissé, de nombreux groupes centrafricains produisaient des étoffes à partir d'écorce d'arbre. La technique consiste à prélever l'écorce interne d'un ficus, puis à la battre longuement pour l'assouplir et l'étendre en un feuillet de \"tissu\" végétal:contentReference[oaicite:43]{index=43}. Chez les pygmées Mbuti et les Zandé, ces étoffes d'écorce servaient de pagnes ou de tuniques rudimentaires, souvent teintes en ocre rouge ou décorées de peintures brunes représentant des motifs inspirés de la forêt (traces d'animaux, feuilles stylisées). Au-delà de leur usage vestimentaire, ces tentures d'écorce étaient également échangées lors des mariages ou offertes en guise de prestige. Bien que remplacé par les tissus manufacturés, l'art de l'écorce battue subsiste à travers quelques artisans et est valorisé comme patrimoine culturel immatériel liant l'homme à son environnement forestier."
+            }
+        ]
+    },
+    "Tchad": {
+        "fabric": [
+            {
+                "name": "Godong (Gabak)",
+                "origin": "Tchad (Sud du pays, ethnies Sara et commerçants Foulbé)",
+                "usage": "Pagne traditionnel en coton tissé, ayant servi de vêtement et de monnaie d'échange",
+                "description": "Étoffe de coton d'environ 30 cm de large, tissée sur des métiers traditionnels puis assemblée en pagne. Le *Godong*, appelé *Gabak* en arabe tchadien, était réputé pour la finesse de son tissage et sa durabilité:contentReference[oaicite:44]{index=44}:contentReference[oaicite:45]{index=45}. Avant la colonisation, les populations locales et les nomades peuls utilisaient ces bandes de tissu comme unité de troc pour acquérir mil, bétail ou outils:contentReference[oaicite:46]{index=46}. Porté en pagne court par les hommes ou en pagne long par les femmes, le godong affichait généralement des rayures bleu indigo et blanches. Aujourd'hui, quelques ateliers de tisserandes perpétuent ce savoir-faire dans la région de N'Djaména, malgré la concurrence des pagnes industriels. Le godong demeure ainsi un symbole du patrimoine textile tchadien, conjuguant savoir-faire artisanal et valeur culturelle."
+            },
+            {
+                "name": "Chèche saharien",
+                "origin": "Nord du Tchad (peuples nomades du Sahara, ex: Toubous)",
+                "usage": "Long turban de tête et de visage, protégeant du soleil et du sable, porté par les hommes",
+                "description": "Bande d'étoffe de coton d'environ 4 à 8 m de longueur, enroulée autour de la tête et couvrant souvent le nez et la bouche. Ce voile facial, appelé *cheich* ou *chèche*, est typique des nomades du désert tchadien (Toubous, Goranes), à l'instar du *tagelmust* des Touaregs plus à l'ouest. Souvent teinté en indigo, dont la couleur imprègne la peau du porteur, ou dans des tons clairs (blanc, beige) pour réfléchir la chaleur, il remplit une double fonction : barrière contre les vents de sable et marqueur culturel. Le port du chèche, dont le nouage est un art transmis de père en fils, symbolise aussi la maturité : chez certains groupes, le jeune homme ne couvre son visage qu'à l'âge adulte. Emblématique du mode de vie saharien, le chèche tchadien reste d'usage courant chez les éleveurs et caravaniers, et a été adopté plus largement comme accessoire identitaire dans tout le Sahel."
+            }
+        ]
+    },
+    "Congo-Brazzaville": {
+        "fabric": [
+            {
+                "name": "Tissu raphia des Téké",
+                "origin": "République du Congo (royaumes Téké du Plateau)",
+                "usage": "Pagne et ornements cérémoniels tissés en fibres de raphia, utilisés lors des rites et dans l'artisanat",
+                "description": "Les Téké du Congo, tout comme ceux du Gabon et de la RDC, ont développé un art textile à base de raphia (appelé *mpusu* en langue locale):contentReference[oaicite:47]{index=47}. Leurs tisserands confectionnaient des pagnes d'apparat aux motifs géométriques bruns sur fond beige, portés par les chefs et dignitaires. Ces pagnes raphia, appelés *ngiya*, servaient notamment lors des mariages traditionnels et des cérémonies d'initiation, où ils pouvaient être échangés comme dot ou exhibés comme symbole de richesse. Par ailleurs, le raphia tressé entre dans la fabrication des masques et coiffes Téké : par exemple, le masque circulaire *kidumu* est entouré d'une collerette en raphia. Résistant et polyvalent, le textile de raphia constitue un emblème de l'identité téké, liant l'esthétique à la spiritualité. Même si le coton a supplanté le raphia pour l'habillement quotidien, ce dernier conserve un rôle vital dans les pratiques culturelles et artistiques congolaises."
+            },
+            {
+                "name": "Pagnes \"Liputa\"",
+                "origin": "République du Congo (influence ouest-africaine)",
+                "usage": "Ensembles vestimentaires féminins en wax (imprimé africain) portés lors des fêtes et au quotidien",
+                "description": "Adopté au Congo-Brazzaville dès les années 1960, le pagne africain imprimé industriellement (dit *wax* ou *Dutch wax*) a donné naissance à la mode *Liputa* – un terme en lingala signifiant « porter du pagne avec élégance ». Les Congolaises ont intégré ces tissus colorés à leur garde-robe traditionnelle : trois pagnes assortis sont utilisés pour confectionner une jupe longue, un haut ou chemisier, et un foulard pour la tête. Les motifs variés (fleurs, arabesques, symboles modernes) et les couleurs éclatantes reflètent à la fois les tendances du moment et des messages culturels ou politiques. Le port du liputa lors des mariages, baptêmes et célébrations nationales exprime l'unité et la joie. Le pagne wax, bien que d'origine étrangère, a ainsi été « congoléisé » pour devenir un tissu traditionnel à part entière, célébrant la créativité et le sens du style reconnus aux femmes congolaises."
+            }
+        ]
+    },
+    "République démocratique du Congo": {
+        "fabric": [
+            {
+                "name": "Velours de Kasaï (tissu Kuba)",
+                "origin": "RDC (Royaume Kuba, région du Kasaï)",
+                "usage": "Textile raffiné en raphia brodé, servant de pagne cérémoniel, de tapisserie et de monnaie de prestige",
+                "description": "Œuvre des peuples Kuba depuis le XVIIe siècle, ces textiles sont tissés à partir de fibres de palmier raphia par les hommes, puis ornés de motifs géométriques complexes brodés ou coupés par les femmes:contentReference[oaicite:48]{index=48}. Les *velours du Kasaï* se présentent sous forme de rectangles tapissés de motifs en relief rappelant le velours, obtenus par la technique du « coupe-coupe » qui crée des boucles rasées:contentReference[oaicite:49]{index=49}. Chaque motif abstrait porte un nom et une signification (proverbe, symbole ésotérique) transmis oralement. Utilisés comme pagnes d'apparat par l'élite Kuba, assemblés en larges pièces pour recouvrir les dépouilles royales ou échangés comme biens précieux, ces tissus ont aussi servi de monnaie lors des transactions importantes. Aujourd'hui prisés par les musées et collectionneurs du monde entier pour leur valeur artistique, les velours de raphia demeurent un fier témoignage du génie textile congolais et de son riche langage ornemental."
+            },
+            {
+                "name": "Étoffe d'écorce peinte (Mbuti)",
+                "origin": "RDC (peuples Mbuti de la forêt d'Ituri)",
+                "usage": "Panneau d'écorce battue décoré, utilisé comme pagne, tenture rituelle et support artistique",
+                "description": "Les pygmées Mbuti fabriquent des étoffes à partir de l'écorce interne d'arbres (figuier) qu'ils assouplissent par battage et enduisent de teintures naturelles. Les femmes Mbuti ornent ensuite ces tissus d'écorce de motifs peints à l'aide de pigments végétaux et de charbon, appliqués avec les doigts ou des brindilles:contentReference[oaicite:50]{index=50}:contentReference[oaicite:51]{index=51}. Les dessins, composés de lignes, de points et de formes organiques, évoquent les éléments de la vie forestière : chemins sinueux, toiles d'araignée, silhouettes d'animaux ou feuillages stylisés. Chaque pièce est unique, traduisant l'improvisation inspirée par la nature et souvent reliée à des chants ou mythes de la forêt. Portées comme pagnes par les Mbuti ou offertes lors des échanges avec les villages bantous voisins, ces étoffes d'écorce occupent une place centrale dans la culture de l'Ituri. Leur esthétique abstraite a inspiré de nombreux artistes contemporains, consacrant ces \"tissus vivants\" comme des œuvres d'art à part entière."
+            }
+        ]
+    },
+    "Guinée équatoriale": {
+        "fabric": [
+            {
+                "name": "Obom (tissu d'écorce)",
+                "origin": "Guinée équatoriale continentale (peuple Fang)",
+                "usage": "Étoffe traditionnelle en écorce battue, utilisée comme pagne et symbole culturel",
+                "description": "Chez les Fang de Guinée équatoriale, l’*obom* désigne le textile confectionné à partir de l'écorce intérieure d'arbres de la famille des moracées. Jadis, les ancêtres fang produisaient ce tissu végétal en battant l'écorce jusqu'à obtenir une pièce souple, qu'ils portaient en cache-sexe ou en pagne autour des hanches:contentReference[oaicite:52]{index=52}. De couleur marron clair, parfois orné de motifs rouges ou noirs par teinture, l'obom servait de vêtement quotidien et tenait une place importante dans les rites de passage (les initiés recevant un pagne d'écorce en signe d'admission dans la communauté adulte). Avec la colonisation et l'arrivée des cotonnades européennes, ce savoir-faire a failli disparaître, mais il connaît un regain d'intérêt grâce à des programmes culturels locaux. L'obom fang demeure un emblème de l'identité équato-guinéenne, rattachant la population moderne à son héritage forestier."
+            },
+            {
+                "name": "Pagne wax (\"telas africanas\")",
+                "origin": "Guinée équatoriale (influences afro-portugaises)",
+                "usage": "Tissu de coton imprimé de motifs colorés, employé pour les jupes, robes et foulards du costume féminin",
+                "description": "Au fil du XXe siècle, les femmes équato-guinéennes ont adopté les pagnes africains à motifs comme base de leur habillement, en les intégrant à des tenues d'inspiration ibérique. Le costume traditionnel féminin, notamment lors des mariages folkloriques, se compose d'une longue jupe froncée taillée dans un pagne wax aux motifs vibrants, assortie d'un corsage à manches courtes (appelé *blusa colete*) souvent réalisé dans le même tissu ou en dentelle blanche. Un tablier décoratif (*avental*) et un foulard noué sur la tête complètent l'ensemble:contentReference[oaicite:53]{index=53}:contentReference[oaicite:54]{index=54}. Ces \"**telas africanas**\" importées, aux dessins géométriques ou floraux, ont progressivement supplanté les anciens pagnes tissés. Elles permettent aux Santoméennes et aux Équato-Guinéennes d'exprimer leur joie de vivre et leur attachement à la culture pan-africaine tout en perpétuant l'élégance héritée de la colonisation portugaise. Véritables vecteurs de métissage vestimentaire, les pagnes wax en Guinée équatoriale illustrent la fusion entre tradition locale et influences extérieures."
+            }
+        ]
+    },
+    "Gabon": {
+        "fabric": [
+            {
+                "name": "Obom (Libreville)",
+                "origin": "Gabon (ethnies Fang et Kota du nord)",
+                "usage": "Tissu d'écorce battue à usage vestimentaire et rituel, aujourd'hui patrimonial",
+                "description": "Les forêts gabonaises ont longtemps fourni la matière première des vêtements traditionnels à travers l'obom, textile d'écorce végétale. Fabriqué à partir de l'écorce de certains arbres (tels que le *mutuba*), l'obom gabonais était porté autrefois par les clans Fang, Kota et autres comme pagne ou cache-sexe, aussi bien par les hommes que par les femmes. Sa fabrication impliquait un rituel : l'arbre était choisi avec soin, l'écorce prélevée et la fibre interne martelée au maillet sur une souche, parfois en respectant des tabous (silence rituel, interdiction de travailler la nuit). Le résultat est une étoffe souple, de teinte brun-rouge, que l'on peut teindre ou peindre. Au-delà de l'habillement, l'obom servait de toile pour des masques plats ou des effigies reliquaires chez les Kota. Tombé en désuétude avec les tissus modernes, l'obom connaît un renouveau grâce aux artistes et aux musées qui l'exposent, conscient de sa valeur en tant qu'emblème des racines culturelles gabonaises."
+            },
+            {
+                "name": "Tissu de raphia (Okuyi)",
+                "origin": "Gabon (ethnie Punu et groupes du sud)",
+                "usage": "Fibre végétale tissée ou tressée, utilisée pour les costumes de danse traditionnelle et objets rituels",
+                "description": "Les Punu du sud du Gabon, connus pour leurs masques blancs *okuyi*, utilisent abondamment le raphia dans leur artisanat. Leurs danseurs masqués arborent une jupe en raphia épais, teinte d'un ocre brun, qui accentue leurs mouvements pendant les danses sur échasses ou les cérémonies d'initiation. Le raphia est préparé en extrayant les longues fibres des feuilles de palmier, puis en les séchant et en les assouplissant. Tissé en nappes ou noué en franges, il sert non seulement de \"tissu\" vestimentaire (jupes, ceintures, foulards de danse) mais aussi de lien pour assembler les panneaux de vannerie ou les coiffures. Sa présence dans les rites traduit une connexion avec la nature et les ancêtres : la texture et le bruit du raphia accompagnent les chants sacrés. Bien que la plupart des Gabonais s'habillent aujourd'hui de pagnes usinés, le raphia reste vivant dans la culture gabonaise par le biais des ballets folkloriques, des mascarades traditionnelles et de l'engouement pour les arts premiers."
+            }
+        ]
+    },
+    "Sao Tomé-et-Principe": {
+        "fabric": [
+            {
+                "name": "Pagne santoméen",
+                "origin": "São Tomé-et-Príncipe (influences angolaises et européennes)",
+                "usage": "Carré de tissu en coton imprimé, porté en jupe nouée et comme foulard par les femmes",
+                "description": "Dans l'archipel de São Tomé, la tenue féminine traditionnelle résulte d'un métissage afro-portugais. L'élément central en est le pagne en coton, souvent un wax importé d'Afrique de l'Ouest ou un tissu fleuri d'inspiration européenne. Porté en jupe longue nouée à la taille (*saia*), agrémenté d'un deuxième pagne en guise de châle ou de tablier (*avental*), et accompagné d'un foulard de tête assorti, il compose la silhouette typique des \"*fôlô*\" (femmes) santoméennes lors des fêtes folkloriques:contentReference[oaicite:55]{index=55}:contentReference[oaicite:56]{index=56}. Les couleurs chatoyantes et motifs tropicaux de ces pagnes reflètent la joie de vivre insulaire et l'héritage africain, tandis que la coupe en couches superposées rappelle la mode coloniale. Ce costume, encore visible lors des mariages, des danses traditionnelles (*usêmba*, *dexá*) et du carnaval, est un symbole de l'identité santoméenne, alliant simplicité, coquetterie et héritage culturel."
+            },
+            {
+                "name": "Blouse brodée (Blusa Conjunta)",
+                "origin": "São Tomé-et-Principe (influence portugaise, adaptation locale)",
+                "usage": "Haut féminin traditionnel en tissu uni ou dentelle, porté avec le pagne lors des cérémonies",
+                "description": "Évolution créole de la chemise coloniale, la *blusa* santoméenne est un chemisier ajusté, souvent à manches courtes bouffantes, confectionné dans un tissu assorti au pagne ou dans une popeline blanche agrémentée de broderies. Ce corsage se ferme généralement par des boutons sur le devant et comporte un col rond ou carré modestement échancré. Pour les grandes occasions, il est orné de dentelle aux manches et autour du col, rappelant les *blusas de renda* (blouses en dentelle) portugaises. Ensemble, la blouse et le pagne forment la *traje tradicional* qui témoigne de la fusion des influences : les motifs et couleurs du pagne incarnent l'Afrique, tandis que la coupe de la blouse et ses broderies évoquent l'Europe coloniale. Encore porté par les femmes âgées à la campagne et remis à l'honneur par des groupes folkloriques, cet ensemble incarne la grâce et le métissage culturels propres à São Tomé-et-Príncipe:contentReference[oaicite:57]{index=57}."
+            }
+        ]
+    },
+    "Bénin": {
+        "fabric": [
+            {
+                "name": "Kanvô",
+                "origin": "Peuple Fon (sud Bénin) et Baatonu (nord Bénin):contentReference[oaicite:0]{index=0}",
+                "usage": "Initialement réservé aux rois d'Abomey, aujourd'hui utilisé lors de tenues traditionnelles et valorisé comme emblème national:contentReference[oaicite:1]{index=1}",
+                "description": "Pagne tissé à la main en bandes de coton (parfois lin ou chanvre), inspiré de l'« Asho oke » yoruba introduit au XVIIIᵉ siècle; autrefois symbole royal, il représente un trésor culturel béninois:contentReference[oaicite:2]{index=2}"
+            },
+            {
+                "name": "Wax hollandais",
+                "origin": "Technique batik javanais via les Néerlandais, popularisée en Afrique de l'Ouest (ex: commerçantes \"Nana Benz\" de Lomé):contentReference[oaicite:3]{index=3}:contentReference[oaicite:4]{index=4}",
+                "usage": "Vêtements du quotidien et tenues de fête (robes, pagnes, boubous) prisés à travers l'Afrique de l'Ouest, notamment pour mariages et baptêmes:contentReference[oaicite:5]{index=5}:contentReference[oaicite:6]{index=6}",
+                "description": "Tissu de coton imprimé de motifs colorés par une technique à la cire (wax) d'origine indonésienne, industrialisé au XIXᵉ siècle; devenu un symbole identitaire moderne adopté massivement pour son éclat visuel:contentReference[oaicite:7]{index=7}:contentReference[oaicite:8]{index=8}"
+            }
+        ]
+    },
+    "Burkina Faso": {
+        "fabric": [
+            {
+                "name": "Faso Dan Fani",
+                "origin": "Artisans tisserands du Burkina Faso (terme en dioula signifiant « pagne tissé de la patrie »):contentReference[oaicite:9]{index=9}",
+                "usage": "Vêtement de prestige et de fierté nationale (uniformes officiels, tenues quotidiennes valorisées), particulièrement promu depuis les années 1980:contentReference[oaicite:10]{index=10}",
+                "description": "Pagne tissé en coton local devenu emblème du Burkina grâce au président Thomas Sankara qui en a fait un symbole d'émancipation et de patriotisme; il représente le savoir-faire traditionnel burkinabè et est protégé par une indication géographique:contentReference[oaicite:11]{index=11}"
+            },
+            {
+                "name": "Kôkô Dunda",
+                "origin": "Région de Bobo-Dioulasso (Burkina Faso):contentReference[oaicite:12]{index=12}",
+                "usage": "Tissu artisanal autrefois associé aux couches modestes, remis au goût du jour pour des créations de mode et tenues traditionnelles modernes:contentReference[oaicite:13]{index=13}",
+                "description": "Étoffe de coton teinte par pliage et ligature produisant des rayures multicolores (technique tie-and-dye); tombée en désuétude, cette étoffe aux couleurs vives a fait un retour remarqué en 2016 et bénéficie d'un label officiel depuis 2021 pour protéger ses 236 motifs originaux:contentReference[oaicite:14]{index=14}"
+            }
+        ]
+    },
+    "Cap-Vert": {
+        "fabric": [
+            {
+                "name": "Pano d'obra (pano di terra)",
+                "origin": "Îles de Santiago et Fogo, Cap-Vert:contentReference[oaicite:15]{index=15}:contentReference[oaicite:16]{index=16}",
+                "usage": "Pagne féminin traditionnel (habillement), servant aussi de porte-bébé et de couvre-lit; jadis utilisé comme monnaie d'échange tant il était prisé:contentReference[oaicite:17]{index=17}:contentReference[oaicite:18]{index=18}",
+                "description": "Étoffe de coton tissée à la main en bandes étroites appelées \"teadas\" puis assemblées, avec des motifs géométriques indigo et blanc; réputé dès le XVIᵉ siècle pour la finesse de son tissage, le pano d'obra est un joyau artisanal capverdien ayant même servi de monnaie d'échange dans le commerce régional:contentReference[oaicite:19]{index=19}:contentReference[oaicite:20]{index=20}"
+            },
+            {
+                "name": "Wax africain (pagne imprimé)",
+                "origin": "Tissu industriel d'origine européenne (technique batik indonésien), diffusé au Cap-Vert via les échanges ouest-africains",
+                "usage": "Adopté dans la mode moderne capverdienne pour des robes, chemises et accessoires aux motifs colorés, bien que n'étant pas d'origine locale",
+                "description": "Toile de coton imprimée de motifs vifs par réserve de cire, communément appelée \"wax\"; introduite en Afrique de l'Ouest au XIXᵉ siècle, elle s'est intégrée aux tenues contemporaines du Cap-Vert, apportant une touche panafricaine aux styles vestimentaires insulaires"
+            }
+        ]
+    },
+    "Côte d’Ivoire": {
+        "fabric": [
+            {
+                "name": "Pagne Baoulé (Kita)",
+                "origin": "Peuple Baoulé (Akan, Côte d’Ivoire):contentReference[oaicite:21]{index=21}",
+                "usage": "Cérémonies traditionnelles (mariages coutumiers, fêtes de réjouissance) et habillement d'apparat dans la société Akan:contentReference[oaicite:22]{index=22}",
+                "description": "Tissu tissé à la main sur métier en bois, en bandes étroites de coton (parfois mêlé de soie) assemblées en pagne; d'une grande diversité de motifs et couleurs, il se transmet de père en fils chez les Baoulé et demeure un symbole de prestige culturel ivoirien:contentReference[oaicite:23]{index=23}"
+            },
+            {
+                "name": "Toile de Korhogo",
+                "origin": "Peuple Sénoufo (région de Korhogo, Côte d’Ivoire):contentReference[oaicite:24]{index=24}",
+                "usage": "Tenture rituelle et décorative utilisée dans l'art sénoufo, souvent exposée lors des cérémonies initiatiques ou comme objet d'artisanat",
+                "description": "Toile de coton peinte de motifs géométriques bruns et noirs représentant des scènes animalières et symboliques; réalisée avec un pigment végétal fermenté appliqué à l'aide de pochoirs, la toile de Korhogo illustre la spiritualité et l'esthétique ancestrales du peuple sénoufo:contentReference[oaicite:25]{index=25}"
+            }
+        ]
+    },
+    "Gambie": {
+        "fabric": [
+            {
+                "name": "Pagne tissé gambien",
+                "origin": "Artisans mandingues et wolof de Gambie (tradition de tissage familial):contentReference[oaicite:26]{index=26}:contentReference[oaicite:27]{index=27}",
+                "usage": "Habits traditionnels confectionnés pour les grandes occasions familiales (mariages, cérémonies), souvent réalisés sur commande pour chaque famille:contentReference[oaicite:28]{index=28}",
+                "description": "Loincloths tissés à la main en bandes de coton assemblées; ce savoir-faire transmis de génération en génération permettait jadis à chaque famille d'avoir des pagnes spéciaux pour marquer les moments importants de la vie:contentReference[oaicite:29]{index=29}:contentReference[oaicite:30]{index=30}"
+            },
+            {
+                "name": "Batik de Serrekunda",
+                "origin": "Ateliers communautaires de Dippa Kunda (Serrekunda, Gambie):contentReference[oaicite:31]{index=31}",
+                "usage": "Tissus teints artisanalement pour vêtements et accessoires du quotidien, appréciés tant par les locaux que par les visiteurs (souvenirs)",
+                "description": "Technique de teinture à la cire importée durant la colonisation, le batik est pratiqué par des collectifs de femmes gambiennes qui créent des pagnes aux motifs multicolores originaux; ces tissus batik illustrent la créativité locale et sont un pilier de l'artisanat de Serrekunda:contentReference[oaicite:32]{index=32}"
+            }
+        ]
+    },
+    "Ghana": {
+        "fabric": [
+            {
+                "name": "Kenté",
+                "origin": "Peuple Ashanti (Ghana), également adopté par les Ewe du Ghana/Togo:contentReference[oaicite:33]{index=33}",
+                "usage": "Porté lors des festivals, cérémonies d'État et rituels importants; symbolise la noblesse et le statut élevé (vêtement des rois, reines-mères et chefs traditionnels):contentReference[oaicite:34]{index=34}",
+                "description": "Étoffe de prestige tissée à la main en bandes de soie et coton aux motifs complexes et colorés; chaque motif (aux couleurs vives) porte un nom et une signification, faisant du Kenté un véritable langage textile honorant l'histoire et la culture akan:contentReference[oaicite:35]{index=35}"
+            },
+            {
+                "name": "Adinkra",
+                "origin": "Peuple Ashanti (technique originaire du royaume Gyaman, Côte d’Ivoire):contentReference[oaicite:36]{index=36}",
+                "usage": "Tissu à symboles imprimés traditionnellement porté lors des cérémonies funéraires et événements solennels chez les Akan (en particulier les deuils royaux)",
+                "description": "Étoffe de coton (ou bazin) teintée et ornée de symboles Adinkra appliqués manuellement à l’aide de tampons taillés dans des calebasses et trempés dans une encre végétale; chaque symbole Adinkra véhicule un proverbe ou une valeur morale, constituant un langage visuel sacré perpétué par les artisans ashanti:contentReference[oaicite:37]{index=37}"
+            }
+        ]
+    },
+    "Guinée": {
+        "fabric": [
+            {
+                "name": "Lépi",
+                "origin": "Peuple Peul du Fouta-Djalon (Guinée):contentReference[oaicite:38]{index=38}",
+                "usage": "Cérémonies et occasions spéciales (mariages, baptêmes, rites initiatiques), historiquement porté par les notables, chefs religieux et autres dignitaires peuls:contentReference[oaicite:39]{index=39}:contentReference[oaicite:40]{index=40}",
+                "description": "Tissu traditionnel en coton teint naturellement à l’indigo, léger et orné de rayures caractéristiques; symbole de pureté et de sagesse, le Lépi est considéré comme un habit de prestige véhiculant les valeurs culturelles du Fouta-Djalon:contentReference[oaicite:41]{index=41}:contentReference[oaicite:42]{index=42}"
+            },
+            {
+                "name": "Tissu \"Forêt sacrée\"",
+                "origin": "Ethnies de la Guinée forestière (région du sud-est de la Guinée):contentReference[oaicite:43]{index=43}",
+                "usage": "Pièce d'honneur offerte traditionnellement aux dignitaires de passage en pays forestier; utilisée pour confectionner des boubous ou pagnes distinctifs lors de cérémonies",
+                "description": "Étoffe teintée selon une technique locale consistant à utiliser des décoctions d'écorces et de noix de kola pour obtenir un fond brun, puis à appliquer des motifs noirs à l'aide de tampons; rarissime et hautement symbolique, ce tissu de la \"Forêt sacrée\" honore et protège ceux à qui il est dédié:contentReference[oaicite:44]{index=44}"
+            }
+        ]
+    },
+    "Guinée-Bissau": {
+        "fabric": [
+            {
+                "name": "Pagne Manjak",
+                "origin": "Peuple Manjak (Guinée-Bissau, également présent en Casamance):contentReference[oaicite:45]{index=45}",
+                "usage": "Accompagne toutes les grandes étapes de la vie (du baptême aux funérailles) au sein de la communauté manjak, et sert de tenue de cérémonie (mariages, réceptions):contentReference[oaicite:46]{index=46}",
+                "description": "Luxueux pagne tissé à la main par les hommes sur de petits métiers, à base de fils de coton ou de soie; ses motifs riches de sens racontent l'histoire, les rites et les valeurs du peuple Manjak, faisant de chaque pièce un symbole de fierté et de richesse culturelle transmis à travers les générations:contentReference[oaicite:47]{index=47}"
+            },
+            {
+                "name": "Rabal",
+                "origin": "Peuple Manjak (appelé \"serou rabal\" en wolof au Sénégal):contentReference[oaicite:48]{index=48}",
+                "usage": "Tenue féminine traditionnelle manjak, portée différemment selon l'âge et la région lors des grandes occasions (mariages, fêtes familiales):contentReference[oaicite:49]{index=49}",
+                "description": "Variante de pagne manjak aux couleurs et motifs spécifiques codifiés; très prisé des femmes pour son élégance, le Rabal se transmet de mère en fille et chaque motif ou combinaison de couleurs porte une signification sur le statut ou l'étape de vie de celle qui le porte:contentReference[oaicite:50]{index=50}"
+            }
+        ]
+    },
+    "Liberia": {
+        "fabric": [
+            {
+                "name": "Country cloth",
+                "origin": "Tisserands du comté de Lofa (Nord-Ouest du Liberia):contentReference[oaicite:51]{index=51}",
+                "usage": "Vêtement traditionnel des chefs locaux et des anciens, porté lors des cérémonies officielles et des occasions formelles (symbole de statut social):contentReference[oaicite:52]{index=52}:contentReference[oaicite:53]{index=53}",
+                "description": "Étoffe tissée à la main à partir de coton local filé, appréciée pour sa robustesse et autrefois si précieuse qu'elle servait de monnaie d'échange ou de dot; le \"country cloth\" demeure un emblème du patrimoine libérien, aujourd'hui remis en valeur dans des créations modernes en association avec du cuir ou d'autres matières:contentReference[oaicite:54]{index=54}:contentReference[oaicite:55]{index=55}"
+            },
+            {
+                "name": "Tissu tie-dye (gara)",
+                "origin": "Artisans teinturiers urbains du Liberia (inspiré de techniques ouest-africaines)",
+                "usage": "Vêtements contemporains aux motifs éclatants (chemises, robes, tuniques) prisés pour les tenues estivales et décontractées en milieu urbain",
+                "description": "Technique de teinture artisanale consistant à nouer le tissu par endroits et à le plonger dans des bains de teinture végétale, créant des motifs aux contrastes saisissants; le résultat, appelé localement \"gara\", reflète la créativité libérienne et apporte une touche d'originalité colorée dans la mode quotidienne"
+            }
+        ]
+    },
+    "Mali": {
+        "fabric": [
+            {
+                "name": "Bogolan (bògòlanfini)",
+                "origin": "Peuple Bambara (Mali):contentReference[oaicite:56]{index=56}",
+                "usage": "Vêtements traditionnels (tenues de chasseurs, parures féminines) et articles décoratifs d'artisanat; aujourd'hui également intégré à la mode urbaine comme symbole identitaire national:contentReference[oaicite:57]{index=57}",
+                "description": "Tissu de coton teint selon une technique ancestrale à la boue fermentée et aux teintures végétales, donnant des motifs géométriques bruns et noirs sur fond ocre; historiquement porteur de messages symboliques et de pouvoirs protecteurs, le bogolan est devenu une icône de l'identité malienne, prisé tant en habillement qu'en décoration:contentReference[oaicite:58]{index=58}"
+            },
+            {
+                "name": "Bazin riche",
+                "origin": "Étoffe damassée de coton importée d'Europe puis teinte artisanalement au Mali:contentReference[oaicite:59]{index=59}",
+                "usage": "Confection des grands boubous brodés et autres tenues d'apparat portés lors des mariages, baptêmes, fêtes religieuses et réceptions officielles:contentReference[oaicite:60]{index=60}",
+                "description": "Tissu de coton lourd apprêté d'une brillance et d'une raideur caractéristiques, teint dans une gamme de couleurs vives par des teinturières expérimentées; le bazin riche est synonyme d'élégance et de réussite sociale, occupant une place centrale dans la mode malienne et ouest-africaine depuis des décennies:contentReference[oaicite:61]{index=61}:contentReference[oaicite:62]{index=62}"
+            }
+        ]
+    },
+    "Niger": {
+        "fabric": [
+            {
+                "name": "Téra-Téra",
+                "origin": "Peuple Zarma (Djerma) du Niger:contentReference[oaicite:65]{index=65}",
+                "usage": "Pagne tissé destiné aux cérémonies nuptiales chez les Djerma: il sert traditionnellement à couvrir la jeune mariée lors de son mariage:contentReference[oaicite:66]{index=66}",
+                "description": "Étoffe de coton d'un tissage exceptionnel propre à l'ethnie zarma, transmise familialement; le \"Téra-Téra\" se distingue par ses motifs et sa symbolique liés au mariage, et demeure un élément important du patrimoine textile nigérien, bien que menacé par la modernité:contentReference[oaicite:67]{index=67}"
+            },
+            {
+                "name": "Kounta",
+                "origin": "Peuple Hausa (sud du Niger):contentReference[oaicite:68]{index=68}",
+                "usage": "Tissu tissé à motifs utilisé comme tapis de prière, tenture murale ou natte de sol lors des grandes occasions dans la culture hausa:contentReference[oaicite:69]{index=69}",
+                "description": "Pagnes en bandes tissées aux motifs géométriques typiques de l'art hausa, servant d’éléments utilitaires et décoratifs; le \"Kounta\" illustre le raffinement du tissage traditionnel hausa et était autrefois un signe de statut lorsqu'il ornait les demeures ou accueillait les invités de marque:contentReference[oaicite:70]{index=70}"
+            }
+        ]
+    },
+    "Nigeria": {
+        "fabric": [
+            {
+                "name": "Aso Oke",
+                "origin": "Peuple Yoruba (Sud-Ouest du Nigeria):contentReference[oaicite:71]{index=71}",
+                "usage": "Vêtement traditionnel de prestige porté lors des grandes occasions (festivals, mariages, cérémonies d'intronisation), sous forme de tenues telles que l'Agbada pour les hommes ou le boubou pour les femmes:contentReference[oaicite:72]{index=72}",
+                "description": "Tissu étroit tissé à la main en bandes par les tisserands yoruba (notamment à Iseyin, Ede, Okene) puis assemblées; utilisé pour confectionner des habits élégants richement brodés, l’Aso Oke se décline en variantes célèbres (Etu à rayures bleu indigo, Sanyan en soie beige, Alari en soie magenta), chacune prisée pour sa texture et sa signification culturelle:contentReference[oaicite:73]{index=73}"
+            },
+            {
+                "name": "Akwete",
+                "origin": "Peuple Igbo (ville d'Akwete, État d'Abia, Nigeria):contentReference[oaicite:74]{index=74}",
+                "usage": "Tissu de parure et de dignité chez les Igbo, traditionnellement tissé par les femmes et utilisé pour des tenues féminines, écharpes cérémonielles et objets décoratifs",
+                "description": "Étoffe unique tissée à la main à partir de coton, de raphia et d'autres fibres, réputée pour la finesse de son tissage et la richesse de ses motifs; les tisserandes d'Akwete maîtrisent des centaines de motifs différents mais n'en combinent que quelques-uns par pièce, chaque nouvelle création étant protégée par une sorte de droit d'auteur implicite valorisant l'innovation artisanale:contentReference[oaicite:75]{index=75}"
+            },
+            {
+                "name": "Adire",
+                "origin": "Peuple Yoruba (région d'Abeokuta, Nigeria):contentReference[oaicite:76]{index=76}",
+                "usage": "Tissu teint à l'indigo porté dans la vie quotidienne et lors de manifestations culturelles; très en vogue au début du XXᵉ siècle en Afrique de l'Ouest avant l'arrivée massive des textiles imprimés:contentReference[oaicite:77]{index=77}",
+                "description": "Étoffe de coton ornée de motifs obtenus par réserves de teinture indigo (techniques Yoruba de tie-dye ou de peinture à l'amidon), créant des dessins d'un bleu profond; l'Adire, fabriqué par des teinturières spécialisées, offre une grande variété de motifs traditionnels (Oniko, Eleko, Alabere, etc.) et témoigne de l'ingéniosité des artisans nigérians, malgré un déclin dû à la colonisation et aux importations de masse au XXᵉ siècle:contentReference[oaicite:78]{index=78}"
+            }
+        ]
+    },
+    "Sénégal": {
+        "fabric": [
+            {
+                "name": "Pagne tissé (Seurou Rabal)",
+                "origin": "Peuple Manjak (Njaago) du Sénégal:contentReference[oaicite:79]{index=79}",
+                "usage": "Présent à chaque étape clé de la vie (naissance, initiation, mariage, funérailles): il sert de couverture protectrice pour le nouveau-né, d'étoffe nuptiale pour accompagner la mariée, et même de drap funéraire pour honorer le défunt:contentReference[oaicite:80]{index=80}:contentReference[oaicite:81]{index=81}",
+                "description": "Étoffe de prestige tissée artisanalement en bandes étroites par les maîtres tisserands Njaago, aux motifs et couleurs variés transmis de génération en génération; connu sous le nom de \"serou rabal\", ce pagne lourd et solide est considéré comme un talisman social qui confère respect et protection, accompagnant chaque Sénégalais « du berceau à la tombe »:contentReference[oaicite:82]{index=82}:contentReference[oaicite:83]{index=83}"
+            },
+            {
+                "name": "Wax (pagne africain)",
+                "origin": "Tissu imprimé industriel d'origine hollandaise (Wax hollandais de Vlisco), adopté massivement par la population ouest-africaine au XXᵉ siècle:contentReference[oaicite:84]{index=84}",
+                "usage": "Employé tant pour les tenues quotidiennes que pour les ensembles de fête (boubous, robes, complets assortis) au Sénégal; omniprésent dans les mariages, soirées et défilés de mode contemporains:contentReference[oaicite:85]{index=85}:contentReference[oaicite:86]{index=86}",
+                "description": "Tissu en coton aux couleurs vives et aux motifs graphiques variés, réalisé par impression à la cire d'après la technique batik; bien que son procédé et sa production soient d'origine étrangère, le wax est devenu un élément incontournable de la mode sénégalaise et africaine, symbole d'une identité culturelle réinventée et partagée:contentReference[oaicite:87]{index=87}:contentReference[oaicite:88]{index=88}"
+            }
+        ]
+    },
+    "Sierra Leone": {
+        "fabric": [
+            {
+                "name": "Gara (tie-dye)",
+                "origin": "Ville de Makeni, Sierra Leone:contentReference[oaicite:89]{index=89}",
+                "usage": "Tissu teint traditionnel utilisé pour confectionner vêtements, articles de décoration et tenues cérémonielles; très prisé également par les touristes comme souvenir artisanal:contentReference[oaicite:90]{index=90}",
+                "description": "Technique de teinture à réserve pratiquée depuis des siècles en Sierra Leone: en nouant le coton et en utilisant des teintures naturelles (indigo, écorces, amidon), on obtient des motifs complexes racontant chacun un aspect de la culture sierra-léonaise; le gara, artisanat durable et minutieux, produit des étoffes polyvalentes utilisées aussi bien en habillement qu'en art décoratif:contentReference[oaicite:91]{index=91}:contentReference[oaicite:92]{index=92}"
+            },
+            {
+                "name": "Country cloth",
+                "origin": "Tisserands traditionnels des provinces (Mende, Temne et autres) de Sierra Leone:contentReference[oaicite:93]{index=93}",
+                "usage": "Vêtement d'apparat et symbole de statut porté par les chefs, chasseurs (ex: tunique de chasseur \"ronko\") et notables locaux; utilisé lors des cérémonies coutumières et dans les échanges de prestige",
+                "description": "Étoffe rustique en coton épais filé et tissé à la main sur des métiers à trois pieds, en longues bandes d'environ 10 cm ensuite cousues bord à bord; autrefois répandu pour l'habillement quotidien, le \"country cloth\" sierra-léonais est aujourd'hui valorisé comme héritage culturel, incarnant l'endurance et l'identité des communautés locales:contentReference[oaicite:94]{index=94}:contentReference[oaicite:95]{index=95}"
+            }
+        ]
+    },
+    "Togo": {
+        "fabric": [
+            {
+                "name": "Kenté (Ewe)",
+                "origin": "Peuple Ewe (sud du Togo, apparenté aux Ewe/Ghana et Ashanti):contentReference[oaicite:96]{index=96}",
+                "usage": "Vêtement de prestige porté lors des festivals traditionnels, des cérémonies officielles et des rites de chefferie chez les Ewe; symbole de richesse et d'honneur social",
+                "description": "Tissu tissé en bandes étroites de soie et de coton aux motifs colorés complexes, similaire au kenté ashanti; les tisserands ewe y intègrent leurs propres variations de motifs et de coloris, faisant du kenté togolais un étendard culturel à la fois local et transfrontalier valorisant le savoir-faire ancestral et la dignité de ceux qui le portent:contentReference[oaicite:97]{index=97}"
+            },
+            {
+                "name": "Pagne wax (Ankara)",
+                "origin": "Tissu imprimé importé d'Europe (Hollande) à partir du XIXᵉ siècle, dont le commerce a prospéré au Togo grâce aux célèbres \"Nana Benz\":contentReference[oaicite:98]{index=98}",
+                "usage": "Employé dans la couture quotidienne (jupes, boubous, chemises) et pour les ensembles assortis lors des célébrations familiales; le pagne wax est devenu un pilier de la mode togolaise et ouest-africaine contemporaine",
+                "description": "Toile de coton imprimée de motifs graphiques aux couleurs vives, réalisée par impression à la cire; popularisé par les grossistes togolaises dès les années 1930, ce pagne aux multiples designs (appelés souvent par des noms évocateurs) s'est ancré dans les habitudes vestimentaires, au point d'être perçu aujourd'hui comme un tissu africain par excellence, incarnant modernité et fierté culturelle:contentReference[oaicite:99]{index=99}:contentReference[oaicite:100]{index=100}"
+            }
+        ]
+    },
+    "Burundi": {
+        "fabric": [
+            {
+                "name": "Imvutano",
+                "origin": "Culture burundaise (femmes Hutu/Tutsi)",
+                "usage": "Robe drapée féminine pour mariages et cérémonies",
+                "description": "Ensemble de plusieurs pièces de tissu léger formant une robe traditionnelle élégante, couvrant le corps tout en mettant en valeur la silhouette:contentReference[oaicite:0]{index=0}. Portée lors des mariages et événements officiels, l’imvutano symbolise la fierté et le statut social dans la société burundaise."
+            },
+            {
+                "name": "Écorce battue",
+                "origin": "Artisans burundais (technique ancestrale)",
+                "usage": "Tissu traditionnel fabriqué à partir d’écorce d’arbre, pour vêtements anciens et rituels",
+                "description": "Étoffe obtenue par le battage et la macération de l’écorce intérieure d’arbres (souvent le figuier), une pratique ancienne partagée par de nombreuses cultures africaines:contentReference[oaicite:1]{index=1}. Ce tissu rustique, autrefois porté au quotidien, témoigne du savoir-faire ancestral burundais et sert encore lors de certaines cérémonies pour honorer la tradition."
+            }
+        ]
+    },
+    "Comores": {
+        "fabric": [
+            {
+                "name": "Shiromani",
+                "origin": "Île d’Anjouan (culture comorienne)",
+                "usage": "Grand châle coloré pour femmes, usage quotidien et cérémoniel",
+                "description": "Large pièce de tissu traditionnel aux motifs vifs couvrant presque tout le corps:contentReference[oaicite:2]{index=2}. Originaire d’Anjouan, le shiromani est porté par les femmes aussi bien au travail que lors des cérémonies, souvent accompagné de pâte de santal sur le visage en signe de beauté et de respect."
+            },
+            {
+                "name": "Salouva",
+                "origin": "Îles d’Anjouan et Mohéli",
+                "usage": "Robe/paréo traditionnel féminin noué au-dessus de la poitrine",
+                "description": "Pièce d’étoffe rectangulaire en coton, portée élégamment comme une robe longue nouée sur la poitrine:contentReference[oaicite:3]{index=3}. Le salouva, particulièrement prisé à Anjouan et Mohéli, constitue une tenue féminine raffinée lors des fêtes et mariages, symbolisant la modestie et l’élégance dans la culture comorienne."
+            }
+        ]
+    },
+    "Djibouti": {
+        "fabric": [
+            {
+                "name": "Boubou (Dirac)",
+                "origin": "Communauté somalie Issa de Djibouti",
+                "usage": "Robe longue féminine très colorée, portée avec un châle et un jupon",
+                "description": "Tenue traditionnelle des Djiboutiennes composée d’une robe ample et légère aux couleurs vives (appelée localement “dirac”) portée sur un jupon en dentelle, avec un voile assorti couvrant les épaules:contentReference[oaicite:4]{index=4}. Ce boubou transparent mais modestement drapé est privilégié lors des mariages et festivités, reflétant l’héritage somali et l’élégance culturelle de Djibouti."
+            },
+            {
+                "name": "Sanafil",
+                "origin": "Peuple Afar de Djibouti",
+                "usage": "Pagne masculin traditionnel enroulé à la taille",
+                "description": "Long rectangle de tissu porté par les hommes Afar comme un pagne ceinturant la taille:contentReference[oaicite:5]{index=5}. Souvent orné de rayures vives ou de motifs géométriques, le sanafil est la tenue traditionnelle masculine lors des activités quotidiennes et des cérémonies chez les Afars, symbolisant leur identité nomade et leur adaptation au climat désertique."
+            }
+        ]
+    },
+    "Érythrée": {
+        "fabric": [
+            {
+                "name": "Zuria",
+                "origin": "Ethnies tigrinya et tigre d’Érythrée",
+                "usage": "Robe blanche féminine de cérémonie, ornée de broderies",
+                "description": "Longue robe traditionnelle en coton blanc léger, décorée de motifs brodés colorés sur les bords:contentReference[oaicite:6]{index=6}. Le zuria est porté par les femmes lors des mariages et des fêtes religieuses (comme la fête du Meskel), incarnant la grâce et la pureté dans la culture érythréenne."
+            },
+            {
+                "name": "Shamma (Netsela)",
+                "origin": "Communautés chrétiennes d’Érythrée (Tigrinya)",
+                "usage": "Châle en coton blanc porté par-dessus les vêtements, au quotidien et aux offices",
+                "description": "Grand voile de coton blanc tissé, porté par les hommes et les femmes sur les épaules ou la tête:contentReference[oaicite:7]{index=7}. Appelé shamma ou netsela, ce tissu sobre et sacré est fréquemment utilisé lors des cérémonies religieuses et culturelles, symbolisant modestie et respect dans la tradition érythréenne."
+            }
+        ]
+    },
+    "Éthiopie": {
+        "fabric": [
+            {
+                "name": "Shamma",
+                "origin": "Plateau éthiopien (peuple Habesha)",
+                "usage": "Châle traditionnel en coton blanc, usage quotidien et cérémoniel",
+                "description": "Étoffe emblématique éthiopienne, tissée à la main dans un coton blanc fin et légèrement translucide:contentReference[oaicite:8]{index=8}. Historiquement réservé aux classes nobles et au clergé, le shamma est aujourd’hui porté par tous, hommes et femmes, comme châle ou pagne lors des journées ordinaires et des cérémonies religieuses, rappelant les valeurs de modestie et de pureté."
+            },
+            {
+                "name": "Netela",
+                "origin": "Femmes habesha (Éthiopie et Érythrée)",
+                "usage": "Voile féminin en coton blanc, pour les offices religieux et occasions spéciales",
+                "description": "Grand châle léger porté par les femmes par-dessus la robe traditionnelle (habesha kemis) lors des messes et fêtes. Tissé en coton blanc orné aux extrémités de motifs tissés multicolores appelés tibeb:contentReference[oaicite:9]{index=9}, le netela symbolise la dévotion et l’élégance dans la culture éthiopienne."
+            },
+            {
+                "name": "Gabi",
+                "origin": "Communautés des hauts plateaux d’Éthiopie",
+                "usage": "Couverture épaisse en coton, utilisée par temps froid et lors de cérémonies",
+                "description": "Large pièce de coton blanc tissé en plusieurs couches, formant un châle épais utilisé comme couverture pendant les nuits fraîches ou les saisons froides:contentReference[oaicite:10]{index=10}. Le gabi, porté aussi bien par les hommes que par les femmes, sert de manteau chaleureux et revêt parfois une signification honorifique lorsqu’il est offert en cadeau ou utilisé lors des célébrations traditionnelles."
+            }
+        ]
+    },
+    "Kenya": {
+        "fabric": [
+            {
+                "name": "Kikoi",
+                "origin": "Peuple swahili de la côte kényane",
+                "usage": "Pagne ceinturé masculin (peut servir de paréo, écharpe ou turban)",
+                "description": "Rectangle de tissu en coton aux rayures tissées (plutôt que teintes):contentReference[oaicite:11]{index=11}, traditionnellement porté par les hommes de la côte est-africaine autour de la taille. Polyvalent, le kikoi sert également de serviette de plage, de porte-bébé ou de foulard, illustrant l’ingéniosité maritime de la culture swahilie et s’étant diffusé jusqu’aux communautés masaï de l’intérieur."
+            },
+            {
+                "name": "Shuka masaï",
+                "origin": "Peuple masaï (Kenya et Tanzanie)",
+                "usage": "Couverture vestimentaire à carreaux, utilisée comme cape ou pagne par les hommes",
+                "description": "Étoffe épaisse à motif écossais (souvent rouge vif à rayures ou carreaux noirs et bleus), connue comme la « couverture africaine » et portée par les guerriers Masaï en guise de vêtement principal:contentReference[oaicite:12]{index=12}. Le shuka, symbole de force et de bravoure, protège du froid nocturne et des intempéries de la savane, tout en affirmant l’identité culturelle masaï transmise de génération en génération."
+            },
+            {
+                "name": "Kanga (Leso)",
+                "origin": "Culture swahilie (côte kényane et tanzanienne)",
+                "usage": "Pagne féminin imprimé à messages (vêtement quotidien et moyen d’expression)",
+                "description": "Pièce de coton rectangulaire d’environ 1,5 m × 1 m aux couleurs vives, comportant une bordure décorative et souvent une inscription en swahili:contentReference[oaicite:13]{index=13}. Les kangas, vendus par paire, sont portés par les femmes comme jupes, foulards ou porte-bébés, et affichent des proverbes ou messages imprimés:contentReference[oaicite:14]{index=14}, ce qui en fait non seulement un vêtement polyvalent mais aussi un support de communication sociale dans l’ensemble de l’Afrique de l’Est."
+            }
+        ]
+    },
+    "Madagascar": {
+        "fabric": [
+            {
+                "name": "Lambahoany",
+                "origin": "Régions côtières malgaches (peuple Sakalava et autres)",
+                "usage": "Pagne traditionnel en coton imprimé, porté en paréo par les femmes",
+                "description": "Pièce principale du costume malgache, le lambahoany est un large panneau de coton aux motifs colorés que les femmes nouent sous les aisselles ou à la taille:contentReference[oaicite:15]{index=15}. Très prisé dans l’Ouest et le Sud, ce paréo aux couleurs vives est porté au quotidien et reflète la dignité et l’amour propres à la culture malgache, étant même échangé lors des fiançailles en signe d’attachement:contentReference[oaicite:16]{index=16}."
+            },
+            {
+                "name": "Lambamena",
+                "origin": "Tradition merina (Haute terre malgache)",
+                "usage": "Linceul funéraire (étoffe rouge pour envelopper les défunts)",
+                "description": "Pièce de linceul de couleur rouge vif, en soie ou en coton, utilisée pour enrouler les dépouilles lors des funérailles:contentReference[oaicite:17]{index=17}. Le lambamena (“lamba rouge”) revêt une haute importance symbolique : il accompagne la personne dans sa dernière demeure et est indispensable lors du famadihana (retournement des morts), témoignant du respect et de l’amour des vivants envers leurs ancêtres."
+            },
+            {
+                "name": "Lamba landy (soie malgache)",
+                "origin": "Artisans des Hautes Terres (ethnie Merina)",
+                "usage": "Étoffe de soie tissée à la main, pour tenues de prestige et cérémonies royales",
+                "description": "Tissu noble fabriqué à partir de soie sauvage locale, autrefois réservé aux nobles et à la royauté. Connu sous des variantes comme le lamba arindrano (vêtement de cérémonie des nobles) ou le jabo-landy (soie mêlée de raphia):contentReference[oaicite:18]{index=18}, le lamba en soie malgache se distingue par sa finesse et ses motifs subtils. Il est porté lors des grandes occasions (couronnements, mariages traditionnels) et demeure un symbole d’élégance et de statut social élevé à Madagascar."
+            }
+        ]
+    },
+    "Maurice": {
+        "fabric": [
+            {
+                "name": "Tissu Madras",
+                "origin": "Communautés créoles de Maurice (origine indienne)",
+                "usage": "Étoffe à carreaux multicolores pour tenues folkloriques (robe de séga, coiffure)",
+                "description": "Étoffe en coton léger à motif carreaux, importée de l’Inde au XIXe siècle et adoptée dans le patrimoine vestimentaire local mauricien:contentReference[oaicite:19]{index=19}. Le madras sert notamment à confectionner les jupes longues et foulards des danseuses de séga traditionnel, ses teintes vives et quadrillages symbolisant le métissage culturel et la gaieté de l’île."
+            },
+            {
+                "name": "Paréo",
+                "origin": "Culture insulaire des Mascareignes",
+                "usage": "Pagne léger et coloré porté en robe de plage ou en jupe nouée",
+                "description": "Grand morceau de tissu aux motifs tropicaux, porté aussi bien par les hommes que par les femmes en tenue de plage décontractée. Noué autour du buste ou à la taille, le paréo est apprécié pour sa fraîcheur et sa facilité d’utilisation sous le climat chaud. Popularisé à Maurice et dans les îles voisines comme vêtement de loisir, il est également utilisé dans les danses et spectacles, incarnant l’art de vivre créole dans l’océan Indien."
+            }
+        ]
+    },
+    "Rwanda": {
+        "fabric": [
+            {
+                "name": "Umushanana",
+                "origin": "Culture rwandaise (porté aussi au Burundi)",
+                "usage": "Tenue de cérémonie féminine composée d’une jupe et d’une étoffe drapée",
+                "description": "Habit traditionnel d’une grande élégance porté par les femmes lors des mariages et événements officiels. L’umushanana consiste en une longue jupe couvrante nouée aux hanches, accompagnée d’un large drapé assorti passé sur une épaule au-dessus d’un haut ajusté:contentReference[oaicite:20]{index=20}. Symbole d’élégance et de respect, cette tenue est souvent confectionnée dans des tissus fluides unis ou à motifs discrets, et reste incontournable dans les cérémonies rwandaises contemporaines."
+            },
+            {
+                "name": "Igitenge",
+                "origin": "Pays des Grands Lacs (adopté au Rwanda)",
+                "usage": "Tissu en coton imprimé (wax) utilisé pour les jupes, robes et accessoires",
+                "description": "Tissu de coton épais aux motifs africains colorés, similaire au kitenge d’Afrique de l’Est. Importé à l’origine par les échanges commerciaux, l’igitenge est aujourd’hui très répandu au Rwanda : les femmes le portent en pagne, en robe sur mesure ou en foulard, que ce soit au quotidien ou lors des fêtes. Ses motifs variés (fleurs, arabesques, symboles) et sa robustesse en font un support d’expression identitaire autant qu’un textile prisé de la mode africaine actuelle."
+            }
+        ]
+    },
+    "Seychelles": {
+        "fabric": [
+            {
+                "name": "Penwar (robe créole)",
+                "origin": "Tradition créole seychelloise (influence française)",
+                "usage": "Jupe longue évasée, portée avec un chemisier (kazak) comme costume national féminin",
+                "description": "Composante du costume traditionnel des Seychelles, le penwar est une jupe ample et colorée généralement assortie d’un corsage à manches longues appelé kazak:contentReference[oaicite:21]{index=21}. Confectionnée dans des cotonnades légères à motifs floraux, cette tenue coloniale adaptée au climat tropical est portée par les danseuses lors de la moutya (danse traditionnelle classée à l’UNESCO) et durant le Festival Kreol, incarnant le raffinement et la joie de vivre créole."
+            },
+            {
+                "name": "Madras créole",
+                "origin": "Patrimoine vestimentaire des îles de l’océan Indien",
+                "usage": "Tissu à carreaux utilisé en coiffure traditionnelle et ornements de tenues",
+                "description": "Introduit par les échanges avec l’Inde et l’Europe, le madras à carreaux multicolores a été adopté aux Seychelles notamment pour les accessoires et touches décoratives du costume créole. On le retrouve dans les mouchoirs de tête noués par les femmes lors des fêtes, ou intégré aux robes folkloriques pour ajouter une note de contraste vive. Ce tissu symbolise l’héritage multiculturel de l’archipel et reste un élément pittoresque des tenues lors des célébrations culturelles."
+            }
+        ]
+    },
+    "Somalie": {
+        "fabric": [
+            {
+                "name": "Guntiino",
+                "origin": "Peuple somali nomade (Horn of Africa)",
+                "usage": "Robe drapée traditionnelle pour femmes, portée lors des mariages et fêtes",
+                "description": "Longue pièce de tissu coloré enroulée autour du corps, attachée sur une épaule et ceinturée à la taille:contentReference[oaicite:22]{index=22}. Jadis tenue quotidienne des Somaliennes, le guntiino est aujourd’hui surtout utilisé pendant les cérémonies nuptiales et les événements culturels. Ses couleurs vibrantes et ses motifs (parfois tie-dye) célèbrent l’esthétique pastorale somalienne tout en offrant une grande liberté de mouvement dans le désert."
+            },
+            {
+                "name": "Dirac (Garbasaar)",
+                "origin": "Communautés côtières somaliennes (influence yéménite/indienne)",
+                "usage": "Robe de fête féminine, en voile léger orné, portée avec un châle",
+                "description": "Tenue élégante apparue au XXe siècle, le dirac est une robe ample taillée dans un tissu très léger et transparent (souvent de la mousseline ou de l’organza) aux couleurs vives:contentReference[oaicite:23]{index=23}. Porté au-dessus d’un fond opaque et accompagné d’un voile assorti (garbasaar) pour couvrir la tête et les épaules, le dirac est la tenue privilégiée des mariées et des invitées lors des mariages somaliens, reflétant un mélange d’influences indiennes et arabes adapté au goût somali."
+            },
+            {
+                "name": "Macawis",
+                "origin": "Peuple somali (vestiaire masculin)",
+                "usage": "Sarong traditionnel pour les hommes, à carreaux ou rayures",
+                "description": "Long pagne rectangulaire en coton, souvent à motifs écossais ou rayés, porté enroulé autour des hanches par les hommes somaliens. Hérité des échanges avec les cultures arabes et sud-asiatiques, le macawis est devenu un vêtement quotidien populaire grâce à sa légèreté et son confort sous le climat aride:contentReference[oaicite:24]{index=24}. Il est porté de manière informelle à la maison et lors des rassemblements locaux, témoignant de la simplicité et de la praticité dans la culture vestimentaire de Somalie."
+            }
+        ]
+    },
+    "Soudan du Sud": {
+        "fabric": [
+            {
+                "name": "Jalabiya",
+                "origin": "Région du Nil blanc (influence arabo-nubienne)",
+                "usage": "Tunique-robe masculine ample et légère, portée au quotidien",
+                "description": "Longue robe traditionnelle à manches longues et sans col, généralement de couleur blanche ou pastel, portée par les hommes dans tout le Soudan du Sud septentrional:contentReference[oaicite:25]{index=25}. Confectionnée dans une cotonnade claire pour réfléchir la chaleur, la jalabiya descend jusqu’aux chevilles et sa coupe large assure fraîcheur et aisance. Importée par les échanges avec l’Égypte et le Soudan, elle est devenue un symbole de respectabilité et d’appartenance religieuse chez de nombreux Sud-Soudanais."
+            },
+            {
+                "name": "Thobe (Toub)",
+                "origin": "Tradition soudanaise (femmes urbaines du Sud-Soudan)",
+                "usage": "Voile vestimentaire féminin enveloppant, pour sorties et cérémonies",
+                "description": "Grande étoffe légère (souvent en mousseline de coton ou en polyester satiné) que les femmes enroulent autour du corps et par-dessus la tête, ne laissant qu’une épaule et le visage découverts:contentReference[oaicite:26]{index=26}. Le thobe aux couleurs chatoyantes et aux imprimés raffinés est porté lors des mariages, des réunions communautaires et des prières, notamment par les femmes sud-soudanaises influencées par la mode de Khartoum. Il incarne la pudeur élégante et le lien culturel persistant entre le Soudan du Sud et le Soudan voisin."
+            }
+        ]
+    },
+    "Tanzanie": {
+        "fabric": [
+            {
+                "name": "Kanga",
+                "origin": "Côte swahilie (Tanzanie et Zanzibar)",
+                "usage": "Pagne imprimé à slogan, porté au quotidien par les femmes",
+                "description": "Tissu emblématique de l’Afrique de l’Est, le kanga est une pièce de coton aux couleurs éclatantes, ornée d’une bordure décorative et d’une maxime en swahili au centre:contentReference[oaicite:27]{index=27}. Vendu par paires assorties, il sert de pagne, de foulard, de porte-bébé ou de nappe selon les besoins. Véritable “tissu qui parle”, le kanga véhicule des proverbes, des messages sociaux ou affectueux et fait partie intégrante de la vie sociale en Tanzanie, depuis les marchés jusqu’aux cérémonies familiales."
+            },
+            {
+                "name": "Kitenge",
+                "origin": "Afrique de l’Est (industrie textile tanzanienne)",
+                "usage": "Tissu de coton épais imprimé (wax), utilisé pour tailleur, robes et chemises",
+                "description": "Étoffe colorée cousine du wax d’Afrique de l’Ouest, le kitenge est largement produit et porté en Tanzanie. Fabriqué en coton local dans des usines comme celle de Morogoro:contentReference[oaicite:28]{index=28}, il présente des motifs géométriques ou floraux aux teintes vives. Les Tanzaniennes le portent en pagne informel, mais il est aussi coupé par les couturiers pour réaliser des robes modernes, des chemises pour hommes ou des uniformes. Symbole de la fierté nationale, le kitenge tanzanien a même servi de support à des messages politiques et à la promotion de la culture ujamaa (communautaire) dans les années post-indépendance."
+            },
+            {
+                "name": "Shuka masaï",
+                "origin": "Peuple masaï de Tanzanie",
+                "usage": "Couverture traditionnelle à carreaux, portée en cape par les guerriers",
+                "description": "Semblable à son usage au Kenya, la couverture masaï (shuka) est un textile épais à dominance rouge, orné de carreaux ou de rayures, qui sert de vêtement principal aux pasteurs masaï. En Tanzanie, cette étoffe est particulièrement associée aux guerriers ilmoran du pays masaï (région d’Arusha et du Ngorongoro) qui la drapent fièrement sur leurs épaules comme symbole de bravoure. Au-delà de son aspect culturel, le shuka protège du froid nocturne des hauts-plateaux et de la poussière, et est devenu un des emblèmes touristiques de la Tanzanie."
+            }
+        ]
+    },
+    "Ouganda": {
+        "fabric": [
+            {
+                "name": "Lubugo (Étoffe d’écorce)",
+                "origin": "Royaume du Buganda (peuple Ganda)",
+                "usage": "Tissu non tissé en écorce battue, utilisé pour tenues rituelles et royales",
+                "description": "Fabriqué à partir de l’écorce intérieure du figuier mutuba, le lubugo est un textile ancestral obtenu par martelage de l’écorce jusqu’à obtention d’une pièce souple et feutrée:contentReference[oaicite:29]{index=29}. Avant l’introduction du tissu tissé, il servait de pagne et de manteau aux rois et aux notables du Buganda. De nos jours, le barkcloth ougandais, reconnu patrimoine immatériel de l’UNESCO, est encore confectionné par les artisans selon la tradition et utilisé lors de funérailles ou d’initiations pour honorer l’héritage culturel."
+            },
+            {
+                "name": "Kitenge (Chitenge)",
+                "origin": "Afrique de l’Est et centrale (popularisé en Ouganda)",
+                "usage": "Tissu en coton imprimé multi-usage (vêtements féminins surtout)",
+                "description": "Introduit dans la région des Grands Lacs au XXe siècle, le pagne wax appelé kitenge en swahili (ou chitenge en luganda) est devenu un élément phare de la garde-robe ougandaise. Les femmes le portent en jupe nouée, en foulard de tête ou le font coudre en élégantes robes gomesi (tenues traditionnelles à épaulettes). Ses motifs bigarrés – fleurs, arabesques, symboles tribaux – et ses couleurs franches en font un moyen d’afficher l’appartenance culturelle tout en restant dans la mode actuelle. On le voit dans les marchés colorés de Kampala comme dans les cérémonies, preuve de son adoption universelle en Ouganda."
+            }
+        ]
+    },
+    "Afrique du Sud": {
+        "fabric": [
+            {
+                "name": "Shweshwe",
+                "origin": "Communautés sotho et xhosa d’Afrique du Sud",
+                "usage": "Tissu de coton teint et imprimé (indigo à l’origine), pour robes et jupes traditionnelles",
+                "description": "Étoffe en coton teintée et imprimée de petits motifs géométriques, connue comme le « denim sud-africain » pour sa popularité et sa solidité:contentReference[oaicite:30]{index=30}. Importé au XIXe siècle sous forme de toile indigo par les missionnaires français auprès du roi Moshoeshoe Iᵉʳ, puis par les marchands allemands (d’où son nom ujamani, « allemand », en xhosa):contentReference[oaicite:31]{index=31}, le shweshwe a été adopté par les femmes xhosa (aprons de jeunes mariées, jupes) et sothos (appelé seshoeshoe). Aujourd’hui fabriqué localement en de multiples couleurs, il reste prisé pour les tenues traditionnelles et s’intègre aussi à la mode contemporaine sud-africaine."
+            },
+            {
+                "name": "Umbhaco",
+                "origin": "Peuple Xhosa du Cap oriental",
+                "usage": "Toile de coton épaisse utilisée pour les jupes et couvertures rituelles",
+                "description": "Tissu de coton lourd, généralement écru ou teint de couleurs unies, servant à confectionner les robes et jupes traditionnelles xhosa, notamment la jupe portefeuille isikhakha. L’umbhaco, très durable, est souvent orné de liserés noirs ou colorés et de perles, et constitue la base de la tenue formelle xhosa lors des mariages et cérémonies initiatiques:contentReference[oaicite:32]{index=32}. En plus d’habiller les femmes mariées, il est utilisé comme couverture châle par les aînées, véhiculant statut et respect dans la communauté."
+            }
+        ]
+    },
+    "Botswana": {
+        "fabric": [
+            {
+                "name": "Leteise (German print)",
+                "origin": "Ethnie tswana (Botswana, influence européenne)",
+                "usage": "Tissu de coton teint à motifs géométriques, pour robes et chemises traditionnelles",
+                "description": "Étoffe de coton colorée ornée de motifs répétitifs, introduite à l’origine par les missionnaires et colons allemands au XIXe siècle. Le leteise (ou leteisi) est généralement indigo ou bleu, avec des imprimés pointillés blancs, mais il existe aujourd’hui dans une grande variété de teintes:contentReference[oaicite:33]{index=33}:contentReference[oaicite:34]{index=34}. Traditionnellement coupé en tablier (khiba) et foulard (tukwi) pour les femmes mariées, il est désormais porté aussi par les hommes (chemises, vestons). Indispensable lors des mariages et célébrations, ce tissu incarne l’élégance discrète et l’identité nationale botswanaise."
+            },
+            {
+                "name": "Mogagolwane",
+                "origin": "Société tswana (Botswana)",
+                "usage": "Couverture traditionnelle à carreaux portée par les femmes mariées",
+                "description": "Épais tissu à motif quadrillé noir-et-blanc ou multicolore, utilisé comme châle ou couverture d’épaule par les femmes mariées chez certains groupes tswana:contentReference[oaicite:35]{index=35}. Symbole de statut marital, le mogagolwane est exhibé fièrement lors des cérémonies familiales et des rassemblements communautaires. Si certaines tribus lui préfèrent de nos jours un châle blanc plus moderne, beaucoup perpétuent la tradition de cette couverture qui confère prestance et respectabilité à celle qui la porte."
+            }
+        ]
+    },
+    "Lesotho": {
+        "fabric": [
+            {
+                "name": "Seanamarena (couverture basotho)",
+                "origin": "Royaume du Lesotho (introduite à l’ère victorienne)",
+                "usage": "Couverture en laine épaisse portée en cape par les hommes et femmes Basotho",
+                "description": "Célèbre couverture en laine, à motifs et bordures distinctives, adoptée par le peuple sotho au XIXe siècle en remplacement des peaux traditionnelles:contentReference[oaicite:36]{index=36}. Offerte initialement au roi Moshoeshoe Iᵉʳ par des commerçants britanniques, la seanamarena (du nom d’un chef Basotho) est devenue un emblème national : chaque dessin (épi de maïs, motif « dents de crocodile », etc.) et chaque couleur véhiculent une signification (fertilité, richesse, statut):contentReference[oaicite:37]{index=37}. Portée différemment selon le sexe (rayures verticales pour les hommes, horizontales pour les femmes) et l’occasion (rites de passage, mariages, funérailles), cette couverture incarne l’héritage et la fierté basotho."
+            },
+            {
+                "name": "Seshoeshoe (shweshwe)",
+                "origin": "Culture Basotho (inspirée du roi Moshoeshoe Iᵉʳ)",
+                "usage": "Tissu de coton imprimé à petits motifs, pour les jupes et robes des femmes",
+                "description": "Variante locale du shweshwe d’Afrique du Sud, ce tissu est indissociable de l’habit féminin traditionnel au Lesotho. Introduit dans les années 1840 et popularisé par le roi Moshoeshoe (d’où son nom seshoeshoe):contentReference[oaicite:38]{index=38}, il se présente en indigo ou en couleurs vives avec des imprimés géométriques fins. Les femmes sotho le portent en ensembles coordonnés (robe ample, tablier et foulard assortis) lors des mariages et des offices religieux. Léger mais résistant, le seshoeshoe est également prisé par la mode urbaine, faisant le lien entre la modernité et la coutume."
+            }
+        ]
+    },
+    "Malawi": {
+        "fabric": [
+            {
+                "name": "Chitenje",
+                "origin": "Communautés bantoues du Malawi (influences swahilie et ouest-africaines)",
+                "usage": "Pagne polyvalent en coton imprimé, porté en jupe, tablier et foulard",
+                "description": "Grand tissu de coton aux motifs chatoyants et enduit de cire, introduit au Malawi via les routes commerciales indo-européennes il y a plusieurs siècles:contentReference[oaicite:39]{index=39}. Vendu en pièces d’environ 2,5 yards (environ 2,3 m):contentReference[oaicite:40]{index=40}, le chitenje sert traditionnellement de jupe nouée pour couvrir les jambes (signe de modestie en milieu rural:contentReference[oaicite:41]{index=41}), d’écharpe porte-bébé pour attacher l’enfant au dos de sa mère, ou de coiffe (duku) pour agrémenter la tenue. En ville, ce tissu est souvent taillé par des couturiers en robes et chemises modernes, et il joue même un rôle politique lorsque les partis distribuent des chitenje imprimés à l’effigie de leurs candidats:contentReference[oaicite:42]{index=42}."
+            },
+            {
+                "name": "Batik malawien",
+                "origin": "Ateliers d’artisans (MaCoHa) du Malawi",
+                "usage": "Tissu artisanal teint à la main (technique du batik ou tie-dye), pour vêtements et décoration",
+                "description": "Étoffe de coton décorée manuellement par réserves de cire ou nouages, produite par les artisans locaux souvent en collaboration avec le Malawi Council for the Handicapped:contentReference[oaicite:43]{index=43}. Chaque batik présente des motifs uniques – dégradés de couleurs, figures géométriques ou scènes de la vie malawienne – faisant de chaque pièce un objet d’art. Utilisé pour confectionner chemises, robes d’été, tentures murales ou nappes, le batik malawite valorise la créativité nationale et offre une source de revenu aux communautés d’artisans."
+            }
+        ]
+    },
+    "Mozambique": {
+        "fabric": [
+            {
+                "name": "Capulana",
+                "origin": "Mozambique (culture bantoue et swahilie)",
+                "usage": "Pagne imprimé multi-usage (jupe, porte-bébé, foulard) pour les femmes",
+                "description": "Véritable pierre angulaire de l’identité vestimentaire mozambicaine:contentReference[oaicite:44]{index=44}, la capulana est un pagne en coton d’environ 2 m × 1 m, orné de motifs africains audacieux et colorés. Portée comme jupe par les femmes en milieu rural, elle sert aussi de châle, de linge de portage pour bébé ou même de nappe de pique-nique. Symbole d’appartenance nationale, la capulana est offerte lors des mariages et des naissances, et s’invite aussi dans la mode urbaine (robes, accessoires), témoignant de sa grande versatilité et de son fort attachement culturel."
+            },
+            {
+                "name": "Leso (Kanga mozambicain)",
+                "origin": "Côte nord du Mozambique (influence swahilie)",
+                "usage": "Pagne léger à message en kiswahili, utilisé comme voile ou pagne de tous les jours",
+                "description": "Équivalent local du kanga d’Afrique de l’Est, le leso est très répandu dans les provinces septentrionales de Cabo Delgado et Nampula, où l’héritage swahili est présent. En coton plus fin que la capulana et imprimé de proverbes ou de vœux en kiswahili, il est porté par les femmes comme tenue d’intérieur, en pagne informel ou en foulard. Le leso a historiquement véhiculé des messages sociaux et politiques durant la lutte anticoloniale, et demeure un support d’expression culturelle tout en étant un vêtement de commodité apprécié sous le climat côtier."
+            }
+        ]
+    },
+    "Namibie": {
+        "fabric": [
+            {
+                "name": "Ondelela (Odelela)",
+                "origin": "Peuple Ovambo (Nord de la Namibie)",
+                "usage": "Tissu en coton à rayures tissées, utilisé pour les robes et jupes traditionnelles",
+                "description": "Partie intégrante de la riche tapisserie namibienne, l’ondelela est un tissu artisanal orné de rayures longitudinales noires, blanches et brunes, traditionnellement porté par les femmes Owambo dans la confection de leur robe à volants distinctive:contentReference[oaicite:45]{index=45}. Ce textile robuste, aux bandes tissées à la main, symbolise l’héritage artistique du peuple ovambo et se transmet de mère en fille. Il est couramment porté lors des mariages ovambo et des danses outjina, conférant fierté ethnique et élégance colorée à celles qui le revêtent."
+            },
+            {
+                "name": "Ujamani (Shweshwe namibien)",
+                "origin": "Colonisation allemande (communautés Nama et Herero)",
+                "usage": "Tissu imprimé indigo ou coloré, employé pour les robes victoriennes Herero et Nama",
+                "description": "Introduit par les colons européens, notamment allemands, à la fin du XIXe siècle, ce tissu de coton teint à l’indigo avec des motifs blancs réguliers a été adopté par les Nama et les Herero pour leurs tenues traditionnelles. Appelé localement ujamani (terme dérivé de « Allemagne »):contentReference[oaicite:46]{index=46}, il est utilisé pour coudre les longues robes victoriennes à crinoline des femmes herero ainsi que les jupes superposées des femmes nama. Sa popularité perdure : l’ujamani, disponible aujourd’hui en divers coloris, reste un symbole de résistance culturelle, transformant un textile colonial en marqueur identitaire namibien."
+            }
+        ]
+    },
+    "Eswatini": {
+        "fabric": [
+            {
+                "name": "Lihiya (Emahiya)",
+                "origin": "Royaume d’eSwatini (peuple Swazi)",
+                "usage": "Pagne traditionnel orné de symboles nationaux, porté lors des rites et danses",
+                "description": "Grand carré de tissu imprimé des couleurs et emblèmes du Swaziland (souvent le portrait du roi, l’emblème national ou des motifs géométriques), utilisé comme vêtement d’apparat. Porté différemment selon le statut : les femmes mariées le drapent en forme de bandeau descendant sous l’épaule gauche (indiquant leur mariage), tandis que les jeunes filles le nouent sur l’épaule droite sans peau animale en dessous:contentReference[oaicite:47]{index=47}:contentReference[oaicite:48]{index=48}. Le lihiya, ou emahiya au pluriel, est essentiel lors de la danse du Umhlanga (danse des roseaux) et des cérémonies officielles, incarnant la fierté nationale et l’héritage swazi."
+            },
+            {
+                "name": "Sidvwashi",
+                "origin": "Culture swazie (habillement féminin)",
+                "usage": "Étoffe de coton utilisée comme jupon ou pagne de dessous lors des cérémonies",
+                "description": "Pièce de tissu nouée autour de la taille des jeunes filles swazies pour couvrir le bas du corps lors des événements traditionnels:contentReference[oaicite:49]{index=49}. Le sidvwashi, souvent de couleur vive unie, remplace les jupes en peau de chèvre pour les générations modernes. Porté sous le lihiya ou seul lors des danses, il permet de préserver la modestie tout en participant au costume rituel. Moins visible que le lihiya, il n’en demeure pas moins une composante indispensable de la tenue féminine swazie lors des festivités culturelles."
+            }
+        ]
+    },
+    "Zambie": {
+        "fabric": [
+            {
+                "name": "Chitenge",
+                "origin": "Zambie (Afrique centrale et australe)",
+                "usage": "Pagne en coton imprimé, élément de base du costume féminin zambien",
+                "description": "Étoffe de coton épaisse aux imprimés africains éclatants, appelée chitenge en langue locale. Importé initialement via l’Asie et l’Europe, ce tissu wax s’est enraciné dans la culture zambienne au point que le pagne est familièrement nommé « Zimbabwe » en Zambie (tandis qu’au Zimbabwe voisin, on l’appelle « Zambia »!):contentReference[oaicite:50]{index=50}. Les femmes zambiennes le portent en jupe nouée diurne, en pagne de marché, en porte-bébé et le transforment en robes élégantes pour des tenues de ville. Ses motifs variés (faune, emblèmes, formes abstraites) et sa facilité d’entretien en ont fait un textile omniprésent, du village aux célébrations nationales."
+            },
+            {
+                "name": "Musisi (robe Lozi)",
+                "origin": "Région de Barotsé (ethnie Lozi, Zambie de l’Ouest)",
+                "usage": "Robe cérémonielle à crinoline superposée, portée par les femmes Lozi",
+                "description": "Tenue traditionnelle majestueuse des Lozis, la musisi est une robe ample constituée de plusieurs couches de volants, héritée des influences victoriennes. Portée à l’origine à la cour du roi Litunga lors de la cérémonie du Kuomboka, elle s’est diffusée et est aujourd’hui arborée par des femmes de toutes ethnies en Zambie comme symbole d’unité nationale:contentReference[oaicite:51]{index=51}. Confectionnée dans des tissus chatoyants (satin, dentelle ou wax de luxe), la musisi confère prestance et élégance royale aux mariées et aux danseuses lors des grandes occasions, tout en honorant la tradition séculaire du royaume Lozi."
+            }
+        ]
+    },
+    "Zimbabwe": {
+        "fabric": [
+            {
+                "name": "Zambia (pagne)",
+                "origin": "Zimbabwe (dénomination locale du pagne importé)",
+                "usage": "Tissu pagne en coton imprimé, utilisé en jupe, tablier et foulard par les femmes",
+                "description": "Au Zimbabwe, le pagne wax a pris le nom populaire de « zambia » car il provenait initialement du commerce transfrontalier avec la Zambie voisine:contentReference[oaicite:52]{index=52}. Pièce polyvalente, il est porté par les femmes en jupe nouée à la maison, en tablier par-dessus la robe à l’église, ou pour porter le bébé sur le dos. Ses motifs flamboyants et sa disponibilité bon marché en ont fait un textile du quotidien, tout en étant présent lors des rassemblements politiques (imprimé aux couleurs des partis) ou des fêtes d’ubuntu (solidarité), signe qu’il est pleinement intégré à l’identité vestimentaire zimbabwéenne."
+            },
+            {
+                "name": "Imprimé wax africain",
+                "origin": "Technique batik javanaise adaptée par les manufactures européennes (introduite au XXe siècle)",
+                "usage": "Tissu de coton aux motifs colorés, très employé dans la mode traditionnelle et moderne",
+                "description": "Également appelé ankara ou Java print, ce textile en coton épais à motifs cirés a conquis le Zimbabwe après la Seconde Guerre mondiale. D’abord importé d’Europe (des usines hollandaises Vlisco), puis d’Asie, il est aujourd’hui disponible sur les marchés locaux en pièces de 6 yards. Les couturiers zimbabwéens l’utilisent pour créer des tenues contemporaines inspirées de la tradition : robes droites ou évasées, chemises pour hommes, tenues assorties pour couples lors des mariages, etc. Ses dessins souvent géométriques ou floraux mêlent influences locales et panafricaines, exprimant la fierté d’un style africain intemporel qui traverse les générations."
+            }
+        ]
+    }
+}

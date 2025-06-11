@@ -10,24 +10,29 @@ export async function PUT(req, { params }) {
     let data = await req.json();
     console.log("📩 Request payload:", data);
 
-    // Nettoyer les valeurs invalides
+    // Nettoyer les champs vides ou indéfinis
     Object.keys(data).forEach((key) => {
       if (data[key] === undefined || data[key] === "") {
         delete data[key];
       }
     });
 
+    // ✅ Corriger le type de `price`
+    if (data.price !== undefined) {
+      data.price = parseFloat(data.price);
+    }
+
     // Gérer les pays à part
     let countryIds = [];
     if (Array.isArray(data.countries)) {
       countryIds = data.countries.map((c) => ({ id: parseInt(c.id) }));
-      delete data.countries; // Supprime les pays de data pour éviter le conflit
+      delete data.countries;
     }
 
     const updatedProduct = await prisma.product.update({
       where: { id: productId },
       data: {
-        ...data, // ✅ Applique tous les champs envoyés (ex: name, price, available, etc.)
+        ...data,
         countries: {
           connect: countryIds,
         },
@@ -37,6 +42,7 @@ export async function PUT(req, { params }) {
 
     console.log("✅ Produit mis à jour :", updatedProduct);
     return new Response(JSON.stringify(updatedProduct), { status: 200 });
+
   } catch (error) {
     console.error("❌ Erreur serveur :", error);
     return new Response(JSON.stringify({ message: "Erreur serveur" }), { status: 500 });
