@@ -4,7 +4,10 @@ import Header from '../../components/header';
 import { useEffect, useState } from 'react';
 import { loadStripe } from '@stripe/stripe-js';
 
+
 const stripePromise = loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY);
+
+
 
 function CartPage() {
   const [cartItems, setCartItems] = useState([]);
@@ -57,11 +60,10 @@ function CartPage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ action }),
       });
-
+  
       const data = await res.json();
       if (res.ok) {
-        console.log("✅ Mise à jour réussie :", data);
-        fetchCartItems(); // 🔄 Recharger le panier après mise à jour
+        fetchCartItems(); // 🔄 Toujours refetch après update
       } else {
         console.error("❌ Erreur lors de la mise à jour :", data.message);
       }
@@ -69,6 +71,9 @@ function CartPage() {
       console.error("❌ Erreur :", error);
     }
   };
+  
+  
+  
 
   // ✅ Fonction pour ajouter un article au panier
   const addToCart = async (item) => {
@@ -119,13 +124,19 @@ function CartPage() {
     try {
       const res = await fetch('/api/cart/clear', { method: "DELETE" });
       if (res.ok) {
-        setCartItems([]);
+        // Recharge le panier depuis le back pour être sûr d’avoir l’état à jour
+        await fetchCartItems();
+        // Optionnel : réinitialiser le total si fetchCartItems ne le fait pas
         setTotal(0);
+      } else {
+        const data = await res.json();
+        console.error("❌ Erreur lors du vidage du panier :", data.message);
       }
     } catch (error) {
       console.error("❌ Erreur :", error);
     }
   };
+  
 
 
   // ✅ Fonction pour initier le paiement avec Stripe

@@ -4,7 +4,7 @@ import Link from 'next/link';
 const AccessoriesSection = () => {
   const accessories = [
     {
-      img: "/images/foulardbaoulé.webp",
+      img: "/images/foulardbaoule.webp",
       title: "Foulard en baoulé",
       desc: "Foulard fait en avec tissu Baoulé."
     },

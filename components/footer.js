@@ -1,6 +1,6 @@
 // components/Footer.js
 import Link from 'next/link';
-import { FaFacebookF, FaInstagram, FaTwitter } from 'react-icons/fa';
+import { FaFacebookF, FaInstagram, FaTwitter , FaTiktok} from 'react-icons/fa';
 
 export default function Footer() {
   return (
@@ -35,15 +35,23 @@ export default function Footer() {
               <li><a href="tel:+33612607431" className="hover:text-green-200">(+33) 612 607 431</a></li>
             </ul>
             <div className="flex justify-center md:justify-start space-x-4 mt-4">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <a href="https://www.facebook.com/people/Afritex/100076970153369/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
                 <FaFacebookF className="w-6 h-6 text-yellow-300 hover:text-green-300 transition-transform transform hover:scale-110" />
               </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <a href="https://www.instagram.com/afritex.fr?utm_source=qr&igsh=cnF3dWFvZmJoemo3" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
                 <FaInstagram className="w-6 h-6 text-yellow-300 hover:text-green-300 transition-transform transform hover:scale-110" />
               </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+              <a href="https://x.com/contactafritex?t=f85NKn3_XhCMyAZlm3f5PQ&s=09" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
                 <FaTwitter className="w-6 h-6 text-yellow-300 hover:text-green-300 transition-transform transform hover:scale-110" />
               </a>
+              <a
+  href="https://www.tiktok.com/@afritex"  // remplace avec ton vrai pseudo si différent
+  target="_blank"
+  rel="noopener noreferrer"
+  aria-label="TikTok"
+>
+  <FaTiktok className="w-6 h-6 text-yellow-300 hover:text-green-300 transition-transform transform hover:scale-110" />
+</a>
             </div>
           </div>
         </div>

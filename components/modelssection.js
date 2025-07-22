@@ -10,7 +10,7 @@ const ModelsSection = () => {
       desc: " tenues luxueuses fabriquées à partir d'un tissu en coton tissé teint en indigo de style vintage"
     },
     {
-      img: "/images/modèle-bogolan.webp",
+      img: "/images/modele-bogolan.webp",
       title: "Création Bogolan",
       desc: "Tenue contemporaine mettant en valeur les motifs ancestraux du bogolan."
     },

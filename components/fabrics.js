@@ -9,12 +9,12 @@ const FabricsSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           {[
             {
-              img: '/images/shweshwe-accueil.jpg',
+              img: '/images/Shweshwe-accueil.webp',
               title: 'Shweshwe',
               desc: "Tissu imprimé traditionnel d’Afrique du Sud, utilisé pour des tenues culturelles.",
             },
             {
-              img: '/images/kenté-accueil.jpg',
+              img: '/images/kent-accueil.jpg',
               title: 'Kente',
               desc: "Tissu royal du Ghana, tissé à la main.",
             },

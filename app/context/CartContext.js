@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect } from "react";
+import { createContext, useContext } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { toast } from "react-toastify";
 import PropTypes from "prop-types";
@@ -12,7 +12,7 @@ const CartContext = createContext();
 export function CartProvider({ children }) {
   const queryClient = useQueryClient();
 
-  // 🔄 Récupère les articles du panier depuis le serveur
+  // 🔄 Récupère les articles du panier depuis l'API
   const { data: cartData, isLoading, isError } = useQuery({
     queryKey: ["cart"],
     queryFn: async () => {
@@ -21,27 +21,20 @@ export function CartProvider({ children }) {
         throw new Error("❌ Erreur lors de la récupération du panier.");
       }
       const jsonData = await response.json();
-
-      console.log("📦 Format JSON retourné par `/api/cart` :", jsonData);
-  
       return jsonData.items || [];
     },
-    staleTime: 1000 * 60 * 5, // Cache 5 minutes
+    staleTime: 0, // ⏱️ Toujours refetch si invalidé
   });
 
-  const cartItems = cartData || []; // Par défaut, un tableau vide
+  const cartItems = cartData || [];
 
-  // 🧮 Calcul des totaux
+  // 🧮 Données calculées
   const itemCount = cartItems.reduce((count, item) => count + item.quantity, 0);
   const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
 
-  console.log("📊 Nombre total d'articles :", itemCount);
-  console.log("💰 Prix total des articles :", totalPrice);
-
-  // ✅ Mutation pour ajouter un produit au panier
+  // ✅ Ajout d’un article au panier
   const addToCartMutation = useMutation({
     mutationFn: async (newItem) => {
-      console.log("🛒 Tentative d'ajout au panier :", newItem);
       const response = await fetch("/api/cart", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -54,27 +47,36 @@ export function CartProvider({ children }) {
 
       if (!response.ok) {
         const error = await response.json();
-        throw new Error(error.message || "❌ Erreur lors de l'ajout au panier.");
+        throw new Error(error.message || "❌ Erreur lors de l'ajout.");
       }
 
       return response.json();
     },
     onSuccess: (data) => {
-      console.log("✅ Produit ajouté, réponse du serveur :", data);
       toast.success("🎉 Article ajouté au panier !");
-      
-      // 🟢 Met à jour immédiatement le panier dans React Query
-      queryClient.setQueryData(["cart"], (oldData) => {
-        const updatedData = oldData ? [...oldData, data] : [data];
-    console.log("🟡 Mise à jour immédiate du panier (setQueryData) :", updatedData);
-        return oldData ? [...oldData, data] : [data];
-      });
-
-      // 🔄 Force la mise à jour des données du panier
+      queryClient.setQueryData(["cart"], (oldData) => (oldData ? [...oldData, data] : [data]));
       queryClient.invalidateQueries(["cart"]);
     },
     onError: (error) => {
-      console.error("❌ Erreur lors de l'ajout au panier :", error.message);
+      toast.error(`Erreur : ${error.message}`);
+    },
+  });
+
+  // ✅ Vidage du panier
+  const clearCartMutation = useMutation({
+    mutationFn: async () => {
+      const response = await fetch("/api/cart/clear", { method: "DELETE" });
+      if (!response.ok) {
+        throw new Error("❌ Erreur lors du vidage du panier.");
+      }
+      return response.json();
+    },
+    onSuccess: async () => {
+      toast.success("🧹 Panier vidé !");
+      queryClient.setQueryData(["cart"], []); 
+      await queryClient.invalidateQueries({ queryKey: ["cart"], refetchType: "all" });
+    },
+    onError: (error) => {
       toast.error(`Erreur : ${error.message}`);
     },
   });
@@ -87,7 +89,8 @@ export function CartProvider({ children }) {
         isError,
         itemCount,
         totalPrice,
-        addToCart: addToCartMutation.mutate, // Utilisation correcte
+        addToCart: addToCartMutation.mutate,
+        clearCart: clearCartMutation.mutate,
       }}
     >
       {children}
@@ -95,7 +98,7 @@ export function CartProvider({ children }) {
   );
 }
 
-// 🔗 Hook pour utiliser le panier
+// Hook pour utiliser le panier
 export const useCart = () => {
   const context = useContext(CartContext);
   if (!context) {
@@ -104,7 +107,7 @@ export const useCart = () => {
   return context;
 };
 
-// ✅ Validation des props
+// Validation des props
 CartProvider.propTypes = {
   children: PropTypes.node.isRequired,
 };

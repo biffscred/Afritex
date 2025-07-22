@@ -27,7 +27,8 @@ export default function MapChart() {
   return (
     <div className="relative w-full flex flex-col items-center lg:flex-row lg:items-start">
       {/* 🗺️ Carte */}
-      <div className="w-full lg:w-2/3">
+      <div className="w-full lg:w-2/3 flex justify-center">
+
         <ComposableMap
           width={mapWidth}
           height={mapHeight}
@@ -66,12 +67,12 @@ export default function MapChart() {
                   }}
                   style={{
                     default: {
-                      fill: "#D6D6DA",
-                      stroke: "#000",
-                      strokeWidth: 0.5,
+                      fill: "#f4f4f4",
+                      stroke: "#555",
+                      strokeWidth: 0.3,
                     },
-                    hover: { fill: "#e67e22", cursor: "pointer" },
-                    pressed: { fill: "#d35400" },
+                    hover: { fill: "#1e90ff", cursor: "pointer" },
+                    pressed: { fill: "#007acc" },
                   }}
                 />
               ))

@@ -58,19 +58,26 @@ function NavigationMenu({ isOpen, toggleMenu, itemCount, session, isAdmin }) {
             </span>
           </Link>
         </li>
-        <li className="relative group">
+        <li className="group relative">
   <span className="text-white text-lg font-bold hover:text-orange-400 transition-colors duration-300 cursor-pointer">
     À propos
   </span>
-  {/* Menu déroulant */}
-  <ul className="absolute hidden group-hover:block bg-white shadow-md rounded-lg mt-2 w-48">
+
+  {/* Menu déroulant animé */}
+  <ul className="absolute top-full left-0 z-50 hidden group-hover:block bg-white shadow-md rounded-lg mt-2 w-48 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
     <li>
-      <Link href="/about" className="block px-4 py-2 text-gray-800 hover:bg-orange-100 transition">
+      <Link
+        href="/about"
+        className="block px-4 py-2 text-gray-800 hover:bg-orange-100 transition"
+      >
         Notre histoire
       </Link>
     </li>
     <li>
-      <Link href="/fabricbycountry" className="block px-4 py-2 text-gray-800 hover:bg-orange-100 transition">
+      <Link
+        href="/fabricbycountry"
+        className="block px-4 py-2 text-gray-800 hover:bg-orange-100 transition"
+      >
         Tissus par pays
       </Link>
     </li>

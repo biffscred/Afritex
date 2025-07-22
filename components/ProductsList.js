@@ -1,16 +1,16 @@
 "use client";
-import React, { useCallback, Suspense } from "react";
+
+import React, { useCallback, Suspense, useState, useEffect } from "react";
 import useSWRInfinite from "swr/infinite";
 import dynamic from "next/dynamic";
 import ProductCard from "./ProductCard";
+import ProductFilters from "./ProductFilters";
 
-// Import dynamique de la modale pour un code splitting (lazy loading)
 const ProductModal = dynamic(() => import("./ProductModal"), {
   ssr: false,
   loading: () => <div>Chargement de la modale...</div>,
 });
 
-// Fonction fetcher avec gestion d'erreur
 const fetcher = (url) =>
   fetch(url)
     .then((res) => {
@@ -19,57 +19,51 @@ const fetcher = (url) =>
     })
     .catch((err) => console.error("❌ Erreur API :", err));
 
-// Nombre d'éléments par page (pour la pagination)
 const PAGE_SIZE = 16;
 
-// Clé pour SWRInfinite
-const getKey = (pageIndex, previousPageData) => {
-  if (previousPageData && !previousPageData.products.length) return null;
-  return `/api/products?page=${pageIndex + 1}&pageSize=${PAGE_SIZE}`;
-};
-
-
 const ProductsList = () => {
-  // Utilisation de SWRInfinite pour gérer la récupération paginée
+  const [filters, setFilters] = useState({});
+  const [selectedProduct, setSelectedProduct] = useState(null);
+
+  const getKey = (pageIndex, previousPageData) => {
+    if (previousPageData && !previousPageData.products.length) return null;
+
+    let url = `/api/products?page=${pageIndex + 1}&pageSize=${PAGE_SIZE}`;
+    if (filters.category) url += `&category=${filters.category}`;
+    if (filters.country) url += `&country=${filters.country}`;
+    if (filters.priceMin) url += `&priceMin=${filters.priceMin}`;
+    if (filters.priceMax) url += `&priceMax=${filters.priceMax}`;
+    if (filters.color) url += `&color=${filters.color}`;
+    if (filters.material) url += `&material=${filters.material}`;
+
+    return url;
+  };
+
   const { data, error, size, setSize, isValidating } = useSWRInfinite(
     getKey,
     fetcher,
     { revalidateOnFocus: false }
   );
 
-  const [selectedProduct, setSelectedProduct] = React.useState(null);
+  useEffect(() => {
+    setSize(1); // reset pagination on filter change
+  }, [filters]);
 
-  // Aplatir les pages récupérées pour obtenir un tableau de produits
   const products = Array.isArray(data)
-  ? data.flatMap((page) => page?.products || [])
-  : [];
+    ? data.flatMap((page) => page?.products || [])
+    : [];
 
-
-  // Logs pour voir ce qui se passe
-  console.log("🟡 Données brutes reçues de l'API :", data);
-  console.log("🟢 Produits extraits après flatten :", products);
-  if (error) console.error("❌ Erreur SWR :", error);
-
-  // Callback mémorisé pour éviter des re-rendus inutiles
   const handleProductClick = useCallback((product) => {
-    console.log("🟠 Produit cliqué :", product);
-  
     const images =
       product.images?.length > 0
         ? product.images
         : product.fabric?.fabricImages ||
           product.models?.[0]?.modelImages ||
-          product.accessories?.[0]?.accessoryImages ||
-          [];
-  
-    setSelectedProduct({
-      ...product,
-      images, 
-      // 👈 toutes les images passées à la modale
-    });console.log("🧩 Images envoyées à la modale :", images);
+          product.accessories?.[0]?.accessoryImages || [];
 
+    setSelectedProduct({ ...product, images });
   }, []);
-  // Affichage de skeleton loaders pendant le chargement
+
   const renderSkeletons = () => {
     return Array.from({ length: PAGE_SIZE }).map((_, index) => (
       <div key={index} className="animate-pulse bg-gray-200 h-64 rounded"></div>
@@ -78,14 +72,15 @@ const ProductsList = () => {
 
   return (
     <div>
+      <ProductFilters onFilter={(f) => setFilters(f)} />
+
       {error && (
         <p className="text-center text-red-500 font-semibold py-4">
           {error.message || "Impossible de charger les produits."}
         </p>
       )}
 
-      {/* Affichage des skeletons pendant le chargement initial */}
-      {(!data && isValidating) ? (
+      {!data && isValidating ? (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {renderSkeletons()}
         </div>
@@ -101,14 +96,10 @@ const ProductsList = () => {
         </div>
       )}
 
-      {/* Bouton pour charger plus de produits si la dernière page atteint PAGE_SIZE */}
-      {data && products.length < data[0]?.totalCount &&  (
+      {data && products.length < data[0]?.totalCount && (
         <div className="flex justify-center py-4">
           <button
-            onClick={() => {
-              console.log("🔵 Chargement de plus de produits...");
-              setSize(size + 1);
-            }}
+            onClick={() => setSize(size + 1)}
             className="px-4 py-2 bg-blue-500 text-white rounded"
           >
             Charger plus
@@ -116,16 +107,12 @@ const ProductsList = () => {
         </div>
       )}
 
-      {/* Affichage de la modale en lazy loading via Suspense */}
       {selectedProduct && (
         <Suspense fallback={<div>Chargement de la modale...</div>}>
           <ProductModal
             product={selectedProduct}
             isOpen={true}
-            onClose={() => {
-              console.log("🔴 Fermeture de la modale pour le produit :", selectedProduct);
-              setSelectedProduct(null);
-            }}
+            onClose={() => setSelectedProduct(null)}
           />
         </Suspense>
       )}
