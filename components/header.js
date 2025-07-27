@@ -39,121 +39,121 @@ function CartBadge({ itemCount }) {
 function NavigationMenu({ isOpen, toggleMenu, itemCount, session, isAdmin }) {
   return (
     <nav
-      className={`${
-        isOpen ? "block" : "hidden"
-      } flex flex-col space-y-4 bg-yellow-600 p-6 lg:flex lg:flex-row lg:space-y-0 lg:space-x-6 lg:bg-transparent lg:p-0`}
-    >
-      <ul className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-6">
-        <li>
-          <Link href="/">
-            <span className="text-white text-lg font-bold hover:text-red-400 transition-colors duration-300 cursor-pointer">
-              Accueil
-            </span>
-          </Link>
-        </li>
-        <li>
-          <Link href="/shop">
-            <span className="text-white text-lg font-bold hover:text-green-400 transition-colors duration-300 cursor-pointer">
-              Boutique
-            </span>
-          </Link>
-        </li>
-        <li className="group relative">
-  <span className="text-white text-lg font-bold hover:text-orange-400 transition-colors duration-300 cursor-pointer">
-    À propos
-  </span>
-
-  {/* Menu déroulant animé */}
-  <ul className="absolute top-full left-0 z-50 hidden group-hover:block bg-white shadow-md rounded-lg mt-2 w-48 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-    <li>
-      <Link
-        href="/about"
-        className="block px-4 py-2 text-gray-800 hover:bg-orange-100 transition"
-      >
-        Notre histoire
-      </Link>
-    </li>
-    <li>
-      <Link
-        href="/fabricbycountry"
-        className="block px-4 py-2 text-gray-800 hover:bg-orange-100 transition"
-      >
-        Tissus par pays
-      </Link>
-    </li>
-  </ul>
-</li>
-
-        <li>
-          <Link href="/contact">
-            <span className="text-white text-lg font-bold hover:text-blue-400 transition-colors duration-300 cursor-pointer">
-              Contact
-            </span>
-          </Link>
-        </li>
-        <li>
-          <Link href="/faq">
-            <span className="text-white text-lg font-bold hover:text-purple-400 transition-colors duration-300 cursor-pointer">
-              FAQ
-            </span>
-          </Link>
-        </li>
-        <li>
-          <CartBadge itemCount={itemCount} />
-        </li>
-        {session ? (
-          <>
-            {isAdmin && (
+    className={`${
+      isOpen ? "block" : "hidden"
+    } flex flex-col space-y-4 bg-yellow-600 p-6 lg:flex lg:flex-row lg:space-y-0 lg:space-x-6 lg:bg-transparent lg:p-0`}
+  >
+    <ul className="flex flex-col lg:flex-row space-y-4 lg:space-y-0 lg:space-x-6">
+      <li>
+        <Link href="/">
+          <span className="text-white text-lg font-bold hover:text-red-400 transition-colors duration-300 cursor-pointer">
+            Accueil
+          </span>
+        </Link>
+      </li>
+  
+      <li>
+        <Link href="/shop">
+          <span className="text-white text-lg font-bold hover:text-green-400 transition-colors duration-300 cursor-pointer">
+            Boutique
+          </span>
+        </Link>
+      </li>
+  
+      {/* ✅ Menu déroulant À propos */}
+      <li className="relative group">
+        <span className="text-white text-lg font-bold hover:text-orange-400 transition-colors duration-300 cursor-pointer">
+          À propos
+        </span>
+        <ul className="absolute top-full left-0 z-50 hidden group-hover:block bg-white shadow-md rounded-lg mt-2 w-48 pt-2
+                       opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
+          <li>
+            <Link href="/about" className="block px-4 py-2 text-gray-800 hover:bg-orange-100 transition">
+              Notre histoire
+            </Link>
+          </li>
+          <li>
+            <Link href="/fabricbycountry" className="block px-4 py-2 text-gray-800 hover:bg-orange-100 transition">
+              Tissus par pays
+            </Link>
+          </li>
+        </ul>
+      </li>
+  
+      <li>
+        <Link href="/contact">
+          <span className="text-white text-lg font-bold hover:text-blue-400 transition-colors duration-300 cursor-pointer">
+            Contact
+          </span>
+        </Link>
+      </li>
+  
+      <li>
+        <Link href="/faq">
+          <span className="text-white text-lg font-bold hover:text-purple-400 transition-colors duration-300 cursor-pointer">
+            FAQ
+          </span>
+        </Link>
+      </li>
+  
+      <li>
+        <CartBadge itemCount={itemCount} />
+      </li>
+  
+      {session ? (
+        <>
+          {isAdmin && (
+            <li>
+              <Link href="/admin">
+                <span className="text-white text-lg font-bold hover:text-pink-400 transition-colors duration-300 cursor-pointer">
+                  Admin
+                </span>
+              </Link>
+            </li>
+          )}
+          <li>
+            <button
+              onClick={signOut}
+              className="text-white text-lg font-bold hover:text-red-500 transition-colors duration-300 cursor-pointer"
+            >
+              Déconnexion
+            </button>
+          </li>
+        </>
+      ) : (
+        <li className="relative">
+          <button
+            onClick={toggleMenu}
+            className="text-white text-lg font-bold hover:text-blue-400 transition-colors duration-300 cursor-pointer"
+            aria-haspopup="true"
+            aria-expanded={isOpen}
+          >
+            Espace
+          </button>
+          {isOpen && (
+            <ul className="absolute bg-yellow-600 shadow-lg rounded-md mt-2 w-32 p-2 space-y-2 z-50">
               <li>
-                <Link href="/admin">
-                  <span className="text-white text-lg font-bold hover:text-pink-400 transition-colors duration-300 cursor-pointer">
-                    Admin
+                <button
+                  onClick={signIn}
+                  className="w-full text-left text-white text-lg font-bold hover:text-green-500 transition-colors duration-300"
+                >
+                  Connexion
+                </button>
+              </li>
+              <li>
+                <Link href="/auth/register">
+                  <span className="text-white text-lg font-bold hover:text-blue-400 transition-colors duration-300 cursor-pointer">
+                    Inscription
                   </span>
                 </Link>
               </li>
-            )}
-            <li>
-              <button
-                onClick={signOut}
-                className="text-white text-lg font-bold hover:text-red-500 transition-colors duration-300 cursor-pointer"
-              >
-                Déconnexion
-              </button>
-            </li>
-          </>
-        ) : (
-          <li>
-            <button
-              onClick={toggleMenu}
-              className="text-white text-lg font-bold hover:text-blue-400 transition-colors duration-300 cursor-pointer"
-              aria-haspopup="true"
-              aria-expanded={isOpen}
-            >
-              Espace
-            </button>
-            {isOpen && (
-              <ul className="absolute bg-yellow-600 shadow-lg rounded-md mt-2 w-32 p-2 space-y-2 z-50">
-                <li>
-                  <button
-                    onClick={signIn}
-                    className="w-full text-left text-white text-lg font-bold hover:text-green-500 transition-colors duration-300"
-                  >
-                    Connexion
-                  </button>
-                </li>
-                <li>
-                  <Link href="/auth/register">
-                    <span className="text-white text-lg font-bold hover:text-blue-400 transition-colors duration-300 cursor-pointer">
-                      Inscription
-                    </span>
-                  </Link>
-                </li>
-              </ul>
-            )}
-          </li>
-        )}
-      </ul>
-    </nav>
+            </ul>
+          )}
+        </li>
+      )}
+    </ul>
+  </nav>
+  
   );
 }
 

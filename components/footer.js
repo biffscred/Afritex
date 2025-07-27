@@ -12,7 +12,7 @@ export default function Footer() {
           <div>
             <h3 className="text-2xl font-semibold mb-4 text-yellow-300">Afritex</h3>
             <p className="text-yellow-100">
-              Explorez une  selection de l'authentisme des tissus africains  , vètements  , et accesoires  faits avec des materaiux de hautes qualités .
+              Explorez une  selection d'authentiques  tissus africains ,de vêtements  et d'accesoires  faits avec des matières de qualité.
             </p>
           </div>
           

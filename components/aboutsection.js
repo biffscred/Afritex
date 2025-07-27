@@ -44,7 +44,7 @@ const AboutSection = () => {
           {/* Colonne 1 */}
           <div className="w-full md:w-1/3 p-2 flex">
             <div className="service-box bg-white text-black hover:bg-black hover:text-white transition duration-300 p-6 rounded-lg flex flex-col justify-center items-center h-full">
-              <h3 className="text-xl font-bold text-center">Des produits de qualité exclusivement à base de coton africain Pour soutenir la chaîne de valeur de la filière coton</h3>
+              <h3 className="text-xl font-bold text-center">Des produits de qualité exclusivement à base de coton africain pour soutenir la chaîne de valeur de la filière coton</h3>
             </div>
           </div>
           {/* Colonne 2 */}

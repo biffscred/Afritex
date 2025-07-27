@@ -7,7 +7,7 @@ const ModelsSection = () => {
     {
       img: "/images/vintage-accueil.webp",
       title: "Tenue Vintage",
-      desc: " tenues luxueuses fabriquées à partir d'un tissu en coton tissé teint en indigo de style vintage"
+      desc: " Tenues luxueuses fabriquées à partir d'un tissu en coton tissé teint en indigo de style vintage"
     },
     {
       img: "/images/modele-bogolan.webp",

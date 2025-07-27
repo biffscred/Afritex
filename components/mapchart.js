@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { ComposableMap, Geographies, Geography } from "react-simple-maps";
+import React from "react";
+
 
 const geoUrl = "/data/africa.geojson";
 
@@ -36,48 +38,83 @@ export default function MapChart() {
           projectionConfig={{ scale, center }}
           className="w-full h-auto max-h-[700px]"
         >
-          <Geographies geography={geoUrl}>
-            {({ geographies }) =>
-              geographies.map((geo) => (
-                <Geography
-                  key={geo.rsmKey}
-                  geography={geo}
-                  onMouseEnter={(e) => {
-                    setHoveredCountry({
-                      name: geo.properties.country,
-                      code: geo.properties.code,
-                      fabric: Array.isArray(geo.properties.fabric)
-                        ? geo.properties.fabric
-                        : [],
-                    });
-                    setCursorPos({ x: e.clientX, y: e.clientY });
-                  }}
-                  onMouseMove={(e) =>
-                    setCursorPos({ x: e.clientX, y: e.clientY })
-                  }
-                  onMouseLeave={() => setHoveredCountry(null)}
-                  onClick={() => {
-                    setSelectedCountry({
-                      name: geo.properties.country,
-                      code: geo.properties.code,
-                      fabric: Array.isArray(geo.properties.fabric)
-                        ? geo.properties.fabric
-                        : [],
-                    });
-                  }}
-                  style={{
-                    default: {
-                      fill: "#f4f4f4",
-                      stroke: "#555",
-                      strokeWidth: 0.3,
-                    },
-                    hover: { fill: "#1e90ff", cursor: "pointer" },
-                    pressed: { fill: "#007acc" },
-                  }}
-                />
-              ))
-            }
-          </Geographies>
+    <Geographies geography={geoUrl}>
+  {({ geographies }) => {
+    // ✅ Script ici directement
+    let manquants = [];
+
+    geographies.forEach((geo) => {
+      const country = geo.properties.country;
+      const fabrics = Array.isArray(geo.properties.fabric) ? geo.properties.fabric : [];
+
+      fabrics.forEach((f) => {
+        const img = f.image;
+        const imageManquante =
+          !img ||
+          img.trim() === "" ||
+          img.includes("❌") ||
+          img.toLowerCase().includes("aucun") ||
+          (!img.startsWith("http") && !img.startsWith("/images/"));
+
+        if (imageManquante) {
+          manquants.push({
+            name: f.name,
+            country,
+            image: img || "❌ vide ou invalide",
+          });
+        }
+      });
+    });
+
+    console.table(manquants);
+    console.log(`🟥 Tissus sans image correcte : ${manquants.length}`);
+
+    // ✅ on continue avec l’affichage normal
+    return geographies.map((geo) => {
+      const country = geo.properties.country;
+      const isTiny = ["Cape Verde", "Comoros", "Seychelles", "Djibouti", "Gambia"].includes(country);
+
+      const commonHandlers = {
+        onClick: () => {
+          setSelectedCountry({
+            name: country,
+            code: geo.properties.code,
+            fabric: Array.isArray(geo.properties.fabric) ? geo.properties.fabric : [],
+          });
+        },
+        onMouseEnter: (e) => {
+          setHoveredCountry({
+            name: country,
+            code: geo.properties.code,
+            fabric: Array.isArray(geo.properties.fabric) ? geo.properties.fabric : [],
+          });
+          setCursorPos({ x: e.clientX, y: e.clientY });
+        },
+        onMouseMove: (e) => setCursorPos({ x: e.clientX, y: e.clientY }),
+        onMouseLeave: () => setHoveredCountry(null),
+      };
+
+      return (
+        <React.Fragment key={geo.rsmKey}>
+          <Geography geography={geo} {...commonHandlers} style={{
+            default: { fill: "#f4f4f4", stroke: "#555", strokeWidth: 0.3 },
+            hover: { fill: "#1e90ff", cursor: "pointer" },
+            pressed: { fill: "#007acc" },
+          }} />
+
+          {isTiny && (
+            <Geography geography={geo} {...commonHandlers} style={{
+              default: { fill: "transparent", stroke: "transparent", strokeWidth: 10, pointerEvents: "all" },
+              hover: { fill: "transparent", cursor: "pointer" },
+              pressed: { fill: "transparent" },
+            }} />
+          )}
+        </React.Fragment>
+      );
+    });
+  }}
+</Geographies>
+
         </ComposableMap>
 
         {/* Tooltip rapide */}
