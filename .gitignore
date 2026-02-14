@@ -39,3 +39,6 @@ next-env.d.ts
 public/images/tissus/Archive.zip
 exported_images.zip
 *.zip
+
+# Images exportées
+/exported_images/
