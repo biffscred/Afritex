@@ -14,6 +14,9 @@ export default function AdminDashboardProduct() {
   const [artisans, setArtisans] = useState([]);
   const [countries, setCountries] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState("");
+  
+  const [searchTerm, setSearchTerm] = useState("");
+
   const [page, setPage] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
   const [showAddForm, setShowAddForm] = useState(false);
@@ -51,6 +54,22 @@ export default function AdminDashboardProduct() {
       fetchProducts(selectedCategory, page);
     }
   }, [selectedCategory, page]);
+  useEffect(() => {
+    const delay = setTimeout(() => {
+      if (searchTerm.length >= 2) {
+        fetch(`/api/products?search=${searchTerm}`)
+          .then((res) => res.json())
+          .then((data) => setProducts(Array.isArray(data.products) ? data.products : []))
+          .catch(() => toast.error("Erreur de recherche"));
+      } else {
+        fetchProducts(selectedCategory, page);
+      }
+    }, 300);
+  
+    return () => clearTimeout(delay);
+  }, [searchTerm]);
+  
+  
 
   async function fetchProducts(category = "", currentPage = 1) {
     try {
@@ -198,6 +217,16 @@ export default function AdminDashboardProduct() {
     <option value="ACCESSORY">Accessoires</option>
   </select>
 </div>
+<div>
+    <label className="mr-2 font-semibold text-gray-700">🔍 Rechercher :</label>
+    <input
+      type="text"
+      placeholder="Nom du produit..."
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      className="p-2 border rounded w-full md:w-72"
+    />
+  </div>
 
 
       {showAddForm && (
@@ -238,7 +267,9 @@ export default function AdminDashboardProduct() {
             </tr>
           </thead>
           <tbody>
-            {products.map((p) => (
+          {products
+    .filter((p) => p.name.toLowerCase().includes(searchTerm.toLowerCase()))
+    .map((p) => (
               <tr key={p.id}>
                 <td>{p.id}</td>
                 <td>
@@ -282,6 +313,8 @@ export default function AdminDashboardProduct() {
                     <option value="MODEL">Modèle</option>
                     <option value="ACCESSORY">Accessoire</option>
                   </select>
+                 
+
                 </td>
                 <td className="text-center">
                   <input

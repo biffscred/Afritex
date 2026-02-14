@@ -29,24 +29,25 @@ const ProductsList = () => {
     if (previousPageData && !previousPageData.products.length) return null;
 
     let url = `/api/products?page=${pageIndex + 1}&pageSize=${PAGE_SIZE}`;
+    if (filters.searchText) url += `&search=${encodeURIComponent(filters.searchText)}`;
     if (filters.category) url += `&category=${filters.category}`;
     if (filters.country) url += `&country=${filters.country}`;
-    if (filters.priceMin) url += `&priceMin=${filters.priceMin}`;
-    if (filters.priceMax) url += `&priceMax=${filters.priceMax}`;
     if (filters.color) url += `&color=${filters.color}`;
     if (filters.material) url += `&material=${filters.material}`;
+    if (filters.priceMin) url += `&priceMin=${filters.priceMin}`;
+    if (filters.priceMax) url += `&priceMax=${filters.priceMax}`;
+    if (filters.weightMin) url += `&weightMin=${filters.weightMin}`;
+    if (filters.weightMax) url += `&weightMax=${filters.weightMax}`;
 
     return url;
   };
 
-  const { data, error, size, setSize, isValidating } = useSWRInfinite(
-    getKey,
-    fetcher,
-    { revalidateOnFocus: false }
-  );
+  const { data, error, size, setSize, isValidating } = useSWRInfinite(getKey, fetcher, {
+    revalidateOnFocus: false,
+  });
 
   useEffect(() => {
-    setSize(1); // reset pagination on filter change
+    setSize(1); // Reset pagination when filters change
   }, [filters]);
 
   const products = Array.isArray(data)
@@ -87,11 +88,7 @@ const ProductsList = () => {
       ) : (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
           {products.map((product) => (
-            <ProductCard
-              key={product.id}
-              product={product}
-              onClick={handleProductClick}
-            />
+            <ProductCard key={product.id} product={product} onClick={handleProductClick} />
           ))}
         </div>
       )}

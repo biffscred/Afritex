@@ -101,11 +101,12 @@ export async function POST(req) {
   }
 }
 
-// ✅ GET : Récupérer les produits avec filtres
 export async function GET(req) {
   try {
-    const { searchParams } = new URL(req.url);
+    const searchParams = new URL(req.url, "http://localhost:3000").searchParams;
 
+
+    const search = searchParams.get("search")?.trim().toLowerCase();
     const categoryFilter = searchParams.get("category");
     const countryFilter = searchParams.get("country");
     const colorFilter = searchParams.get("color");
@@ -124,36 +125,51 @@ export async function GET(req) {
         countries: { some: { name: countryFilter } },
       }),
       ...(colorFilter && {
-        color: { contains: colorFilter, mode: "insensitive" },
+        color: {
+          contains: colorFilter,
+          mode: "insensitive",
+        },
       }),
       ...(materialFilter && {
-        material: { contains: materialFilter, mode: "insensitive" },
+        material: { contains: materialFilter.toLowerCase() },
+      }),
+      ...(search && {
+        name: { contains: search }, // Pas de "mode" en Prisma 5
       }),
     };
 
-    const skip = (page - 1) * pageSize;
+    const commonQuery = {
+      where: whereClause,
+      include: {
+        productImages: true,
+        artisan: true,
+        countries: true,
+        fabric: { include: { fabricImages: true } },
+        models: { include: { modelImages: true } },
+        accessories: { include: { accessoryImages: true } },
+      },
+      orderBy: { [sortBy]: sortOrder },
+    };
 
-    const [products, totalCount] = await Promise.all([
-      prisma.product.findMany({
-        where: whereClause,
-        include: {
-          productImages: true,
-          artisan: true,
-          countries: true,
-          fabric: { include: { fabricImages: true } },
-          models: { include: { modelImages: true } },
-          accessories: { include: { accessoryImages: true } },
-        },
-        orderBy: { [sortBy]: sortOrder },
-        skip,
-        take: pageSize,
-      }),
-      prisma.product.count({ where: whereClause }),
-    ]);
+    const isSearch = Boolean(search && search.length > 1);
 
-    return NextResponse.json({ products, totalCount, page, pageSize }, { status: 200 });
+    const products = await prisma.product.findMany(
+      isSearch
+        ? commonQuery // On ignore skip/take si recherche active
+        : { ...commonQuery, skip: (page - 1) * pageSize, take: pageSize }
+    );
+
+    const totalCount = await prisma.product.count({ where: whereClause });
+
+    return NextResponse.json(
+      { products, totalCount, page, pageSize },
+      { status: 200 }
+    );
   } catch (error) {
-    console.error("❌ GET Erreur :", error);
-    return NextResponse.json({ message: "Erreur serveur GET" }, { status: 500 });
+    console.error("\u274C ERREUR API PRODUCTS :", error);
+    return NextResponse.json(
+      { message: "Erreur serveur GET" },
+      { status: 500 }
+    );
   }
 }

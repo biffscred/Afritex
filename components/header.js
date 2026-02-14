@@ -60,26 +60,29 @@ function NavigationMenu({ isOpen, toggleMenu, itemCount, session, isAdmin }) {
         </Link>
       </li>
   
-      {/* ✅ Menu déroulant À propos */}
       <li className="relative group">
-        <span className="text-white text-lg font-bold hover:text-orange-400 transition-colors duration-300 cursor-pointer">
-          À propos
-        </span>
-        <ul className="absolute top-full left-0 z-50 hidden group-hover:block bg-white shadow-md rounded-lg mt-2 w-48 pt-2
-                       opacity-0 group-hover:opacity-100 transition-opacity duration-300 delay-100">
-          <li>
-            <Link href="/about" className="block px-4 py-2 text-gray-800 hover:bg-orange-100 transition">
-              Notre histoire
-            </Link>
-          </li>
-          <li>
-            <Link href="/fabricbycountry" className="block px-4 py-2 text-gray-800 hover:bg-orange-100 transition">
-              Tissus par pays
-            </Link>
-          </li>
-        </ul>
-      </li>
+  <div className="text-white text-lg font-bold hover:text-orange-400 transition-colors duration-300 cursor-pointer">
+    À propos
+  </div>
   
+  {/* Menu déroulant */}
+  <div className="absolute top-full left-0 z-50 mt-2 w-48 bg-white rounded-lg shadow-md opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-300">
+    <ul className="pt-2">
+      <li>
+        <Link href="/about" className="block px-4 py-2 text-gray-800 hover:bg-orange-100 transition">
+          Notre histoire
+        </Link>
+      </li>
+      <li>
+        <Link href="/fabricbycountry" className="block px-4 py-2 text-gray-800 hover:bg-orange-100 transition">
+          Tissus par pays
+        </Link>
+      </li>
+    </ul>
+  </div>
+</li>
+
+
       <li>
         <Link href="/contact">
           <span className="text-white text-lg font-bold hover:text-blue-400 transition-colors duration-300 cursor-pointer">
