@@ -35,7 +35,7 @@ export default function ProductFilters({ onFilter }) {
       material,
     });
   }, [searchText, category, country, color, priceMin, priceMax, weightMin, weightMax, material]);
-
+  console.log("Contenu de colors:", colors);
   return (
     <div className="mb-6 p-4 bg-white rounded-xl shadow flex flex-wrap gap-4 items-end">
       {/* 🔍 Recherche */}

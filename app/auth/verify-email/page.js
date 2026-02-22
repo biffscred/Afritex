@@ -1,9 +1,10 @@
 "use client";
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 
-export default function VerifyEmail() {
+// 1. On crée un composant interne qui contient toute ta logique actuelle
+function VerifyEmailContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const [message, setMessage] = useState('Vérification en cours...');
@@ -12,43 +13,31 @@ export default function VerifyEmail() {
   useEffect(() => {
     const token = searchParams.get('token');
     const email = searchParams.get('email');
-    console.log(token, email); // Pour déboguer, vérifiez si les deux sont bien récupérés
 
     if (token && email) {
-      // Appel à l'API de vérification d'e-mail
       const verifyEmail = async () => {
         try {
           const res = await fetch(`/api/auth/verify-email?token=${token}&email=${email}`);
-          console.log("Réponse brute de l'API :", res);
-      
-          // Vérifier le type de contenu de la réponse avant de la parser
           const contentType = res.headers.get("content-type");
       
           if (contentType && contentType.includes("application/json")) {
             const data = await res.json();
-            console.log("Données JSON reçues :", data);
-      
             if (res.ok) {
-              setMessage(data.message); // Message de succès
+              setMessage(data.message);
               setError(false);
             } else {
-              setMessage(data.message); // Message d'erreur de l'API
+              setMessage(data.message);
               setError(true);
             }
           } else {
-            // Si le contenu n'est pas du JSON, logguez la réponse textuelle (probablement HTML)
-            const textData = await res.text();
-            console.error("La réponse n'est pas en JSON. Réponse brute :", textData);
             setMessage('Une erreur est survenue. Réponse inattendue du serveur.');
             setError(true);
           }
         } catch (error) {
-          console.error("Erreur capturée lors de la requête fetch :", error);
           setMessage('Erreur réseau, veuillez réessayer.');
           setError(true);
         }
       };
-
       verifyEmail();
     } else {
       setMessage('Token ou email de vérification manquant.');
@@ -79,5 +68,18 @@ export default function VerifyEmail() {
         )}
       </div>
     </div>
+  );
+}
+
+// 2. Le composant principal exporté enveloppe le contenu dans Suspense
+export default function VerifyEmail() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen flex items-center justify-center bg-gray-100">
+        <div className="text-xl font-semibold">Chargement de la vérification...</div>
+      </div>
+    }>
+      <VerifyEmailContent />
+    </Suspense>
   );
 }

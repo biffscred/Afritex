@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import prisma from '../../../../lib/prisma';
 import { hash } from 'bcryptjs';
-import sendEmail from '../../../../lib/email';
+import { sendEmail } from "../../../../lib/email";
 import crypto from 'crypto';
 
 // Fonction pour générer un token de vérification

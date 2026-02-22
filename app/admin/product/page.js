@@ -229,28 +229,79 @@ export default function AdminDashboardProduct() {
   </div>
 
 
-      {showAddForm && (
-        <div className="bg-yellow-100 p-4 rounded mb-6 shadow-md">
-          <h2 className="text-lg font-semibold mb-4">Nouveau produit</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {Object.keys(newProduct).map((key) => (
-              <input
-                key={key}
-                placeholder={key}
-                value={newProduct[key]}
-                onChange={(e) => setNewProduct({ ...newProduct, [key]: e.target.value })}
-                className="p-2 border rounded"
-              />
-            ))}
-            <button
-              onClick={handleAddProduct}
-              className="col-span-full bg-green-500 text-white px-4 py-2 rounded hover:bg-green-600"
-            >
-              Enregistrer
-            </button>
-          </div>
-        </div>
-      )}
+  {showAddForm && (
+  <div className="bg-orange-50 p-6 rounded-xl mb-8 shadow-md border border-orange-200">
+    <h2 className="text-xl font-bold mb-4 text-orange-800">✨ Ajouter un nouveau trésor Afritex</h2>
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+      
+      {/* Informations de base */}
+      <input 
+        placeholder="Nom du produit" 
+        value={newProduct.name} 
+        onChange={(e) => setNewProduct({...newProduct, name: e.target.value})} 
+        className="p-2 border rounded bg-white" 
+      />
+      <input 
+        placeholder="Prix (ex: 45)" 
+        type="number" 
+        value={newProduct.price} 
+        onChange={(e) => setNewProduct({...newProduct, price: e.target.value})} 
+        className="p-2 border rounded bg-white" 
+      />
+      <input 
+        placeholder="URL de l'image" 
+        value={newProduct.image} 
+        onChange={(e) => setNewProduct({...newProduct, image: e.target.value})} 
+        className="p-2 border rounded bg-white" 
+      />
+
+      {/* Sélection de la Catégorie (Fini les fautes de frappe !) */}
+      <select 
+        value={newProduct.category} 
+        onChange={(e) => setNewProduct({...newProduct, category: e.target.value})}
+        className="p-2 border rounded bg-white"
+      >
+        <option value="">-- Choisir une catégorie --</option>
+        <option value="FABRIC">Tissu (FABRIC)</option>
+        <option value="MODEL">Modèle (MODEL)</option>
+        <option value="ACCESSORY">Accessoire (ACCESSORY)</option>
+      </select>
+
+      {/* Sélection de l'Artisan (Chargé dynamiquement depuis ta base) */}
+      <select 
+        value={newProduct.artisanId} 
+        onChange={(e) => setNewProduct({...newProduct, artisanId: e.target.value})}
+        className="p-2 border rounded bg-white"
+      >
+        <option value="">-- Choisir l'artisan --</option>
+        {artisans.map(art => (
+          <option key={art.id} value={art.id}>{art.name}</option>
+        ))}
+      </select>
+
+      <input 
+        placeholder="Matière (Coton, Soie...)" 
+        value={newProduct.material} 
+        onChange={(e) => setNewProduct({...newProduct, material: e.target.value})} 
+        className="p-2 border rounded bg-white" 
+      />
+
+      <textarea 
+        placeholder="Description" 
+        value={newProduct.description} 
+        onChange={(e) => setNewProduct({...newProduct, description: e.target.value})} 
+        className="p-2 border rounded bg-white col-span-full"
+      />
+
+      <button
+        onClick={handleAddProduct}
+        className="col-span-full bg-orange-600 text-white font-bold py-3 rounded-lg hover:bg-orange-700 transition-all shadow-lg"
+      >
+        🚀 Enregistrer dans le catalogue
+      </button>
+    </div>
+  </div>
+)}
 
       <div className="overflow-x-auto">
         <table className="w-full bg-white rounded shadow">
@@ -267,73 +318,88 @@ export default function AdminDashboardProduct() {
             </tr>
           </thead>
           <tbody>
-          {products
-    .filter((p) => p.name.toLowerCase().includes(searchTerm.toLowerCase()))
-    .map((p) => (
-              <tr key={p.id}>
-                <td>{p.id}</td>
-                <td>
-                  <input
-                    type="text"
-                    value={p.name}
-                    onChange={(e) => handleUpdateProduct(p.id, "name", e.target.value)}
-                    className="p-1 border rounded"
-                  />
-                </td>
-                <td>
-                  <input
-                    type="number"
-                    value={p.price}
-                    onChange={(e) => handleUpdateProduct(p.id, "price", e.target.value)}
-                    className="p-1 border rounded"
-                  />
-                </td>
-                <td>
-  <img
-    src={p.image}
-    alt={p.name}
-    className="w-20 h-20 object-contain rounded shadow mb-2"
-  />
-  <input
-    type="text"
-    value={p.image}
-    onChange={(e) => handleUpdateProduct(p.id, "image", e.target.value)}
-    className="w-full text-xs border rounded p-1 bg-gray-50"
-  />
-</td>
+  {products.map((p) => (
+    <tr key={p.id} className="border-b hover:bg-gray-50">
+      <td className="p-2">{p.id}</td>
+      
+      {/* 📝 Case Nom : enregistre quand on clique ailleurs */}
+      <td className="p-2">
+        <input
+          type="text"
+          defaultValue={p.name}
+          onBlur={(e) => {
+            if (e.target.value !== p.name) {
+              handleUpdateProduct(p.id, "name", e.target.value);
+            }
+          }}
+          className="p-1 border rounded w-full"
+        />
+      </td>
 
+      {/* 💰 Case Prix : enregistre quand on clique ailleurs */}
+      <td className="p-2">
+        <input
+          type="number"
+          defaultValue={p.price}
+          onBlur={(e) => {
+            const newVal = parseFloat(e.target.value);
+            if (newVal !== p.price) {
+              handleUpdateProduct(p.id, "price", newVal);
+            }
+          }}
+          className="p-1 border rounded w-32"
+        />
+      </td>
 
-                <td>
-                  <select
-                    value={p.category}
-                    onChange={(e) => handleUpdateProduct(p.id, "category", e.target.value)}
-                    className="p-1 border rounded"
-                  >
-                    <option value="FABRIC">Tissu</option>
-                    <option value="MODEL">Modèle</option>
-                    <option value="ACCESSORY">Accessoire</option>
-                  </select>
-                 
+      {/* 🖼 Case Image */}
+      <td className="p-2">
+        <img src={p.image} alt={p.name} className="w-12 h-12 object-cover rounded mb-1" />
+        <input
+          type="text"
+          defaultValue={p.image}
+          onBlur={(e) => {
+            if (e.target.value !== p.image) {
+              handleUpdateProduct(p.id, "image", e.target.value);
+            }
+          }}
+          className="text-xs border rounded p-1 w-full"
+        />
+      </td>
 
-                </td>
-                <td className="text-center">
-                  <input
-                    type="checkbox"
-                    checked={p.available}
-                    onChange={(e) => handleUpdateProduct(p.id, "available", e.target.checked)}
-                  />
-                </td>
-                <td>
-                  <button
-                    onClick={() => deleteProduct(p.id)}
-                    className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600"
-                  >
-                    Supprimer
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
+      {/* 📁 Case Catégorie */}
+      <td className="p-2">
+        <select
+          value={p.category}
+          onChange={(e) => handleUpdateProduct(p.id, "category", e.target.value)}
+          className="p-1 border rounded"
+        >
+          <option value="FABRIC">Tissu</option>
+          <option value="MODEL">Modèle</option>
+          <option value="ACCESSORY">Accessoire</option>
+        </select>
+      </td>
+
+      {/* ✅ Case Disponibilité */}
+      <td className="p-2 text-center">
+        <input
+          type="checkbox"
+          defaultChecked={p.available}
+          onChange={(e) => handleUpdateProduct(p.id, "available", e.target.checked)}
+        />
+      </td>
+
+      {/* 🗑 Bouton Supprimer */}
+      <td className="p-2">
+        <button
+          onClick={() => deleteProduct(p.id)}
+          className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition"
+        >
+          Supprimer
+        </button>
+      </td>
+    </tr>
+  ))}
+</tbody>
         </table>
 
         <div className="flex justify-center mt-4 gap-4">

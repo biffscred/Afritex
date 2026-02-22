@@ -3,12 +3,9 @@ import { NextResponse } from 'next/server';
 import nodemailer from 'nodemailer';
 import { google } from 'googleapis';
 
-require('dotenv').config();
 
-console.log('GOOGLE_CLIENT_ID:', process.env.GOOGLE_CLIENT_ID);
-console.log('GOOGLE_CLIENT_SECRET:', process.env.GOOGLE_CLIENT_SECRET);
-console.log('GOOGLE_REFRESH_TOKEN:', process.env.GOOGLE_REFRESH_TOKEN);
-console.log('EMAIL_ADDRESS:', process.env.EMAIL_ADDRESS);
+
+
 
 const OAuth2 = google.auth.OAuth2;
 
