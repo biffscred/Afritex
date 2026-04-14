@@ -77250,14 +77250,14 @@
             "origin": "Ville de Makeni, Sierra Leone",
             "usage": "Tissu teint traditionnel utilisé pour confectionner vêtements, articles de décoration et tenues cérémonielles; très prisé également par les touristes comme souvenir artisanal",
             "description": "Technique de teinture à réserve pratiquée depuis des siècles en Sierra Leone: en nouant le coton et en utilisant des teintures naturelles (indigo, écorces, amidon), on obtient des motifs complexes racontant chacun un aspect de la culture sierra-léonaise; le gara, artisanat durable et minutieux, produit des étoffes polyvalentes utilisées aussi bien en habillement qu'en art décoratif",
-            "image": "❌ Aucun chemin"
+            "image": "/images/fabrics/studio/Gara.png"
           },
           {
             "name": "Country cloth",
             "origin": "Tisserands traditionnels des provinces (Mende, Temne et autres) de Sierra Leone:",
             "usage": "Vêtement d'apparat et symbole de statut porté par les chefs, chasseurs (ex: tunique de chasseur \"ronko\") et notables locaux; utilisé lors des cérémonies coutumières et dans les échanges de prestige",
             "description": "Étoffe rustique en coton épais filé et tissé à la main sur des métiers à trois pieds, en longues bandes d'environ 10 cm ensuite cousues bord à bord; autrefois répandu pour l'habillement quotidien, le \"country cloth\" sierra-léonais est aujourd'hui valorisé comme héritage culturel, incarnant l'endurance et l'identité des communautés locales",
-            "image": "❌ Aucun chemin"
+            "image": "/images/fabrics/studio/Country-cloth.png"
           }
         ]
       },
@@ -80234,14 +80234,14 @@
           {
             "name": "Lépi",
             "description": "Le Lépi est un pagne indigo traditionnel de Guinée, emblématique notamment chez les Peuls. Fabriqué en coton léger, il se caractérise par ses teintes bleu indigo profond obtenues à partir de teintures végétales (feuilles d’indigotier) et ses rayures ou marbrures dues aux techniques de ligature lors de la teinture. Porté lors des mariages et cérémonies, le lépi est un symbole d’élégance et de pureté. La Guinée étant le principal producteur, ce pagne s’est diffusé dans la sous-région (Mali, Niger, Burkina) tout en étant préservé comme élément du patrimoine artisanal guinéen.",
-            "image": "❌ Aucun chemin"
+            "image": "/images/fabrics/studio/Lepi.png"
           },
           {
             "name": "Tissu \"Forêt sacrée\"",
             "origin": "Ethnies de la Guinée forestière (région du sud-est de la Guinée)",
             "usage": "Pièce d'honneur offerte traditionnellement aux dignitaires de passage en pays forestier; utilisée pour confectionner des boubous ou pagnes distinctifs lors de cérémonies",
             "description": "Étoffe teintée selon une technique locale consistant à utiliser des décoctions d'écorces et de noix de kola pour obtenir un fond brun, puis à appliquer des motifs noirs à l'aide de tampons; rarissime et hautement symbolique, ce tissu de la \"Forêt sacrée\" honore et protège ceux à qui il est dédié",
-            "image": "❌ Aucun chemin"
+            "image": "/images/fabrics/studio/Foret sacree.png"
           }
         ]
       },
@@ -86946,14 +86946,14 @@
             "origin": "Tisserands du comté de Lofa (Nord-Ouest du Liberia)",
             "usage": "Vêtement traditionnel des chefs locaux et des anciens, porté lors des cérémonies officielles et des occasions formelles (symbole de statut social)",
             "description": "Étoffe tissée à la main à partir de coton local filé, appréciée pour sa robustesse et autrefois si précieuse qu'elle servait de monnaie d'échange ou de dot; le \"country cloth\" demeure un emblème du patrimoine libérien, aujourd'hui remis en valeur dans des créations modernes en association avec du cuir ou d'autres matières",
-            "image": "❌ Aucun chemin"
+            "image": "/images/fabrics/studio/Country-cloth.png"
           },
           {
             "name": "Tissu tie-dye (gara)",
             "origin": "Artisans teinturiers urbains du Liberia (inspiré de techniques ouest-africaines)",
             "usage": "Vêtements contemporains aux motifs éclatants (chemises, robes, tuniques) prisés pour les tenues estivales et décontractées en milieu urbain",
             "description": "Technique de teinture artisanale consistant à nouer le tissu par endroits et à le plonger dans des bains de teinture végétale, créant des motifs aux contrastes saisissants; le résultat, appelé localement \"gara\", reflète la créativité libérienne et apporte une touche d'originalité colorée dans la mode quotidienne",
-            "image": "❌ Aucun chemin"
+            "image": "/images/fabrics/studio/Gara.png"
           }
         ]
       },
@@ -199552,7 +199552,7 @@
           {
             "name": "Batik",
             "description": "Le Togo possède une longue tradition de batik, technique importée d’Indonésie via les colonies néerlandaises au XIXe siècle. Contrairement au wax industriel, le batik togolais est entièrement fait main : l’artisan dessine des motifs à la cire chaude sur une toile de coton écru, puis plonge celle-ci dans des bains de teinture successifs. La cire est ensuite retirée, révélant sur le tissu teint les dessins restés en réserve (non teints). Recommencé pour chaque couleur supplémentaire, ce processus donne au batik un aspect craquelé unique dans les zones cirées. À Lomé et dans le centre du Togo, de nombreux artistes perpétuent cette technique pour créer des pagnes aux motifs traditionnels (cauris, adinkra, animaux stylisés) ou contemporains. Utilisés pour des chemises, robes et tentures, les batiks togolais constituent un artisanat d’art vivant. En parallèle, le Togo est l’un des centres historiques du pagne wax (avec la figure des \"Nana Benz\" de Lomé), mais ce tissu étant industriel, il n’est pas propre au pays. Le batik reste donc l’expression textile la plus authentiquement togolaise, alliant héritage étranger et créativité locale.",
-            "image": "❌ Aucun chemin"
+            "image": "/images/fabrics/studio/Batik-togolais.png"
           },
           {
             "name": "Kenté (Ewe)",
@@ -205211,14 +205211,14 @@
             "origin": "Peuple Manjak (Guinée-Bissau, également présent en Casamance)",
             "usage": "Accompagne toutes les grandes étapes de la vie (du baptême aux funérailles) au sein de la communauté manjak, et sert de tenue de cérémonie (mariages, réceptions):contentReference[oaicite:46]{index=46}",
             "description": "Luxueux pagne tissé à la main par les hommes sur de petits métiers, à base de fils de coton ou de soie; ses motifs riches de sens racontent l'histoire, les rites et les valeurs du peuple Manjak, faisant de chaque pièce un symbole de fierté et de richesse culturelle transmis à travers les générations",
-            "image": "❌ Aucun chemin"
+            "image": "/images/fabrics/studio/Manjak-guineebissau.png"
           },
           {
             "name": "Rabal",
             "origin": "Peuple Manjak (appelé \"serou rabal\" en wolof au Sénégal)",
             "usage": "Tenue féminine traditionnelle manjak, portée différemment selon l'âge et la région lors des grandes occasions (mariages, fêtes familiales):contentReference[oaicite:49]{index=49}",
             "description": "Variante de pagne manjak aux couleurs et motifs spécifiques codifiés; très prisé des femmes pour son élégance, le Rabal se transmet de mère en fille et chaque motif ou combinaison de couleurs porte une signification sur le statut ou l'étape de vie de celle qui le porte:",
-            "image": "❌ Aucun chemin"
+            "image": "/images/fabrics/studio/Rabal.png"
           }
         ]
       },
@@ -234780,7 +234780,7 @@
             "origin": "Tissu industriel d'origine européenne (technique batik indonésien), diffusé au Cap-Vert via les échanges ouest-africains",
             "usage": "Adopté dans la mode moderne capverdienne pour des robes, chemises et accessoires aux motifs colorés, bien que n'étant pas d'origine locale",
             "description": "Toile de coton imprimée de motifs vifs par réserve de cire, communément appelée \"wax\"; introduite en Afrique de l'Ouest au XIXᵉ siècle, elle s'est intégrée aux tenues contemporaines du Cap-Vert, apportant une touche panafricaine aux styles vestimentaires insulaires",
-            "image": "❌ Aucun chemin"
+            "image": "/images/fabrics/studio/Wax-africain.png"
           }
         ]
       },

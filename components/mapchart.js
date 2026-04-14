@@ -153,6 +153,7 @@ export default function MapChart() {
                 src={`https://flagcdn.com/w80/${selectedCountry.code?.toLowerCase()}.png`}
                 alt="Drapeau"
                 className="w-8 h-6 rounded"
+                
               />
               <h2 className="text-xl font-bold">{selectedCountry.name}</h2>
             </div>
