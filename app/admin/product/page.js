@@ -309,9 +309,10 @@ export default function AdminDashboardProduct() {
             <tr>
               <th>ID</th>
               <th>Nom</th>
+<th>Description</th>
               <th>Prix</th>
               <th>Image</th>
-
+             
               <th>Catégorie</th>
               <th>Dispo</th>
               <th>Actions</th>
@@ -335,6 +336,19 @@ export default function AdminDashboardProduct() {
           className="p-1 border rounded w-full"
         />
       </td>
+{/* 📝 Case Description : avec auto-enregistrement */}
+<td className="p-2">
+  <textarea
+    defaultValue={p.description}
+    onBlur={(e) => {
+      if (e.target.value !== p.description) {
+        handleUpdateProduct(p.id, "description", e.target.value);
+      }
+    }}
+    className="p-1 border rounded w-full text-xs h-12 resize-y"
+    placeholder="Ajouter une description..."
+  />
+</td>
 
       {/* 💰 Case Prix : enregistre quand on clique ailleurs */}
       <td className="p-2">
@@ -350,6 +364,7 @@ export default function AdminDashboardProduct() {
           className="p-1 border rounded w-32"
         />
       </td>
+
 
       {/* 🖼 Case Image */}
       <td className="p-2">

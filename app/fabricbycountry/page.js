@@ -5,7 +5,7 @@ import Image from "next/image";
 import MapChart from "../../components/mapchart.js";
 
 import Header from "../../components/header";
-import Footer from "../../components/footer";
+
 
 export default function AfricanFabricsPage() {
   const [selectedCountry, setSelectedCountry] = useState(null);
@@ -122,7 +122,7 @@ export default function AfricanFabricsPage() {
         )}
       </main>
 
-      <Footer />
+      
     </div>
   );
 }

@@ -33935,8 +33935,7 @@
         "country": "République du Congo",
         "code": "CG",
         "flag": "/images/flags/CG.webp",
-        "fabric": {},
-        "fabrics": [
+        "fabric": [
           {
             "name": "Textile en raphia (Congo-Brazzaville)",
             "origin": "République du Congo (peuples Kongo, Téké, Mbochi)",
@@ -67999,7 +67998,7 @@
           {
             "name": "Sefsari",
             "description": "Grand voile de soie ou de satin beige clair, le sefsari était autrefois la pièce maîtresse de la tenue des citadines en Tunisie (notamment à Tunis). Equivalent du haïk algérien, il couvre la femme de la tête aux pieds, ne laissant entrevoir qu’un œil pour se repérer. Tombé en désuétude avec l’évolution des mœurs vestimentaires, il subsiste lors de rares cérémonies ou dans le costume traditionnel. Chez les hommes, c’est le burnous qui est porté (cape de laine à capuche), souvent de couleur brune, héritage des ancêtres berbères et arabo-andalous. La Tunisie possède également des textiles régionaux notables : la fouta (étoffe rayée en coton) et le blousa (robe en velours brodé de la ville de Kairouan). Toutefois, c’est le sefsari immaculé, image de la femme traditionnelle tunisienne, qui reste iconique dans l’imaginaire culturel, symbolisant la pudeur et l’élégance d’antan.",
-            "image": "❌ Aucun chemin"
+            "image": "/images/fabrics/studio/Sefsari.png"
           },
           {
             "name": "Jebba",
@@ -68013,7 +68012,7 @@
             "origin": "Tunisie (Maghreb)",
             "usage": "Cape en laine à capuche pour les hommes, portée en hiver et lors des cérémonies",
             "description": "Identique dans sa forme au burnous algérien, le burnous tunisien est souvent tissé en laine blanche de mouton, avec une texture épaisse pour couper le froid des nuits désertiques. Vêtement traditionnel des cavaliers et notables tunisiens sous la Régence ottomane, il fut aussi adopté par les confréries religieuses pour les processions. Arboré par les patriotes et les soldats de l'armée française (spahis) au XIXe siècle, il symbolisait courage et appartenance. Aujourd'hui, le burnous est porté par les mariés dans certaines régions lors de la cérémonie du henné ou de la *bsilla*. Cette cape immaculée, flottant sur les épaules, incarne la pureté et la noblesse de la tradition vestimentaire tunisienne.",
-            "image": "❌ Aucun chemin"
+            "image": "/images/fabrics/studio/Burnous-tunisien.png"
           }
         ]
       },
@@ -176962,14 +176961,14 @@
             "origin": "Royaume du Lesotho (introduite à l’ère victorienne)",
             "usage": "Couverture en laine épaisse portée en cape par les hommes et femmes Basotho",
             "description": "Célèbre couverture en laine, à motifs et bordures distinctives, adoptée par le peuple sotho au XIXe siècle en remplacement des peaux traditionnelles. Offerte initialement au roi Moshoeshoe Iᵉʳ par des commerçants britanniques, la seanamarena (du nom d’un chef Basotho) est devenue un emblème national : chaque dessin (épi de maïs, motif « dents de crocodile », etc.) et chaque couleur véhiculent une signification (fertilité, richesse, statut). Portée différemment selon le sexe (rayures verticales pour les hommes, horizontales pour les femmes) et l’occasion (rites de passage, mariages, funérailles), cette couverture incarne l’héritage et la fierté basotho.",
-            "image": "❌ Aucun chemin"
+            "image": "/images/fabrics/studio/Seanamarena.png"
           },
           {
             "name": "Seshoeshoe (shweshwe)",
             "origin": "Culture Basotho (inspirée du roi Moshoeshoe Iᵉʳ)",
             "usage": "Tissu de coton imprimé à petits motifs, pour les jupes et robes des femmes",
             "description": "Variante locale du shweshwe d’Afrique du Sud, ce tissu est indissociable de l’habit féminin traditionnel au Lesotho. Introduit dans les années 1840 et popularisé par le roi Moshoeshoe (d’où son nom seshoeshoe), il se présente en indigo ou en couleurs vives avec des imprimés géométriques fins. Les femmes sotho le portent en ensembles coordonnés (robe ample, tablier et foulard assortis) lors des mariages et des offices religieux. Léger mais résistant, le seshoeshoe est également prisé par la mode urbaine, faisant le lien entre la modernité et la coutume.",
-            "image": "❌ Aucun chemin"
+            "image": "/images/fabrics/studio/Seshoeshoe.png"
           }
         ]
       },
@@ -184478,7 +184477,7 @@
           {
             "name": "Raphia et wax",
             "description": "Au Gabon, les tissus traditionnels comprennent les pagnes tressés en raphia, utilisés autrefois par les peuples forestiers. Par exemple, lors des danses Bwiti ou des cérémonies chez les Punu, des jupes en raphia teinté sont encore employées pour leur aspect symbolique et ancestral. Néanmoins, le tissu le plus répandu de nos jours est le pagne imprimé (dit \"wax\"). Importé d’Europe ou d’Asie, il a été approprié par la population gabonaise pour créer les tenues traditionnelles modernes : boubous, robes ndomas et chemises. Ces pagnes colorés, parfois personnalisés pour des événements (fêtes nationales, portraits de dirigeants), sont devenus l’expression contemporaine de l’identité gabonaise, remplaçant en grande partie les étoffes locales dans la vie quotidienne tout en coexistant avec elles lors des rites culturels.",
-            "image": "❌ Aucun chemin"
+            "image": "/images/fabrics/studio/raphia-wax.png"
           },
           {
             "name": "Obom (Libreville)",
@@ -184492,7 +184491,7 @@
             "origin": "Gabon (ethnie Punu et groupes du sud)",
             "usage": "Fibre végétale tissée ou tressée, utilisée pour les costumes de danse traditionnelle et objets rituels",
             "description": "Les Punu du sud du Gabon, connus pour leurs masques blancs *okuyi*, utilisent abondamment le raphia dans leur artisanat. Leurs danseurs masqués arborent une jupe en raphia épais, teinte d'un ocre brun, qui accentue leurs mouvements pendant les danses sur échasses ou les cérémonies d'initiation. Le raphia est préparé en extrayant les longues fibres des feuilles de palmier, puis en les séchant et en les assouplissant. Tissé en nappes ou noué en franges, il sert non seulement de \"tissu\" vestimentaire (jupes, ceintures, foulards de danse) mais aussi de lien pour assembler les panneaux de vannerie ou les coiffures. Sa présence dans les rites traduit une connexion avec la nature et les ancêtres : la texture et le bruit du raphia accompagnent les chants sacrés. Bien que la plupart des Gabonais s'habillent aujourd'hui de pagnes usinés, le raphia reste vivant dans la culture gabonaise par le biais des ballets folkloriques, des mascarades traditionnelles et de l'engouement pour les arts premiers.",
-            "image": "❌ Aucun chemin"
+            "image": "/images/fabrics/studio/Raphia-okuyi.png"
           }
         ]
       },

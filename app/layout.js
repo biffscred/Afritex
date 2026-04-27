@@ -4,6 +4,7 @@ import '../styles/globals.css';
 import ClientProvider from '../components/clientProvider';
 import { CartProvider } from './context/CartContext';
 import Header from "../components/header";
+import Footer from "../components/footer";
 
 // Charger les polices locales avec gestion des poids
 const geistSans = localFont({
@@ -68,7 +69,7 @@ export default function RootLayout({ children }) {
         <CartProvider>
           <Header />
           {children}
-
+          <Footer />
         </CartProvider>
         </ClientProvider>
       </body>
