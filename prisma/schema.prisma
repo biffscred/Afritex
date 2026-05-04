@@ -7,6 +7,7 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// --- UTILISATEURS & RÔLES ---
 model User {
   id            Int       @id @default(autoincrement())
   email         String    @unique
@@ -18,14 +19,186 @@ model User {
   orders        Order[]
 }
 
+enum UserRole {
+  USER
+  ADMIN
+}
+
+// --- PRODUIT MAÎTRE (Le Pivot) ---
+model Product {
+  id            Int             @id @default(autoincrement())
+  name          String
+  description   String          @db.Text
+  price         Float
+  category      ProductCategory
+  image         String?         // Image principale
+  stock         Int             @default(0)    // <--- Ajouté : Gestion de stock
+  available     Boolean         @default(true)
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  
+  // Attributs techniques
+  material      String?
+  mockupImage   String?
+  
+  // Relations
+  artisanId     Int?
+  artisan       Artisan?        @relation(fields: [artisanId], references: [id])
+  productImages ProductImage[]  
+  
+  // Filtres croisés
+  countries     Country[]       @relation("ProductCountries")
+  colors        Color[]         @relation("ProductColors")
+  specialties   Specialty[]     @relation("ProductSpecialties") // <--- Ajouté : Bogolan, Indigo, etc.
+
+  // Sous-tables
+  fabric        Fabric?         @relation("FabricToProduct")
+  accessories   Accessory[]     @relation("ProductToAccessory")
+  models        Model[]
+  orderItems    OrderItem[]
+
+  @@index([artisanId])
+}
+
+enum ProductCategory {
+  FABRIC
+  MODEL
+  ACCESSORY
+}
+
+// --- SPÉCIALITÉS (Tags Marketing/Artisanaux) ---
+model Specialty {
+  id          Int       @id @default(autoincrement())
+  name        String    @unique // Ex: Bogolan, Faso Dan Fani, Ndomo
+  description String?   @db.Text
+  products    Product[] @relation("ProductSpecialties")
+}
+
+// --- TISSUS (Détails techniques) ---
+model Fabric {
+  id          Int      @id @default(autoincrement())
+  productId   Int      @unique
+  name        String   @unique
+  price       Float
+  image       String?
+  
+  // Dimensions spécifiques au textile
+  width       Float?   // Laize du tissu (ex: 120cm)
+  pattern     String?  // Motif (ex: géométrique, uni)
+  material    String?
+  
+  product     Product  @relation("FabricToProduct", fields: [productId], references: [id], onDelete: Cascade)
+  
+  fabricImages FabricImage[]
+  countries    Country[]     @relation("FabricCountries")
+  accessories  Accessory[]
+  models       Model[]
+  orderItems   OrderItem[]
+  
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
+
+// --- MODÈLES (Vêtements) ---
+model Model {
+  id          Int      @id @default(autoincrement())
+  productId   Int
+  fabricId    Int?
+  artisanId   Int?
+  name        String
+  description String
+  price       Float
+  image       String?
+
+  product     Product  @relation(fields: [productId], references: [id], onDelete: Cascade)
+  fabric      Fabric?  @relation(fields: [fabricId], references: [id], onDelete: Cascade)
+  artisan     Artisan? @relation(fields: [artisanId], references: [id], onDelete: Cascade)
+  
+  sizes       Size[]   @relation("ModelSizes") // <--- Ajouté : S, M, L, XL
+  
+  modelImages ModelImage[]
+  countries   Country[] @relation("ModelCountries")
+  orderItems  OrderItem[] @relation("OrderItemModel")
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([artisanId])
+  @@index([fabricId])
+}
+
+model Size {
+  id     Int     @id @default(autoincrement())
+  name   String  @unique // S, M, L, XL, etc.
+  models Model[] @relation("ModelSizes")
+}
+
+// --- ACCESSOIRES ---
+model Accessory {
+  id          Int      @id @default(autoincrement())
+  productId   Int
+  fabricId    Int?
+  artisanId   Int?
+  name        String
+  description String
+  price       Float
+  image       String?
+  
+  dimensions  String?  // <--- Ajouté : Longueur/Largeur (ex: "180x30cm")
+
+  product     Product  @relation("ProductToAccessory", fields: [productId], references: [id], onDelete: Cascade)
+  fabric      Fabric?  @relation(fields: [fabricId], references: [id], onDelete: Cascade)
+  artisan     Artisan? @relation(fields: [artisanId], references: [id], onDelete: Cascade)
+
+  accessoryImages AccessoryImage[]
+  countries       Country[] @relation("AccessoryCountries")
+  orderItems      OrderItem[] @relation("OrderItemAccessory")
+
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([artisanId])
+  @@index([fabricId])
+}
+
+// --- AUTRES MODÈLES (Géographie, Couleurs, Artisans) ---
+model Country {
+  id          Int      @id @default(autoincrement())
+  name        String   @unique
+  artisans    Artisan[]
+  accessories Accessory[] @relation("AccessoryCountries")
+  fabrics     Fabric[]    @relation("FabricCountries")
+  models      Model[]     @relation("ModelCountries")
+  products    Product[]   @relation("ProductCountries")
+}
+
+model Color {
+  id       Int       @id @default(autoincrement())
+  name     String    @unique // Ex: Indigo, Ocre, Terre
+  products Product[] @relation("ProductColors")
+}
+
+model Artisan {
+  id          Int      @id @default(autoincrement())
+  name        String
+  countryId   Int
+  country     Country  @relation(fields: [countryId], references: [id], onDelete: Cascade)
+  products    Product[]
+  accessories Accessory[]
+  models      Model[]
+
+  @@index([countryId])
+}
+
+// --- COMMANDES (Tunnel d'achat) ---
 model Order {
   id        Int      @id @default(autoincrement())
   userId    Int
   total     Float    @default(0)
-  createdAt DateTime @default(now())
   status    String   @default("PENDING")
+  createdAt DateTime @default(now())
 
-  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade, map: "Order_UserId_fkey")
+  user       User        @relation(fields: [userId], references: [id], onDelete: Cascade)
   orderItems OrderItem[]
 
   @@index([userId])
@@ -41,191 +214,51 @@ model OrderItem {
   quantity    Int
   price       Float
 
-  order     Order      @relation(fields: [orderId], references: [id], onDelete: Cascade, map: "OrderItem_OrderId_fkey")
-  product   Product?   @relation(fields: [productId], references: [id], onDelete: Cascade, map: "OrderItem_ProductId_fkey")
-  fabric    Fabric?    @relation(fields: [fabricId], references: [id], onDelete: Cascade, map: "OrderItem_FabricId_fkey")
+  order     Order      @relation(fields: [orderId], references: [id], onDelete: Cascade)
+  product   Product?   @relation(fields: [productId], references: [id], onDelete: Cascade)
+  fabric    Fabric?    @relation(fields: [fabricId], references: [id], onDelete: Cascade)
   accessory Accessory? @relation("OrderItemAccessory", fields: [accessoryId], references: [id], onDelete: Cascade)
   model     Model?     @relation("OrderItemModel", fields: [modelId], references: [id], onDelete: Cascade)
 
   @@index([orderId])
   @@index([productId])
   @@index([fabricId])
-  @@index([accessoryId])
-  @@index([modelId])
-}
-model Product {
-  id          Int             @id @default(autoincrement())
-  name        String
-  description String          @db.Text
-  price       Float
-  category    ProductCategory
-  image       String?
-  createdAt   DateTime        @default(now())
-  updatedAt   DateTime        @updatedAt
-  available   Boolean         @default(true)
-  artisanId   Int?
-  color       String?
-  material    String?
-  mockupImage String?
- productImages  ProductImage[]  
-   
-
-  fabric      Fabric?     @relation("FabricToProduct")
-  accessories Accessory[] @relation("ProductToAccessory")
-  models      Model[]
-  orderItems  OrderItem[]
-
-  artisan   Artisan?  @relation(fields: [artisanId], references: [id])
-  countries Country[] @relation("ProductCountries")
-  colors Color[] @relation("ProductColors")
-
-  @@index([artisanId])
 }
 
-model Fabric {
+// --- IMAGES ---
+model ProductImage {
   id        Int     @id @default(autoincrement())
-  material  String?
-  pattern   String?
-  productId Int     @unique
+  url       String
+  altText   String?
+  productId Int
+  product   Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
-  name      String   @unique
-  image     String?
-  price     Float
-  origin    String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime
-
-  product      Product       @relation("FabricToProduct", fields: [productId], references: [id], onDelete: Cascade)
-  orderItems   OrderItem[]
-  accessories  Accessory[]
-  models       Model[]
-  fabricImages FabricImage[]
-  countries    Country[]     @relation("FabricCountries")
-}
-
-model Accessory {
-  id          Int    @id @default(autoincrement())
-  name        String
-  description String
-  price       Float
-  fabricId    Int?
-  productId   Int
-
-  product Product @relation("ProductToAccessory", fields: [productId], references: [id], onDelete: Cascade)
-  fabric  Fabric? @relation(fields: [fabricId], references: [id], onDelete: Cascade)
-
-  image           String?
-  createdAt       DateTime         @default(now())
-  updatedAt       DateTime         @updatedAt
-  color           String?
-  artisanId       Int?
-  artisan         Artisan?         @relation(fields: [artisanId], references: [id], onDelete: Cascade)
-  accessoryImages AccessoryImage[]
-  countries       Country[]        @relation("AccessoryCountries")
-  orderItems      OrderItem[]      @relation("OrderItemAccessory")
-
-  @@index([artisanId])
-  @@index([fabricId])
-}
-
-model Model {
-  id          Int      @id @default(autoincrement())
-  name        String
-  description String
-  price       Float
-  productId   Int
-  fabricId    Int?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime
-  color       String?
-  artisanId   Int?
-  image       String?
-
-  product     Product      @relation(fields: [productId], references: [id], onDelete: Cascade)
-  fabric      Fabric?      @relation(fields: [fabricId], references: [id], onDelete: Cascade)
-  artisan     Artisan?     @relation(fields: [artisanId], references: [id], onDelete: Cascade)
-  modelImages ModelImage[]
-  countries   Country[]    @relation("ModelCountries")
-  orderItems  OrderItem[]  @relation("OrderItemModel")
-
-  @@index([artisanId])
-  @@index([fabricId])
-}
-
-model Artisan {
-  id          Int         @id @default(autoincrement())
-  name        String
-  countryId   Int
-  accessories Accessory[]
-  country     Country     @relation(fields: [countryId], references: [id], onDelete: Cascade)
-  models      Model[]
-  products    Product[]
-
-  @@index([countryId])
-}
-
-model Country {
-  id          Int         @id @default(autoincrement())
-  name        String      @unique
-  artisans    Artisan[]
-  accessories Accessory[] @relation("AccessoryCountries")
-  fabrics     Fabric[]    @relation("FabricCountries")
-  models      Model[]     @relation("ModelCountries")
-  products    Product[]   @relation("ProductCountries")
-}
-
-model Color {
-  id       Int       @id @default(autoincrement())
-  name     String    @unique
-  products Product[] @relation("ProductColors")
-}
-
-model AccessoryImage {
-  id          Int       @id @default(autoincrement())
-  url         String
-  altText     String?
-  accessoryId Int
-  accessory   Accessory @relation(fields: [accessoryId], references: [id], onDelete: Cascade)
-
-  @@index([accessoryId])
+  @@index([productId])
 }
 
 model FabricImage {
-  id       Int     @id @default(autoincrement())
+  id       Int    @id @default(autoincrement())
   url      String
-  altText  String?
   fabricId Int
-  fabric   Fabric  @relation(fields: [fabricId], references: [id], onDelete: Cascade)
+  fabric   Fabric @relation(fields: [fabricId], references: [id], onDelete: Cascade)
 
   @@index([fabricId])
 }
 
 model ModelImage {
-  id      Int     @id @default(autoincrement())
+  id      Int    @id @default(autoincrement())
   url     String
-  altText String?
   modelId Int
-  model   Model   @relation(fields: [modelId], references: [id], onDelete: Cascade)
+  model   Model  @relation(fields: [modelId], references: [id], onDelete: Cascade)
 
   @@index([modelId])
 }
-model ProductImage {
-  id         Int     @id @default(autoincrement())
-  url        String
-  altText    String?
-  productId  Int
-  product    Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
-  @@index([productId])
-}
+model AccessoryImage {
+  id          Int       @id @default(autoincrement())
+  url         String
+  accessoryId Int
+  accessory   Accessory @relation(fields: [accessoryId], references: [id], onDelete: Cascade)
 
-enum UserRole {
-  USER
-  ADMIN
-}
-
-enum ProductCategory {
-  FABRIC
-  MODEL
-  ACCESSORY
+  @@index([accessoryId])
 }

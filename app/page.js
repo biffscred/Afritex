@@ -4,7 +4,7 @@ import Header from '../components/header';
 import FabricsSection from '../components/fabrics';
 import ModelsSection from '../components/modelssection';
 import AccessoriesSection from '../components/accessories';
-import Footer from '../components/footer';
+
 // import ExploreSection from '@/components/exploresection';
 // import TestimonialsSection from '@/components/testimonialssection';
 // import NewsletterSection from '@/components/newslettersection';
@@ -64,7 +64,7 @@ export default function Home() {
         <ContactSection />
       </section> */}
        {/* Footer */}
-       <Footer />
+      
     </div>
   );
 }

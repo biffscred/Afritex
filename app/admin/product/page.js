@@ -4,436 +4,419 @@ import { useEffect, useState } from "react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { ToastContainer, toast } from "react-toastify";
+import { 
+  X, Image as ImageIcon, FolderOpen, Search, 
+  ChevronRight, Check, Edit2, Trash2, User, Maximize 
+} from "lucide-react"; 
 import "react-toastify/dist/ReactToastify.css";
 
 export default function AdminDashboardProduct() {
   const { data: session, status } = useSession();
   const router = useRouter();
 
+  // --- ÉTATS RÉFÉRENTIELS ---
   const [products, setProducts] = useState([]);
   const [artisans, setArtisans] = useState([]);
-  const [countries, setCountries] = useState([]);
-  const [selectedCategory, setSelectedCategory] = useState("");
-  
+  const [sizes, setSizes] = useState([]);
+  const [colors, setColors] = useState([]); // Pour usage futur
+
+  // --- ÉTATS MÉDIATHÈQUE ---
+  const [showMediaModal, setShowMediaModal] = useState(false);
+  const [availableImages, setAvailableImages] = useState([]); 
+  const [mediaFolders, setMediaFolders] = useState([]);
+  const [currentPath, setCurrentPath] = useState("");
+  const [mediaSearch, setMediaSearch] = useState("");
+  const [targetGalleryIndex, setTargetGalleryIndex] = useState(null); 
+  const [selectedTemp, setSelectedTemp] = useState([]); 
+
+  // --- ÉTATS CATALOGUE & ÉDITION ---
+  const [showAddForm, setShowAddForm] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editId, setEditId] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
 
-  const [page, setPage] = useState(1);
-  const [totalCount, setTotalCount] = useState(0);
-  const [showAddForm, setShowAddForm] = useState(false);
+  const initialProductState = {
+    name: "", description: "", price: "", category: "",
+    image: "", imagesGallery: ["", "", "", ""],
+    stock: 0, artisanId: "", material: "",
+    sizes: [], colors: [], specialties: [],
+    width: "", pattern: ""
+  };
 
-  const pageSize = 20;
+  const [newProduct, setNewProduct] = useState(initialProductState);
 
-  const [newProduct, setNewProduct] = useState({
-    name: "",
-    description: "",
-    price: "",
-    category: "",
-    image: "",
-    artisanId: "",
-    color: "",
-    material: "",
-  });
+  // --- NAVIGATION MÉDIATHÈQUE ---
+
+  const navigateToFolder = async (folderPath) => {
+    try {
+      setCurrentPath(folderPath);
+      setMediaSearch("");
+      const res = await fetch(`/api/media?folder=${encodeURIComponent(folderPath)}`);
+      const data = await res.json();
+      setMediaFolders(data.folders || []);
+      setAvailableImages(data.images || []);
+      setSelectedTemp([]); 
+    } catch (err) {
+      toast.error("Erreur de navigation");
+    }
+  };
+// Fonction pour sauvegarder instantanément quand tu finis de taper dans le tableau
+const handleQuickUpdate = async (productId, data) => {
+  try {
+    const res = await fetch(`/api/products/${productId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) {
+      const errorData = await res.json();
+      throw new Error(errorData.details || "Erreur lors de la mise à jour");
+    }
+
+    toast.success("Enregistré !");
+    fetchProducts(); // On rafraîchit le tableau pour voir le nom s'afficher
+  } catch (err) {
+    console.error("❌ Erreur QuickUpdate :", err);
+    toast.error("Erreur de sauvegarde rapide");
+  }
+};
+  const handleMediaSearch = async (val) => {
+    setMediaSearch(val);
+    if (!val) return navigateToFolder(currentPath);
+    try {
+      const res = await fetch(`/api/media?search=${encodeURIComponent(val)}`);
+      const data = await res.json();
+      setAvailableImages(data.images || []);
+      setMediaFolders([]);
+    } catch (err) { console.error(err); }
+  };
+
+  const openMediaLibrary = (index = null) => {
+    setTargetGalleryIndex(index);
+    setSelectedTemp([]); 
+    navigateToFolder(""); 
+    setShowMediaModal(true);
+  };
+
+  const toggleImageSelection = (url) => {
+    if (targetGalleryIndex === null) {
+      setNewProduct({ ...newProduct, image: url });
+      setShowMediaModal(false);
+    } else {
+      setSelectedTemp(prev => 
+        prev.includes(url) ? prev.filter(item => item !== url) : [...prev, url]
+      );
+    }
+  };
+
+  const confirmGallerySelection = () => {
+    const updatedGallery = [...newProduct.imagesGallery];
+    let selectionIdx = 0;
+    for (let i = targetGalleryIndex; i < updatedGallery.length; i++) {
+      if (selectionIdx < selectedTemp.length) {
+        updatedGallery[i] = selectedTemp[selectionIdx];
+        selectionIdx++;
+      }
+    }
+    setNewProduct({ ...newProduct, imagesGallery: updatedGallery });
+    setSelectedTemp([]);
+    setShowMediaModal(false);
+  };
+
+  // --- LOGIQUE CRUD ---
+
+  const handleEditClick = (product) => {
+    setIsEditing(true);
+    setEditId(product.id);
+    setNewProduct({
+      ...product,
+      artisanId: product.artisanId?.toString() || "",
+      sizes: product.sizes?.map(s => s.id) || [],
+      imagesGallery: product.productImages?.map(img => img.url) || ["", "", "", ""]
+    });
+    setShowAddForm(true);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
+  const handleDelete = async (id) => {
+    if (!confirm("Voulez-vous vraiment supprimer ce produit ?")) return;
+    try {
+      const res = await fetch(`/api/products/${id}`, { method: "DELETE" });
+      if (res.ok) {
+        toast.success("Produit supprimé");
+        fetchProducts();
+      }
+    } catch (err) { toast.error("Erreur suppression"); }
+  };
+
+  async function handleSubmit() {
+    const method = isEditing ? "PUT" : "POST";
+    const url = isEditing ? `/api/products/${editId}` : "/api/products";
+
+    try {
+      const productData = {
+        ...newProduct,
+        price: parseFloat(newProduct.price) || 0,
+        stock: parseInt(newProduct.stock) || 0,
+        artisanId: newProduct.artisanId ? parseInt(newProduct.artisanId) : null,
+        imagesGallery: newProduct.imagesGallery.filter(url => url !== ""),
+        sizes: newProduct.sizes // IDs des tailles
+      };
+
+      const res = await fetch(url, {
+        method: method,
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(productData),
+      });
+
+      if (!res.ok) throw new Error();
+
+      toast.success(isEditing ? "✅ Mis à jour !" : "✨ Ajouté !");
+      setShowAddForm(false);
+      setIsEditing(false);
+      setNewProduct(initialProductState);
+      fetchProducts();
+    } catch (err) {
+      toast.error("❌ Erreur d'enregistrement");
+    }
+  }
+
+  // --- CHARGEMENTS ---
 
   useEffect(() => {
     if (status === "loading") return;
     if (!session || session.user.role !== "ADMIN") {
       router.push("/auth/login");
-    }
-  }, [session, status, router]);
-
-  useEffect(() => {
-    if (session?.user.role === "ADMIN") {
-      fetchProducts(selectedCategory, page);
-      fetchCountries();
-      fetchArtisans();
-    }
-  }, [session]);
-
-  useEffect(() => {
-    if (session?.user.role === "ADMIN") {
-      fetchProducts(selectedCategory, page);
-    }
-  }, [selectedCategory, page]);
-  useEffect(() => {
-    const delay = setTimeout(() => {
-      if (searchTerm.length >= 2) {
-        fetch(`/api/products?search=${searchTerm}`)
-          .then((res) => res.json())
-          .then((data) => setProducts(Array.isArray(data.products) ? data.products : []))
-          .catch(() => toast.error("Erreur de recherche"));
-      } else {
-        fetchProducts(selectedCategory, page);
-      }
-    }, 300);
-  
-    return () => clearTimeout(delay);
-  }, [searchTerm]);
-  
-  
-
-  async function fetchProducts(category = "", currentPage = 1) {
-    try {
-      let url = `/api/products?page=${currentPage}&pageSize=${pageSize}`;
-      if (category) url += `&category=${category}`;
-
-      const res = await fetch(url);
-      if (!res.ok) throw new Error(`Erreur HTTP : ${res.status}`);
-      const data = await res.json();
-
-      setProducts(Array.isArray(data.products) ? data.products : []);
-      setTotalCount(data.totalCount || 0);
-    } catch (error) {
-      toast.error("Erreur lors de la récupération des produits.");
-    }
-  }
-
-  async function fetchArtisans() {
-    try {
-      const res = await fetch("/api/artisans");
-      const data = await res.json();
-      setArtisans(data);
-    } catch {
-      toast.error("Erreur lors de la récupération des artisans.");
-    }
-  }
-
-  async function fetchCountries() {
-    try {
-      const res = await fetch("/api/countries");
-      const data = await res.json();
-      setCountries(data);
-    } catch {
-      toast.error("Erreur lors de la récupération des pays.");
-    }
-  }
-
-  async function handleUpdateProduct(productId, field, value) {
-    try {
-      const updatedValue =
-        field === "countries"
-          ? Array.isArray(value)
-            ? value.map((id) => ({ id: parseInt(id) }))
-            : []
-          : value;
-
-      const res = await fetch(`/api/products/${productId}`, {
-        method: "PUT",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ [field]: updatedValue }),
-      });
-
-      if (!res.ok) throw new Error("Erreur update");
-
-      toast.success("✅ Produit mis à jour");
-      setProducts((prev) =>
-        prev.map((p) => (p.id === productId ? { ...p, [field]: updatedValue } : p))
-      );
-    } catch {
-      toast.error("❌ Erreur update !");
-    }
-  }
-
-  async function deleteProduct(id) {
-    if (!confirm("Supprimer ce produit ?")) return;
-    try {
-      const res = await fetch(`/api/products/${id}`, { method: "DELETE" });
-      if (res.ok) {
-        setProducts((prev) => prev.filter((p) => p.id !== id));
-        toast.success("Produit supprimé !");
-      } else {
-        toast.error("Erreur suppression.");
-      }
-    } catch {
-      toast.error("Erreur réseau !");
-    }
-  }
-
-  async function handleAddProduct() {
-    try {
-      const res = await fetch("/api/products", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(newProduct),
-      });
-      if (!res.ok) throw new Error();
-
-      toast.success("Produit ajouté !");
-      setNewProduct({
-        name: "",
-        description: "",
-        price: "",
-        category: "",
-        image: "",
-        artisanId: "",
-        color: "",
-        material: "",
-      });
+    } else {
+      fetchInitialData();
       fetchProducts();
-      setShowAddForm(false);
-    } catch {
-      toast.error("Erreur ajout produit.");
     }
+  }, [session, status]);
+
+  async function fetchInitialData() {
+    const fetchJson = (url) => fetch(url).then(res => res.json());
+    try {
+      const [art, siz] = await Promise.all([
+        fetchJson("/api/artisans"), fetchJson("/api/sizes")
+      ]);
+      setArtisans(art); setSizes(siz);
+    } catch (err) { console.error("Erreur chargement référentiels"); }
   }
+
+  async function fetchProducts() {
+    const res = await fetch(`/api/products?search=${searchTerm}`);
+    const data = await res.json();
+    setProducts(data.products || []);
+  }
+
+  useEffect(() => { fetchProducts(); }, [searchTerm]);
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <ToastContainer />
+    <div className="container mx-auto px-4 py-8 bg-gray-50 min-h-screen">
+      <ToastContainer position="bottom-right" />
 
-      <div className="flex justify-between items-center mb-6">
-      <div className="flex justify-between mb-4">
-  <button
-    onClick={() => router.push("/admin")}
-    className="bg-gray-600 text-white px-4 py-2 rounded hover:bg-gray-700"
-  >
-    🔙 Retour admin
-  </button>
-  <button
-    onClick={() => router.push("/")}
-    className="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700"
-  >
-    🏠 Accueil
-  </button>
-</div>
+      {/* MODALE MÉDIATHÈQUE */}
+      {showMediaModal && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-md z-[1000] flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl w-full max-w-5xl h-[85vh] flex flex-col shadow-2xl overflow-hidden">
+            <div className="p-6 border-b bg-gray-50 flex flex-col md:flex-row justify-between items-center gap-4">
+              <div className="flex flex-col">
+                <h3 className="font-black text-red-900 uppercase text-sm flex items-center gap-2"><FolderOpen size={18} /> Explorateur</h3>
+                <div className="flex items-center gap-1 text-[10px] font-bold text-gray-400 uppercase mt-1">
+                  <span className="cursor-pointer hover:text-red-900" onClick={() => navigateToFolder("")}>Racine</span>
+                  {currentPath.split("/").map((p, i, arr) => p && (
+                    <span key={i} className="flex items-center gap-1">
+                      <ChevronRight size={10} /> 
+                      <span className="cursor-pointer hover:text-red-900" onClick={() => navigateToFolder(arr.slice(0, i + 1).join("/"))}>{p}</span>
+                    </span>
+                  ))}
+                </div>
+              </div>
+              <div className="relative flex-1 max-w-sm">
+                <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
+                <input type="text" placeholder="Rechercher..." className="w-full pl-10 pr-4 py-2 border rounded-full outline-none focus:ring-2 focus:ring-red-900" value={mediaSearch} onChange={(e) => handleMediaSearch(e.target.value)} />
+              </div>
+              <button onClick={() => setShowMediaModal(false)} className="p-2 hover:bg-gray-200 rounded-full"><X /></button>
+            </div>
+            <div className="flex-1 overflow-y-auto p-6">
+              <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-6">
+                {mediaFolders.map((f) => (
+                  <div key={f.path} onClick={() => navigateToFolder(f.path)} className="flex flex-col items-center p-4 rounded-2xl hover:bg-yellow-50 cursor-pointer border border-transparent hover:border-yellow-200 transition-all">
+                    <div className="w-16 h-16 bg-yellow-100 rounded-2xl flex items-center justify-center text-yellow-600 shadow-sm"><FolderOpen size={32} fill="currentColor" /></div>
+                    <span className="text-[10px] font-black mt-3 text-center uppercase text-gray-600 line-clamp-2">{f.name}</span>
+                  </div>
+                ))}
+                {availableImages.map((img) => (
+                  <div key={img.url} onClick={() => toggleImageSelection(img.url)} className={`flex flex-col items-center p-2 rounded-2xl cursor-pointer border-2 transition-all ${selectedTemp.includes(img.url) ? 'border-red-900 bg-red-50' : 'border-transparent hover:bg-red-50'}`}>
+                    <div className="w-full aspect-square bg-gray-100 rounded-xl overflow-hidden shadow-sm relative">
+                      <img src={img.url} className="w-full h-full object-cover" />
+                      {selectedTemp.includes(img.url) && <div className="absolute top-1 right-1 bg-red-900 text-white rounded-full p-1"><Check size={12} /></div>}
+                    </div>
+                    <span className="text-[9px] font-bold mt-2 text-center truncate w-full text-gray-400">{img.name}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {targetGalleryIndex !== null && selectedTemp.length > 0 && (
+              <div className="p-4 border-t bg-gray-50 flex justify-between items-center">
+                <span className="text-xs font-bold text-gray-500"><span className="text-red-900">{selectedTemp.length}</span> sélectionnées</span>
+                <button onClick={confirmGallerySelection} className="bg-red-900 text-white px-8 py-2 rounded-full font-black uppercase text-xs">Valider la sélection</button>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
-        <h1 className="text-3xl font-bold text-orange-700">Gestion Produits</h1>
-        <button
-          onClick={() => setShowAddForm((prev) => !prev)}
-          className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+      {/* HEADER */}
+      <div className="flex flex-col md:flex-row justify-between items-center mb-8 gap-4">
+        <h1 className="text-4xl font-black text-red-900 uppercase tracking-tighter">Afritex Admin</h1>
+        <button 
+          onClick={() => { setShowAddForm(!showAddForm); if(isEditing) {setIsEditing(false); setNewProduct(initialProductState);} }} 
+          className="px-8 py-3 bg-red-900 text-white font-bold rounded-xl shadow-lg hover:bg-black transition-all"
         >
-          {showAddForm ? "Annuler" : "Ajouter un produit"}
+          {showAddForm ? "✖ Fermer" : "➕ Nouveau Produit"}
         </button>
       </div>
 
-      <div className="mb-4">
-  <label className="mr-2 font-semibold text-gray-700">Filtrer par catégorie :</label>
-  <select
-    value={selectedCategory}
-    onChange={(e) => setSelectedCategory(e.target.value)}
-    className="p-2 border rounded"
-  >
-    <option value="">Toutes</option>
-    <option value="FABRIC">Tissus</option>
-    <option value="MODEL">Modèles</option>
-    <option value="ACCESSORY">Accessoires</option>
-  </select>
-</div>
-<div>
-    <label className="mr-2 font-semibold text-gray-700">🔍 Rechercher :</label>
-    <input
-      type="text"
-      placeholder="Nom du produit..."
-      value={searchTerm}
-      onChange={(e) => setSearchTerm(e.target.value)}
-      className="p-2 border rounded w-full md:w-72"
-    />
-  </div>
+      {/* FORMULAIRE */}
+      {showAddForm && (
+        <div className="bg-white p-8 rounded-3xl shadow-xl mb-12 border-t-8 border-yellow-600">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {/* Colonne Images */}
+            <div className="space-y-6">
+              <div>
+                <label className="text-xs font-black uppercase text-gray-400 block mb-2">Image Principale</label>
+                <div onClick={() => openMediaLibrary(null)} className="aspect-video bg-gray-100 border-2 border-dashed border-gray-300 rounded-2xl flex items-center justify-center overflow-hidden cursor-pointer hover:border-yellow-600 transition-colors">
+                  {newProduct.image ? <img src={newProduct.image} className="w-full h-full object-cover" /> : <ImageIcon className="text-gray-300" size={40} />}
+                </div>
+              </div>
+              <div>
+                <label className="text-xs font-black uppercase text-gray-400 block mb-2">Galerie Photos</label>
+                <div className="grid grid-cols-4 gap-2">
+                  {newProduct.imagesGallery.map((url, idx) => (
+                    <div key={idx} className="relative aspect-square bg-gray-100 border-2 border-dashed border-gray-300 rounded-xl overflow-hidden group">
+                      {url ? (
+                        <><img src={url} className="w-full h-full object-cover" /><button onClick={() => { const g = [...newProduct.imagesGallery]; g[idx] = ""; setNewProduct({...newProduct, imagesGallery: g}); }} className="absolute top-1 right-1 bg-red-500 text-white p-0.5 rounded-full opacity-0 group-hover:opacity-100 transition"><X size={10}/></button></>
+                      ) : (
+                        <button onClick={() => openMediaLibrary(idx)} className="w-full h-full flex items-center justify-center text-gray-300">+</button>
+                      )}
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
 
+            {/* Colonne Données */}
+            <div className="md:col-span-2 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <input placeholder="Nom" value={newProduct.name} onChange={e => setNewProduct({...newProduct, name: e.target.value})} className="p-4 bg-gray-50 border-none rounded-2xl font-bold outline-none" />
+              <input type="number" placeholder="Prix" value={newProduct.price} onChange={e => setNewProduct({...newProduct, price: e.target.value})} className="p-4 bg-gray-50 border-none rounded-2xl font-bold outline-none" />
+              
+              <select value={newProduct.category} onChange={e => setNewProduct({...newProduct, category: e.target.value})} className="p-4 bg-gray-50 border-none rounded-2xl font-bold outline-none">
+                <option value="">Catégorie...</option>
+                <option value="FABRIC">Tissu</option><option value="MODEL">Modèle</option><option value="ACCESSORY">Accessoire</option>
+              </select>
 
-  {showAddForm && (
-  <div className="bg-orange-50 p-6 rounded-xl mb-8 shadow-md border border-orange-200">
-    <h2 className="text-xl font-bold mb-4 text-orange-800">✨ Ajouter un nouveau trésor Afritex</h2>
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-      
-      {/* Informations de base */}
-      <input 
-        placeholder="Nom du produit" 
-        value={newProduct.name} 
-        onChange={(e) => setNewProduct({...newProduct, name: e.target.value})} 
-        className="p-2 border rounded bg-white" 
-      />
-      <input 
-        placeholder="Prix (ex: 45)" 
-        type="number" 
-        value={newProduct.price} 
-        onChange={(e) => setNewProduct({...newProduct, price: e.target.value})} 
-        className="p-2 border rounded bg-white" 
-      />
-      <input 
-        placeholder="URL de l'image" 
-        value={newProduct.image} 
-        onChange={(e) => setNewProduct({...newProduct, image: e.target.value})} 
-        className="p-2 border rounded bg-white" 
-      />
+              <select value={newProduct.artisanId} onChange={e => setNewProduct({...newProduct, artisanId: e.target.value})} className="p-4 bg-gray-50 border-none rounded-2xl font-bold outline-none">
+                <option value="">Artisan...</option>
+                {artisans.map(a => <option key={a.id} value={a.id}>{a.name}</option>)}
+              </select>
 
-      {/* Sélection de la Catégorie (Fini les fautes de frappe !) */}
-      <select 
-        value={newProduct.category} 
-        onChange={(e) => setNewProduct({...newProduct, category: e.target.value})}
-        className="p-2 border rounded bg-white"
-      >
-        <option value="">-- Choisir une catégorie --</option>
-        <option value="FABRIC">Tissu (FABRIC)</option>
-        <option value="MODEL">Modèle (MODEL)</option>
-        <option value="ACCESSORY">Accessoire (ACCESSORY)</option>
-      </select>
+              <div className="col-span-full">
+                <label className="text-[10px] font-black uppercase text-gray-400 mb-2 block">Tailles Disponibles</label>
+                <div className="flex flex-wrap gap-2 p-3 bg-gray-50 rounded-2xl">
+                  {sizes.map(s => {
+                    const isSelected = newProduct.sizes.includes(s.id);
+                    return (
+                      <button key={s.id} onClick={() => {
+                        const current = [...newProduct.sizes];
+                        setNewProduct({...newProduct, sizes: isSelected ? current.filter(id => id !== s.id) : [...current, s.id]});
+                      }} className={`px-4 py-1.5 rounded-xl text-[10px] font-black transition-all ${isSelected ? 'bg-red-900 text-white shadow-md' : 'bg-white text-gray-400 border border-gray-200'}`}>
+                        {s.name}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
 
-      {/* Sélection de l'Artisan (Chargé dynamiquement depuis ta base) */}
-      <select 
-        value={newProduct.artisanId} 
-        onChange={(e) => setNewProduct({...newProduct, artisanId: e.target.value})}
-        className="p-2 border rounded bg-white"
-      >
-        <option value="">-- Choisir l'artisan --</option>
-        {artisans.map(art => (
-          <option key={art.id} value={art.id}>{art.name}</option>
-        ))}
-      </select>
+              <textarea placeholder="Description..." value={newProduct.description} onChange={e => setNewProduct({...newProduct, description: e.target.value})} className="col-span-full p-4 bg-gray-50 border-none rounded-2xl h-32 outline-none" />
+              
+              <button onClick={handleSubmit} className="col-span-full py-5 bg-red-900 text-white font-black text-xl rounded-2xl shadow-xl uppercase transition-transform active:scale-95">
+                {isEditing ? "Mettre à jour" : "Enregistrer"}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
-      <input 
-        placeholder="Matière (Coton, Soie...)" 
-        value={newProduct.material} 
-        onChange={(e) => setNewProduct({...newProduct, material: e.target.value})} 
-        className="p-2 border rounded bg-white" 
-      />
-
-      <textarea 
-        placeholder="Description" 
-        value={newProduct.description} 
-        onChange={(e) => setNewProduct({...newProduct, description: e.target.value})} 
-        className="p-2 border rounded bg-white col-span-full"
-      />
-
-      <button
-        onClick={handleAddProduct}
-        className="col-span-full bg-orange-600 text-white font-bold py-3 rounded-lg hover:bg-orange-700 transition-all shadow-lg"
-      >
-        🚀 Enregistrer dans le catalogue
-      </button>
-    </div>
-  </div>
-)}
-
-      <div className="overflow-x-auto">
-        <table className="w-full bg-white rounded shadow">
-          <thead className="bg-gray-100">
+      {/* TABLEAU */}
+      <div className="bg-white rounded-3xl shadow-sm border border-gray-100 overflow-hidden">
+        <table className="w-full text-left">
+          <thead className="bg-gray-100 text-gray-500 text-[10px] font-black uppercase tracking-widest">
             <tr>
-              <th>ID</th>
-              <th>Nom</th>
-<th>Description</th>
-              <th>Prix</th>
-              <th>Image</th>
-             
-              <th>Catégorie</th>
-              <th>Dispo</th>
-              <th>Actions</th>
+              <th className="p-6">Produit</th>
+              <th className="p-6">Artisan</th>
+              <th className="p-6">Tailles</th>
+              <th className="p-6">Stock</th>
+              <th className="p-6">Prix</th>
+              <th className="p-6 text-right">Actions</th>
             </tr>
           </thead>
           <tbody>
-  {products.map((p) => (
-    <tr key={p.id} className="border-b hover:bg-gray-50">
-      <td className="p-2">{p.id}</td>
-      
-      {/* 📝 Case Nom : enregistre quand on clique ailleurs */}
-      <td className="p-2">
-        <input
-          type="text"
-          defaultValue={p.name}
-          onBlur={(e) => {
-            if (e.target.value !== p.name) {
-              handleUpdateProduct(p.id, "name", e.target.value);
-            }
-          }}
-          className="p-1 border rounded w-full"
-        />
-      </td>
-{/* 📝 Case Description : avec auto-enregistrement */}
-<td className="p-2">
-  <textarea
-    defaultValue={p.description}
-    onBlur={(e) => {
-      if (e.target.value !== p.description) {
-        handleUpdateProduct(p.id, "description", e.target.value);
-      }
-    }}
-    className="p-1 border rounded w-full text-xs h-12 resize-y"
-    placeholder="Ajouter une description..."
-  />
+            {products.map(p => (
+              <tr key={p.id} className="border-b last:border-0 hover:bg-gray-50 transition-colors">
+                <td className="p-6 flex items-center gap-4">
+                  <img src={p.image} className="w-14 h-14 object-cover rounded-xl shadow-sm" />
+                  <div>
+                    <div className="font-black text-gray-900">{p.name}</div>
+                    <div className="text-[10px] text-yellow-700 font-bold uppercase">{p.category}</div>
+                  </div>
+                </td>
+                <td className="p-6">
+  <div className="flex items-center gap-2">
+    <User size={12} className="text-gray-400" />
+    <input 
+      type="text"
+      placeholder="Nom de l'artisan..."
+      // Ici, on imagine une fonction qui sauvegarde dès que tu changes le texte
+      defaultValue={p.artisan?.name || ""}
+      onBlur={(e) => handleQuickUpdate(p.id, { artisanName: e.target.value })}
+      className="bg-transparent border-b border-transparent hover:border-gray-300 focus:border-red-900 outline-none text-xs font-bold text-gray-600 w-full"
+    />
+  </div>
 </td>
-
-      {/* 💰 Case Prix : enregistre quand on clique ailleurs */}
-      <td className="p-2">
-        <input
-          type="number"
-          defaultValue={p.price}
-          onBlur={(e) => {
-            const newVal = parseFloat(e.target.value);
-            if (newVal !== p.price) {
-              handleUpdateProduct(p.id, "price", newVal);
-            }
-          }}
-          className="p-1 border rounded w-32"
-        />
-      </td>
-
-
-      {/* 🖼 Case Image */}
-      <td className="p-2">
-        <img src={p.image} alt={p.name} className="w-12 h-12 object-cover rounded mb-1" />
-        <input
-          type="text"
-          defaultValue={p.image}
-          onBlur={(e) => {
-            if (e.target.value !== p.image) {
-              handleUpdateProduct(p.id, "image", e.target.value);
-            }
-          }}
-          className="text-xs border rounded p-1 w-full"
-        />
-      </td>
-
-      {/* 📁 Case Catégorie */}
-      <td className="p-2">
-        <select
-          value={p.category}
-          onChange={(e) => handleUpdateProduct(p.id, "category", e.target.value)}
-          className="p-1 border rounded"
-        >
-          <option value="FABRIC">Tissu</option>
-          <option value="MODEL">Modèle</option>
-          <option value="ACCESSORY">Accessoire</option>
-        </select>
-      </td>
-
-      {/* ✅ Case Disponibilité */}
-      <td className="p-2 text-center">
-        <input
-          type="checkbox"
-          defaultChecked={p.available}
-          onChange={(e) => handleUpdateProduct(p.id, "available", e.target.checked)}
-        />
-      </td>
-
-      {/* 🗑 Bouton Supprimer */}
-      <td className="p-2">
-        <button
-          onClick={() => deleteProduct(p.id)}
-          className="bg-red-500 text-white px-2 py-1 rounded hover:bg-red-600 transition"
-        >
-          Supprimer
-        </button>
-      </td>
-    </tr>
-  ))}
-</tbody>
+<td className="p-6">
+  <div className="flex flex-wrap gap-1 max-w-[150px]">
+    {/* Affichage des tailles actuelles */}
+    {p.sizes?.map(s => (
+      <span key={s.id} className="px-2 py-0.5 bg-gray-200 text-[9px] font-black rounded-md uppercase">
+        {s.name}
+      </span>
+    ))}
+    
+    {/* Petit bouton pour ouvrir la sélection si c'est vide */}
+    {p.sizes?.length === 0 && (
+      <button 
+        onClick={() => handleEditClick(p)} // Ouvre le formulaire pour choisir
+        className="text-[9px] text-blue-500 font-bold hover:underline"
+      >
+        + Ajouter tailles
+      </button>
+    )}
+  </div>
+</td>
+                <td className="p-6 font-bold">{p.stock}</td>
+                <td className="p-6 font-black text-red-900">{p.price} €</td>
+                <td className="p-6 text-right">
+                  <div className="flex justify-end gap-2">
+                    <button onClick={() => handleEditClick(p)} className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg"><Edit2 size={16}/></button>
+                    <button onClick={() => handleDelete(p.id)} className="p-2 text-red-500 hover:bg-red-50 rounded-lg"><Trash2 size={16}/></button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
-
-        <div className="flex justify-center mt-4 gap-4">
-          <button
-            onClick={() => setPage((p) => Math.max(1, p - 1))}
-            disabled={page === 1}
-            className="px-3 py-1 bg-gray-600 text-white rounded"
-          >
-            ◀ Précédent
-          </button>
-          <span className="font-bold">Page {page}</span>
-          <button
-            onClick={() => setPage((p) => p + 1)}
-            disabled={products.length < pageSize}
-            className="px-3 py-1 bg-gray-600 text-white rounded"
-          >
-            Suivant ▶
-          </button>
-        </div>
       </div>
     </div>
   );

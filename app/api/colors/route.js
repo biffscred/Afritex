@@ -1,32 +1,18 @@
 import { NextResponse } from "next/server";
-import { PrismaClient } from "@prisma/client";
+import prisma from "../../../lib/prisma";
 
-const prisma = new PrismaClient();
-
-// ✅ API GET : Liste des couleurs uniques présentes dans les produits
 export async function GET() {
   try {
-    const products = await prisma.product.findMany({
-      select: { color: true },
+    // On va directement chercher dans la table Color
+    const colors = await prisma.color.findMany({
+      orderBy: { name: "asc" }
     });
 
-    // Extraire toutes les couleurs, même si stockées en CSV (ex : "Noir, Blanc")
-    const allColors = products
-      .flatMap((p) =>
-        p.color?.split(",").map((c) => c.trim()).filter(Boolean) || []
-      )
-      .filter(Boolean);
-
-    // Supprimer doublons + trier
-    const uniqueColors = [...new Set(allColors)].sort((a, b) =>
-      a.localeCompare(b)
-    );
-
-    return NextResponse.json(uniqueColors);
+    return NextResponse.json(colors);
   } catch (error) {
     console.error("❌ Erreur API /api/colors :", error);
     return NextResponse.json(
-      { error: "Erreur lors de la récupération des couleurs" },
+      { error: "Impossible de récupérer les couleurs" },
       { status: 500 }
     );
   }
