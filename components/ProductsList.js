@@ -54,17 +54,13 @@ const ProductsList = () => {
     ? data.flatMap((page) => page?.products || [])
     : [];
 
-  const handleProductClick = useCallback((product) => {
-    const images =
-      product.images?.length > 0
-        ? product.images
-        : product.fabric?.fabricImages ||
-          product.models?.[0]?.modelImages ||
-          product.accessories?.[0]?.accessoryImages || [];
-
-    setSelectedProduct({ ...product, images });
-  }, []);
-
+    const handleProductClick = useCallback((product) => {
+      // On récupère la galerie qu'on a créée ensemble
+      const gallery = product.productImages || [];
+    
+      // On l'envoie à la modale avec le BON NOM
+      setSelectedProduct({ ...product, productImages: gallery });
+    }, []);
   const renderSkeletons = () => {
     return Array.from({ length: PAGE_SIZE }).map((_, index) => (
       <div key={index} className="animate-pulse bg-gray-200 h-64 rounded"></div>

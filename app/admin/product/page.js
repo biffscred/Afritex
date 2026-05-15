@@ -128,17 +128,30 @@ const handleQuickUpdate = async (productId, data) => {
 
   const handleEditClick = (product) => {
     setIsEditing(true);
-    setEditId(product.id);
+    setShowAddForm(true);
+  
+    // On prépare un tableau de 4 cases vides
+    let gallery = ["", "", "", ""];
+  
+    // Si le produit a des images en base de données, on remplit nos cases
+    if (product.productImages && product.productImages.length > 0) {
+      product.productImages.forEach((img, index) => {
+        if (index < 4) gallery[index] = img.url;
+      });
+    }
+  
+    // On remplit le formulaire avec les données du produit
     setNewProduct({
       ...product,
-      artisanId: product.artisanId?.toString() || "",
+      id: product.id,
+      price: product.price.toString(),
+      // TRÈS IMPORTANT : On transforme les objets Prisma en tableau d'URLs
+      imagesGallery: gallery,
+      // On récupère aussi les IDs des tailles pour les boutons
       sizes: product.sizes?.map(s => s.id) || [],
-      imagesGallery: product.productImages?.map(img => img.url) || ["", "", "", ""]
+      artisanId: product.artisanId || ""
     });
-    setShowAddForm(true);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
   const handleDelete = async (id) => {
     if (!confirm("Voulez-vous vraiment supprimer ce produit ?")) return;
     try {
@@ -152,7 +165,15 @@ const handleQuickUpdate = async (productId, data) => {
 
   async function handleSubmit() {
     const method = isEditing ? "PUT" : "POST";
-    const url = isEditing ? `/api/products/${editId}` : "/api/products";
+    
+    // 💡 Changement ici : on utilise newProduct.id au lieu de editId
+    const url = isEditing ? `/api/products/${newProduct.id}` : "/api/products";
+
+    // Sécurité : si on édite mais qu'on n'a pas d'ID, on arrête tout
+    if (isEditing && !newProduct.id) {
+        toast.error("❌ Erreur : ID du produit introuvable");
+        return;
+    }
 
     try {
       const productData = {
@@ -160,8 +181,9 @@ const handleQuickUpdate = async (productId, data) => {
         price: parseFloat(newProduct.price) || 0,
         stock: parseInt(newProduct.stock) || 0,
         artisanId: newProduct.artisanId ? parseInt(newProduct.artisanId) : null,
-        imagesGallery: newProduct.imagesGallery.filter(url => url !== ""),
-        sizes: newProduct.sizes // IDs des tailles
+        // On nettoie la galerie pour n'envoyer que les vraies URLs
+        imagesGallery: newProduct.imagesGallery.filter(imgUrl => imgUrl && imgUrl.trim() !== ""),
+        sizes: newProduct.sizes 
       };
 
       const res = await fetch(url, {
@@ -170,7 +192,10 @@ const handleQuickUpdate = async (productId, data) => {
         body: JSON.stringify(productData),
       });
 
-      if (!res.ok) throw new Error();
+      if (!res.ok) {
+          const errorData = await res.json();
+          throw new Error(errorData.details || "Erreur serveur");
+      }
 
       toast.success(isEditing ? "✅ Mis à jour !" : "✨ Ajouté !");
       setShowAddForm(false);
@@ -178,9 +203,10 @@ const handleQuickUpdate = async (productId, data) => {
       setNewProduct(initialProductState);
       fetchProducts();
     } catch (err) {
-      toast.error("❌ Erreur d'enregistrement");
+      console.error(err);
+      toast.error(err.message || "❌ Erreur d'enregistrement");
     }
-  }
+}
 
   // --- CHARGEMENTS ---
 
@@ -405,7 +431,18 @@ const handleQuickUpdate = async (productId, data) => {
     )}
   </div>
 </td>
-                <td className="p-6 font-bold">{p.stock}</td>
+<td className="p-6">
+  <div className="flex items-center gap-2">
+    <input 
+      type="number"
+      defaultValue={p.stock}
+      // On appelle la fonction de sauvegarde dès que tu changes de case
+      onBlur={(e) => handleQuickUpdate(p.id, { stock: parseInt(e.target.value) })}
+      className="w-20 bg-gray-50 border border-transparent hover:border-gray-300 focus:border-red-900 rounded px-2 py-1 text-xs font-bold text-gray-700 outline-none transition-all"
+    />
+    <span className="text-[10px] text-gray-400">unités</span>
+  </div>
+</td>
                 <td className="p-6 font-black text-red-900">{p.price} €</td>
                 <td className="p-6 text-right">
                   <div className="flex justify-end gap-2">
