@@ -127,18 +127,17 @@ export async function GET(req) {
     const whereClause = {
       price: { gte: priceMin, lte: priceMax },
       ...(category && { category }),
-      // Filtre par pays (Relation Many-to-Many)
-      ...(country && { countries: { some: { name: { contains: country, mode: 'insensitive' } } } }),
-      // Filtre par couleur (Relation Many-to-Many)
-      ...(color && { colors: { some: { name: { contains: color, mode: 'insensitive' } } } }),
+      // Filtre par pays
+      ...(country && { countries: { some: { name: { contains: country } } } }),
+      // Filtre par couleur
+      ...(color && { colors: { some: { name: { contains: color } } } }),
       // Filtre par spécialité (Bogolan, etc.)
-      ...(specialty && { specialties: { some: { name: { contains: specialty, mode: 'insensitive' } } } }),
-      // Recherche textuelle globale
+      ...(specialty && { specialties: { some: { name: { contains: specialty } } } }),
+      // Recherche textuelle globale (Sans 'mode: insensitive' pour SQLite)
       ...(search && {
         OR: [
-          { name: { contains: search, mode: 'insensitive' } },
-          { description: { contains: search, mode: 'insensitive' } },
-          { material: { contains: search, mode: 'insensitive' } }
+          { name: { contains: search } },
+          { description: { contains: search } }
         ]
       }),
     };
