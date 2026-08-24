@@ -107500,12 +107500,23 @@
         "country": "Côte d'Ivoire",
         "code": "CI",
         "flag": "/images/flags/CI.webp",
-        "fabric": {
-          "name": "Pagne baoulé",
-          "description": "Tissu tissé en bandes utilisé par le peuple Baoulé.",
-          "image": "/images/fabrics/CI.webp"
-        },
-        "fabrics": []
+        "fabric": [
+          {
+            "name": "Baoulé ",
+            "description": "Tissu Baoulé tissé à la main en Côte d’Ivoire, composé de bandes de coton assemblées et de motifs graphiques uniques. Une étoffe artisanale authentique, idéale pour l’habillement et la décoration",
+            "image": "/images/fabrics/studio/Baoule.png"
+          },
+          {
+            "name": "Kita ",
+            "description": "Tissu Kita tissé à la main, composé de bandes de coton ou de soie assemblées et de motifs géométriques colorés. Une étoffe de caractère, symbole de raffinement et de tradition ivoirienne.",
+            "image": "/images/fabrics/studio/Kita.webp"
+          },
+          {
+            "name": "Toile de Korhogo",
+            "description": "Toile de Korhogo tissée et peinte à la main dans le nord de la Côte d’Ivoire. Ses motifs symboliques sénoufo, inspirés d’animaux, de personnages et de formes géométriques, sont réalisés avec des pigments naturels sur une étoffe de coton assemblée en bandes.",
+            "image": "/images/fabrics/studio/Toile-korhogo.webp"
+          }
+        ]
       },
       "geometry": {
         "type": "MultiPolygon",
